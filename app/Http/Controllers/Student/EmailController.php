@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Student;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
