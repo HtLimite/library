@@ -29,6 +29,8 @@
 
             background-size: 100% 100%;
 
+            height:100%;
+
         }
 
         .snow-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100001; }
@@ -453,6 +455,7 @@
             repassword = $("#register-repassword").val(),
             // code = $("#register-code").val(),
             flag = false,
+            time = false,
             validatecode = null;
         //判断学号密码是否为空
         if(username == ""){
@@ -539,7 +542,7 @@
 
         if(flag){
             return false;
-        }else{
+        }else if (!time){
             //注册ajax注册
             //表单序列化
             var str = $("#Regform").serialize();
@@ -583,7 +586,11 @@
                     }else if (data.email){
                         message = "<h4 style='margin: 0 auto'' class='spop-title'>" + data.email + "</h4>";
                     }else if (data.email == 0){
-                        message = "<h4 style='margin: 0 auto'' class='spop-title'>邮箱注册失败!</h4>";
+                        message = "<h4 style='margin: 0 auto'' class='spop-title'>邮箱未发送成功,请一分钟后再试!</h4>";
+                        time = true;
+                        setTimeout(() => {
+                            time = false;
+                        },60000);
                     }
                     spop({
                         template: message,
@@ -592,6 +599,13 @@
                         autoclose: 3000,
                     });
                 }
+            });
+        }else {
+            spop({
+                template:"<h4 style='margin: 0 auto'' class='spop-title'>请一分钟后再试!</h4>",
+                position: 'top-center',
+                style: 'success',
+                autoclose: 3000,
             });
         }
     }

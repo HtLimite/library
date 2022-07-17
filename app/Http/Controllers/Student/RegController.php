@@ -47,9 +47,9 @@ class RegController extends Controller
             unset($arr['repass']);
             $arr['reg'] = time();
             $arr['status'] = 1;
-            $arr['verification_code'] = sha1(time());
-            $arr['verification_expire'] = Carbon::now()->addDay();
+            //调用邮件类
             $qqEmail = new EmailController();
+            //调用邮件类,发送邮件方法
             $emailResult = $qqEmail->index($arr['email']);
             if($emailResult['code'] == 1){
                 //邮箱发送成功 3
@@ -57,8 +57,13 @@ class RegController extends Controller
             }else{
                 $emailStatus ['email' ] = 0;
             }
+            //邮件类获取验证码,验证过期时间
+            $arr['verification_code'] = $qqEmail->code;
+            $arr['verification_expire'] = $qqEmail->expireTime;
             //密码加密哈希
             $arr['password'] = \Hash::make($arr['password']);
+            //默认未激活
+            $arr['is_verification'] = 0;
             //插入数据库
             if(DB::table('student')->insert($arr)) {
                 $emailStatus['reg'] = 1 ;
