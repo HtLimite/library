@@ -35,24 +35,45 @@ class EmailController extends Controller
     //验证邮箱
     public function verify(Request $request){
         $arr = $request->all();
+        if(!$request->has(['code','email'])){
+            $this->failed("警告!!!非法访问!");
+            exit;
+        }
         $user = DB::table('student')->where('email', $arr['email'])->first();
+        //用户是否存在
+        if(empty($user)){
+            $this->failed("警告!!!非法访问!");
+            exit;
+        }
         if($user->verification_code == $arr['code']){
             $nowTime = Carbon::now();
             //验证时间是否过期
                 //解析时间为Carbon对象
             $expire = Carbon::parse( $user->verification_expire);
-            if($expire->gte($nowTime)){
-                $user->is_verification = 1;
-                DB::table('student')->update((array)$user);
-                return view('student.verify',['email' => $user->email,'verify' => $user->is_verification]);
-            }else{
+            //验证是否时间过期
+            if($expire->gte($nowTime))
+            {
+                //验证是否已经激活
+                if ($user->is_verification == 0)
+                {
+                    $user->is_verification = 1;
+                    DB::table('student')->update((array)$user);
+                    return view('student.verify', ['email' => $user->email, 'verify' => $user->is_verification]);
+                }
+                return view('student.verify', ['email' => $user->email]);
+            } else{
                 $str = "<div style='height: 100vh;line-height: 100vh;text-align: center;'>验证时间已过期!</div>";
                 echo $str;
             }
         }else{
-            $str = "<div style='height: 100vh;line-height: 100vh;text-align: center;'>该激活链接已经失效!</div>";
-            echo $str;
+            $this->failed("此链接已失效,请查看最新邮件");
         }
+        return 1;
+    }
+    //链接失效方法
+    public function failed($message){
+        $str = "<div style='height: 100vh;line-height: 100vh;text-align: center;'>$message</div>";
+        echo $str;
     }
 }
 

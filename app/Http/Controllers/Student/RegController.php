@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 //学生注册控制器
@@ -61,7 +62,7 @@ class RegController extends Controller
             $arr['verification_code'] = $qqEmail->code;
             $arr['verification_expire'] = $qqEmail->expireTime;
             //密码加密哈希
-            $arr['password'] = \Hash::make($arr['password']);
+            $arr['password'] = Hash::make($arr['password']);
             //默认未激活
             $arr['is_verification'] = 0;
             //插入数据库

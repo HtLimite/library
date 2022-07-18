@@ -7,9 +7,10 @@
     <title>登录</title>
     <link rel="shortcut icon" href="/student/images/Reiki.icon">
     <link rel="stylesheet" href="/student/css/normalize.css">
+    <link rel="stylesheet" href="/css/fontawesome/css/all.css" type="text/css">
     <link rel="stylesheet" href="/student/css/login.css">
     <link rel="stylesheet" href="/student/css/sign-up-login.css">
-    <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+{{--    <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">--}}
     <link rel="stylesheet" href="/student/css/inputEffect.css" />
     <link rel="stylesheet" href="/student/css/verifyCode.css" />
     <link rel="stylesheet" href="/student/css/tooltips.css" />
@@ -96,7 +97,7 @@
         </div>
         <!-- 忘记密码页面 -->
         <div class="login sign-out-htm">
-            <form action="#" method="post" class="container offset1 loginform">
+            <form action="#" id="forgetForm" class="container offset1 loginform" onsubmit="return false">
                 <!-- 猫头鹰控件 -->
                 <div id="owl-login" class="forget-owl">
                     <div class="hand"></div>
@@ -109,16 +110,16 @@
                 <div class="pad input-container">
                     <section class="content">
 							<span class="input input--hideo">
-								<input class="input__field input__field--hideo" type="text" id="forget-username" autocomplete="off" placeholder="请输入学号"/>
+								<input name="account" class="input__field input__field--hideo" type="text" id="forget-account" autocomplete="off" placeholder="请输入学号"/>
 								<label class="input__label input__label--hideo" for="forget-username">
 									<i class="fa fa-fw fa-user icon icon--hideo"></i>
 									<span class="input__label-content input__label-content--hideo"></span>
 								</label>
 							</span>
                             <span class="input input--hideo">
-								<input class="input__field input__field--hideo" type="text" id="forget-username" autocomplete="off" placeholder="注册邮箱"/>
+								<input name="email" class="input__field input__field--hideo" type="text" id="forget-email" autocomplete="off" placeholder="注册邮箱"/>
 								<label class="input__label input__label--hideo" for="forget-username">
-									<i class="fa fa-fw fa-user icon icon--hideo"></i>
+									<i class="fa-solid fa-envelope icon icon--hideo"></i>
 									<span class="input__label-content input__label-content--hideo"></span>
 								</label>
 							</span>
@@ -130,7 +131,21 @@
 {{--								</label>--}}
 {{--							</span>--}}
                         <span class="input input--hideo">
-								<input class="input__field input__field--hideo" type="password" id="forget-password" placeholder="请重置密码" />
+								<input name="password" class="input__field input__field--hideo" type="password" id="forget-password" placeholder="原密码" />
+								<label class="input__label input__label--hideo" for="forget-password">
+                                    <i class="fa-solid fa-key icon icon--hideo"></i>
+									<span class="input__label-content input__label-content--hideo"></span>
+								</label>
+							</span>
+                        <span class="input input--hideo">
+								<input name="new-password" class="input__field input__field--hideo" type="password" id="new-password" placeholder="新密码" />
+								<label class="input__label input__label--hideo" for="forget-password">
+									<i class="fa fa-fw fa-lock icon icon--hideo"></i>
+									<span class="input__label-content input__label-content--hideo"></span>
+								</label>
+                        </span>
+                        <span class="input input--hideo">
+								<input name="new-repass" class="input__field input__field--hideo" type="password" id="new-repass" placeholder="确认密码" />
 								<label class="input__label input__label--hideo" for="forget-password">
 									<i class="fa fa-fw fa-lock icon icon--hideo"></i>
 									<span class="input__label-content input__label-content--hideo"></span>
@@ -140,7 +155,7 @@
                 </div>
                 <div class="form-actions">
                     <a class="btn pull-left btn-link text-muted" onclick="goto_login()">返回登录</a>
-                    <input class="btn btn-primary" type="button" onclick="forget()" value="重置密码"
+                    <input class="btn btn-primary" type="submit" onclick="forget()" value="重置密码"
                            style="color:white;"/>
                 </div>
             </form>
@@ -171,8 +186,8 @@
 							<input name="email" class="input__field input__field--hideo" type="text" id="register-email"
                                   autocomplete="off" placeholder="QQ邮箱" maxlength="17"/>
 							<label class="input__label input__label--hideo" for="register-username">
-							    <i class="fa fa-fw fa-user icon icon--hideo"></i>
-							    <span class="input__label-content input__label-content--hideo"></span>
+                                <i class="fa-solid fa-envelope icon icon--hideo"></i>
+                                <span class="input__label-content input__label-content--hideo"></span>
 	    					</label>
                         </span>
                         <span class="input input--hideo">
@@ -201,8 +216,6 @@
                 <div class="form-actions">
                     <a class="btn pull-left btn-link text-muted" onclick="goto_login()">返回登录</a>
                     <input class="btn btn-primary" type="submit"  onclick="register()" value="注册" style="color:white;"/>
-                    <input class="btn btn-primary" type="submit"  onclick="qqemail()" value="邮箱注册" style="color:white;"/>
-
                 </div>
             </form>
         </div>
@@ -273,6 +286,11 @@
         });
     });
 
+    //验证码刷新方法
+    function yzm(){
+        $("#login-verify-code-canvas").click();
+    }
+
     function goto_register(){
         $("#register-username").val("");
         $("#register-email").val("");
@@ -285,13 +303,17 @@
     function goto_login(){
         $("#login-username").val("");
         $("#login-password").val("");
+        $("#login-verify-code").val("");
+        yzm();
         $("#tab-1").prop("checked",true);
     }
 
     function goto_forget(){
-        $("#forget-username").val("");
+        $("#forget-account").val("");
         $("#forget-password").val("");
-        $("#forget-code").val("");
+        $("#forget-email").val("");
+        $("#new-password").val("");
+        $("#new-repass").val("");
         $("#tab-3").prop("checked",true);
     }
 
@@ -411,6 +433,13 @@
                     }else if(data == 2){
                         spop({
                             template: '<h4 class="spop-title">账号不存在!</h4>',
+                            position: 'top-center',
+                            style: 'success',
+                            autoclose: 3000,
+                        });
+                    }else{
+                        spop({
+                            template: '<h4 class="spop-title">账号没有激活!</h4>',
                             position: 'top-center',
                             style: 'success',
                             autoclose: 3000,
@@ -574,9 +603,9 @@
                                 second--;
                             }, 1000);
                         },
-                        // onClose: function () {
-                        //     goto_login();
-                        // }
+                        onClose: function () {
+                            goto_login();
+                        }
                     });
                 } else {
                     if (data.account) {
@@ -612,15 +641,18 @@
 
     //重置密码
     function forget(){
-        var username = $("#forget-username").val(),
+        var username = $("#forget-account").val(),
             password = $("#forget-password").val(),
-            code = $("#forget-code").val(),
+            useremail = $("#forget-email").val(),
+            newpass = $("#new-password").val(),
+            newrepass = $("#new-repass").val(),
             flag = false,
             validatecode = null;
         //判断学号密码是否为空
+        //判断学号密码是否为空
         if(username == ""){
             $.pt({
-                target: $("#forget-username"),
+                target: $("#forget-account"),
                 position: 'r',
                 align: 't',
                 width: 'auto',
@@ -629,22 +661,11 @@
             });
             flag = true;
         }
-        if(password == ""){
-            $.pt({
-                target: $("#forget-password"),
-                position: 'r',
-                align: 't',
-                width: 'auto',
-                height: 'auto',
-                content:"密码不能为空"
-            });
-            flag = true;
-        }
         //学号只能是15位以下的字母或数字
         var regExp = /^20[0-1]{1}[0-6]{1}[0-9]{7}$/;
         if(!regExp.test(username)){
             $.pt({
-                target: $("#forget-username"),
+                target: $("#forget-account"),
                 position: 'r',
                 align: 't',
                 width: 'auto',
@@ -653,47 +674,113 @@
             });
             flag = true;
         }
-        //检查用户名是否存在
-        //调后台方法
+        if(!flag){
+            // 判断QQ邮箱是否正确 [1-9][0-9]{4,}@qq.com
+            var qqEmail = /[1-9][0-9]{4,}@qq.com/;
+            if(!qqEmail.test(useremail)){
+                $.pt({
+                    target: $("#forget-email"),
+                    position: 'r',
+                    align: 't',
+                    width: 'auto',
+                    height: 'auto',
+                    content:"请输入正确的QQ邮箱!"
+                });
+                flag = true;
+            }
+        }
 
-        //检查注册码是否正确
-        // if(code != '11111111'){
-        //     $.pt({
-        //         target: $("#forget-code"),
-        //         position: 'r',
-        //         align: 't',
-        //         width: 'auto',
-        //         height: 'auto',
-        //         content:"注册码不正确"
-        //     });
-        //     flag = true;
-        // }
-
-
-
+        if (!flag) {
+            if (password == "") {
+                $.pt({
+                    target: $("#forget-password"),
+                    position: 'r',
+                    align: 't',
+                    width: 'auto',
+                    height: 'auto',
+                    content: "密码不能为空"
+                });
+                flag = true;
+            } else if (newpass == "") {
+                $.pt({
+                    target: $("#new-password"),
+                    position: 'r',
+                    align: 't',
+                    width: 'auto',
+                    height: 'auto',
+                    content: "新密码不能为空"
+                });
+                flag = true;
+            } else if (newpass != newrepass) {
+                $.pt({
+                    target: $("#new-password"),
+                    position: 'r',
+                    align: 't',
+                    width: 'auto',
+                    height: 'auto',
+                    content: "两次输入的密码不一致"
+                });
+                flag = true;
+            }
+        }
+        if(!flag){
+            var repass = /^.{7,14}$/;
+            if(!repass.test(newpass)) {
+                $.pt({
+                    target: $("#new-password"),
+                    position: 'r',
+                    align: 't',
+                    width: 'auto',
+                    height: 'auto',
+                    content: "长度不在7-14之间"
+                });
+                flag = true;
+            }
+        }
         if(flag){
             return false;
         }else{//重置密码
-            spop({
-                template: '<h4 class="spop-title">重置密码成功</h4>即将于3秒后返回登录',
-                position: 'top-center',
-                style: 'success',
-                autoclose: 3000,
-                onOpen : function(){
-                    var second = 2;
-                    var showPop = setInterval(function(){
-                        if(second == 0){
-                            clearInterval(showPop);
+            //ajax异步请求
+            var str = $("#forgetForm").serialize()
+
+
+            $.post('/forget',{str:str,'_token':'{{csrf_token()}}'},function (data) {
+                if(data == 2){
+                    spop({
+                        template:"<h4 style='margin: 0 auto'' class='spop-title'>账号或邮箱不正确!</h4>",
+                        position: 'top-center',
+                        style: 'success',
+                        autoclose: 3000,
+                    });
+                }else if(data == 0){
+                    spop({
+                        template:"<h4 style='margin: 0 auto'' class='spop-title'>原密码错误!!</h4>",
+                        position: 'top-center',
+                        style: 'success',
+                        autoclose: 3000,
+                    });
+                }else if (data == 1){
+                    spop({
+                        template: '<h4 class="spop-title">重置密码成功</h4>即将于3秒后返回登录',
+                        position: 'top-center',
+                        style: 'success',
+                        autoclose: 3000,
+                        onOpen : function(){
+                            var second = 2;
+                            var showPop = setInterval(function(){
+                                if(second == 0){
+                                    clearInterval(showPop);
+                                }
+                                $('.spop-body').html('<h4 class="spop-title">重置密码成功</h4>即将于'+second+'秒后返回登录');
+                                second--;
+                            },1000);
+                        },
+                        onClose : function(){
+                            goto_login();
                         }
-                        $('.spop-body').html('<h4 class="spop-title">重置密码成功</h4>即将于'+second+'秒后返回登录');
-                        second--;
-                    },1000);
-                },
-                onClose : function(){
-                    goto_login();
+                    });
                 }
             });
-            return false;
         }
     }
 </script>

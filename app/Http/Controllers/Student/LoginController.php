@@ -26,6 +26,11 @@ class LoginController extends Controller
         $acc = DB::table('student')->where('account', $arr['account'])->exists();
         if ($acc) {
             $account = DB::table('student')->where('account', $arr['account'])->first();
+            //验证是否邮箱激活
+            if($account->is_verification == 0){
+                return 3;
+            }
+            //验证密码是否正确
             if (Hash::check($arr['password'], $account->password)) {
                 // 密码匹配
                 //记录登陆时间

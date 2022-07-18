@@ -7,7 +7,14 @@
     }
 </style>
 <div class="main">
-    验证成功!{{$email}},<span id="time">3</span>秒后跳转至登录页面
+    @if(!isset($verify))
+        已经被验证!{{$email}},<span id="time">3</span>秒后跳转至登录页面
+
+    @else
+        验证成功!{{$email}},<span id="time">3</span>秒后跳转至登录页面
+
+    @endif
+
 </div>
 <script>
 

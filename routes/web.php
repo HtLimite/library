@@ -32,6 +32,9 @@ Route::get('/verify','Student\EmailController@verify');
 //登录
 Route::post('/log','Student\LoginController@store');
 
+//忘记密码
+Route::post('/forget','Student\ForgetController@store');
+
 Route::group(['namespace' => 'Student','prefix' => 'student','middleware' => 'studentLogin'],function (){
 
 //    学生信息页面
