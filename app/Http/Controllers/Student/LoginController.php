@@ -11,7 +11,12 @@ use Illuminate\Support\Facades\Hash;
 class LoginController extends Controller
 {
     //登陆页面
-    public function index(){
+    public function index(Request $request){
+        //判断是否已经登录
+        if($request->session()->has('account')){
+
+            return redirect('/student/index');
+        }
         return view('student.login');
     }
     //登录验证

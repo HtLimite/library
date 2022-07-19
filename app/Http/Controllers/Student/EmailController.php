@@ -62,6 +62,8 @@ class EmailController extends Controller
                 }
                 return view('student.verify', ['email' => $user->email]);
             } else{
+                //时间过期,账号注册清理记录
+                DB::table('student')->where('id',$user->id)->delete();
                 $str = "<div style='height: 100vh;line-height: 100vh;text-align: center;'>验证时间已过期!</div>";
                 echo $str;
             }
