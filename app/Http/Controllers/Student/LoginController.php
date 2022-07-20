@@ -15,7 +15,7 @@ class LoginController extends Controller
         //判断是否已经登录
         if($request->session()->has('account')){
 
-            return redirect('/student/index');
+//            return redirect('/student/index');
         }
         return view('student.login');
     }

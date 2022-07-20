@@ -16,7 +16,8 @@ class DisplayController extends Controller
      */
     public function index()
     {
-        //
+        //图前台页面
+        return view('student.index');
     }
 
     /**

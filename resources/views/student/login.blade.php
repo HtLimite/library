@@ -458,7 +458,7 @@
                             autoclose: 1000,
                         });
                         setTimeout(() => {
-                            window.location.replace('/student/index');
+                            window.location.replace('/student/css');
                         }, 1000);
                     } else if (data == 0) {
                         spop({
@@ -497,7 +497,13 @@
                 message = "<h4 style='margin: 0 auto'' class='spop-title'>" + data.email + "</h4>";
             }
             if (data.code == 1) {
-                message = "<h4 style='margin: 0 auto'' class='spop-title'>已发送至您的邮箱,请注意查收</h4>";
+                spop({
+                    template: "<h4 style='margin: 0 auto'' class='spop-title'>已发送至您的邮箱,请注意查收</h4>",
+                    position: 'top-center',
+                    style: 'error',
+                    autoclose: 3000,
+                });
+"<h4 style='margin: 0 auto'' class='spop-title'>已发送至您的邮箱,请注意查收</h4>";
             }
             if (data.code == 0) {
                 message = "<h4 style='margin: 0 auto'' class='spop-title'>邮箱注册失败,请重试!</h4>";
@@ -505,7 +511,7 @@
             spop({
                 template: message,
                 position: 'top-center',
-                style: 'success',
+                style: 'error',
                 autoclose: 3000,
             });
         });
@@ -617,7 +623,7 @@
             spop({
                 template: '<h4 class="spop-title">正在发送邮件中...</h4>',
                 position: 'top-center',
-                style: 'success',
+                style: 'info',
                 autoclose: 3000,
             });
             // ajax提交到下一个页面
@@ -661,7 +667,7 @@
                     spop({
                         template: message,
                         position: 'top-center',
-                        style: 'success',
+                        style: 'error',
                         autoclose: 3000,
                     });
                 }
@@ -670,7 +676,7 @@
             spop({
                 template: "<h4 style='margin: 0 auto'' class='spop-title'>请一分钟后再试!</h4>",
                 position: 'top-center',
-                style: 'success',
+                style: 'warning',
                 autoclose: 3000,
             });
         }
@@ -786,14 +792,14 @@
                     spop({
                         template: "<h4 style='margin: 0 auto'' class='spop-title'>账号或邮箱不正确!</h4>",
                         position: 'top-center',
-                        style: 'success',
+                        style: 'warning',
                         autoclose: 3000,
                     });
                 } else if (data == 0) {
                     spop({
                         template: "<h4 style='margin: 0 auto'' class='spop-title'>原密码错误!!</h4>",
                         position: 'top-center',
-                        style: 'success',
+                        style: 'error',
                         autoclose: 3000,
                     });
                 } else if (data == 1) {
