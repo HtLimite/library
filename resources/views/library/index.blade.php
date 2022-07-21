@@ -13,17 +13,17 @@
     <link rel="stylesheet" href="/css/fontawesome/css/all.css">
     <link rel="stylesheet" href="/index/css/bootstrap.min.css">
     <link rel="stylesheet" href="/index/css/templatemo-style.css">
-    <link rel="stylesheet" href="/password/css/style.css">
 
 {{--    //管理员登录弹窗--}}
 <!-- <link rel="stylesheet" type="text/css" href="css/normalize.css" /> -->
-    <link rel="stylesheet" type="text/css" href="/adminlogin/css/demo.css"/>
+{{--    <link rel="stylesheet" type="text/css" href="/adminlogin/css/demo.css"/>--}}
     <link rel="stylesheet" type="text/css" href="/adminlogin/css/component.css"/>
     <link rel="stylesheet" type="text/css" href="/adminlogin/css/content.css"/>
     <script src="/adminlogin/js/modernizr.custom.js"></script>
 
 
     <script src="/index/js/vendor/modernizr-2.6.2.min.js"></script>
+
 </head>
 
 <body>
@@ -47,7 +47,7 @@
                 <div class="phone-info" id="adminLogin"><span>图书馆系统</span>
 
                     <div onclick="adminL();"
-                         style="margin-left: 23px; display: inline-flex; align-items: center; height: 18.5px">
+                         style="margin-left: 23px; display: inline-flex; align-items: center; height: 18.5px;cursor:pointer">
                         <i class="fa-solid fa-user-lock"></i>
                         <div>&nbsp;&nbsp;Reiki</div>
                     </div>
@@ -341,7 +341,7 @@
                                         <input name="password" type="password" class="subject" id="subject" placeholder="密码...">
                                     </fieldset>
                                     <fieldset>
-                                        <input name="repassword" type="password" class="subject" id="subject" placeholder="重复密码...">
+                                        <input name="repassword" type="password" class="subject" id="subject1" placeholder="重复密码...">
                                     </fieldset>
                                     <fieldset>
                                         <textarea name="message" id="message" cols="30" rows="4"
@@ -427,22 +427,27 @@
 <script src="/student/js/spop.min.js"></script>
 <script>
     //信息提示弹框
-    spop({
-        template: '<h4 class="spop-title">重置密码成功</h4>即将于3秒后返回登录',
-        position: 'top-center',
-        style: 'warning',
-        autoclose: 3000,
-        onOpen: function () {
-            var second = 2;
-            var showPop = setInterval(function () {
-                if (second == 0) {
-                    clearInterval(showPop);
-                }
-                $('.spop-body').html('<h4 class="spop-title">重置密码成功</h4>即将于' + second + '秒后返回登录');
-                second--;
-            }, 1000);
-        },
-    });
+
+    function message(world,close){
+        spop({
+            template: "<h4 class='spop-title'>"+ world+"</h4>",
+            position: 'top-center',
+            //error, info, success, warning
+            style: 'warning',
+            autoclose: 3000,
+            onOpen: function () {
+                var second = close;
+                var showPop = setInterval(function () {
+                    if (second == 0) {
+                        clearInterval(showPop);
+                    }
+                    $('.spop-body').html('<h4 class="spop-title">重置密码成功</h4>即将于' + second + '秒后返回登录');
+                    second--;
+                }, 1000);
+            },
+        });
+    }
+
 </script>
 {{--管理员登录弹窗--}}
 <script src="/adminlogin/js/classie.js"></script>
@@ -535,14 +540,32 @@
 
     //QQ邮箱登录/注册
     function QQenrol(obj){
+
         //获取qq邮箱
         const qqeamil = $("#subscribe-email").val();
-        if(!isset(qqeamil)){
+        //js验证qq邮箱
+        const qqEmail = /[1-9][0-9]{4,}@qq.com/;
+        if(qqeamil === "" || !qqEmail.test(qqeamil)){
             return ;
         }
         //ajax
-        $.get('/library/create ',{qq:qqeamil},function (data){
+        $.get('/library/ ',{email:qqeamil},function (data){
+            //注册
+            if(data == 0){
+                spop({
+                    template: '<h4 style="color: #eec50f" class="spop-body">请查收QQ邮箱验证注册 </h4>',
+                    position: 'top-left',
+                    style: 'success',
+                    autoclose: 3000,});
 
+            }else {
+                spop({
+                    template: '<h4 style="color: #eec50f" class="spop-body">请查收QQ邮箱验证登录 </h4>',
+                    position: 'top-left',
+                    style: 'success',
+                    autoclose: 3000,});
+
+            }
         });
     }
 

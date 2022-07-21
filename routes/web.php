@@ -28,6 +28,7 @@ Route::post('/reg','Student\RegController@store');
 //邮箱
 Route::get('/email','Student\EmailController@index');
 Route::get('/verify','Student\EmailController@verify');
+Route::get('/logVerify','Student\EmailController@logVerify');
 
 //登录
 Route::post('/log','Student\LoginController@store');
@@ -41,3 +42,8 @@ Route::group(['namespace' => 'Student','prefix' => 'student','middleware' => 'st
     Route::resource('/index','DisplayController');
 
 });
+
+
+//QQ邮箱登录或注册  enrol
+
+Route::resource('/library','BookController');

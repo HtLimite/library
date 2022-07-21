@@ -51,7 +51,7 @@ class RegController extends Controller
             //调用邮件类
             $qqEmail = new EmailController();
             //调用邮件类,发送邮件方法
-            $emailResult = $qqEmail->index($arr['email']);
+            $emailResult = $qqEmail->index($arr['email'],"student.send-email",0);
             if($emailResult['code'] == 1){
                 //邮箱发送成功 3
                 $emailStatus = array('email' => 1);

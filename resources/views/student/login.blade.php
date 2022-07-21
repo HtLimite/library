@@ -458,7 +458,7 @@
                             autoclose: 1000,
                         });
                         setTimeout(() => {
-                            window.location.replace('/student/css');
+                            window.location.replace('/student/index');
                         }, 1000);
                     } else if (data == 0) {
                         spop({
