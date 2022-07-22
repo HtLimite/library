@@ -25,7 +25,7 @@
 }
 
 .spop--top-center {
-    top: 0;
+    top: 6%;
     left: 50%;
     -webkit-transform: translateX(-50%);
     -ms-transform: translateX(-50%);

@@ -16,8 +16,14 @@ class BookController extends Controller
 
     //| GET|HEAD  | library                    | library.index 首页方法
     public function index(){
-
+        //首页
         return view('library.index');
+    }
+
+    //exit 退出方法
+    public function exit(Request $request){
+        $request->session()->flush();
+        return redirect('/book');
     }
 
 
@@ -53,14 +59,24 @@ class BookController extends Controller
             //存入数据库
             $user->email = $Email['email'];
             $user->save();
-            return 0;
+            //存入session
+            session(['email'=> $Email['email']]);
+            return 2;
 
         }else{
             //登录
+            //限制登录时间间隔
+            $logtime = $user->where('email',$Email['email'])->first();
+            if( time() - $logtime->log < 30){
+                //登陆时间小于30s 返回 3
+                return 3;
+            }
             $regEmail = new EmailController();
             $regEmail->index($Email['email'],"library.email",1);
 
+
             DB::table('student')->where('email',$Email['email'])->update(['log'=>time()]);
+            session(['email'=> $Email['email']]);
             return 1;
         }
     }
@@ -70,5 +86,9 @@ class BookController extends Controller
 
 
     //| DELETE    | library/{library}          | library.destroy
+    public function destroy(Request $request){
+        $request->session()->flush();
+        redirect('/book');
+    }
     // | GET|HEAD  | library/{library}/edit     | library.edit
 }

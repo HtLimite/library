@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="/index/css/bootstrap.min.css">
     <link rel="stylesheet" href="/index/css/templatemo-style.css">
 
-{{--    //管理员登录弹窗--}}
+    {{--    //管理员登录弹窗--}}
 <!-- <link rel="stylesheet" type="text/css" href="css/normalize.css" /> -->
-{{--    <link rel="stylesheet" type="text/css" href="/adminlogin/css/demo.css"/>--}}
+    {{--    <link rel="stylesheet" type="text/css" href="/adminlogin/css/demo.css"/>--}}
     <link rel="stylesheet" type="text/css" href="/adminlogin/css/component.css"/>
     <link rel="stylesheet" type="text/css" href="/adminlogin/css/content.css"/>
     <script src="/adminlogin/js/modernizr.custom.js"></script>
@@ -57,14 +57,18 @@
                                 <button type="button" id="adminButton" style="opacity: 0;">
                                     Login
                                 </button>
-                                <div class="morph-content">
+                                <div class="morph-content" style="background: #5b938b;">
                                     <div>
                                         <div class="content-style-form content-style-form-1">
                                             <span class="icon icon-close">Close the dialog</span>
                                             <h2 style="font-size: 37px;">管理员</h2>
                                             <form>
-                                                <p  style="position: relative"><label> <i class="fa-solid fa-user"></i></label><input type="text" /></p>
-                                                <p style="position: relative"><label><i class="fa-solid fa-lock"></i></label><input type="password"/></p>
+                                                <p style="position: relative"><label> <i
+                                                            class="fa-solid fa-user"></i></label><input type="text"/>
+                                                </p>
+                                                <p style="position: relative"><label><i
+                                                            class="fa-solid fa-lock"></i></label><input
+                                                        type="password"/></p>
                                                 <p>
                                                     <button>登录</button>
                                                 </p>
@@ -97,7 +101,7 @@
                             <a href="#" class="fa fa-dribbble"></a>
                         </li>
                         <li>
-                            <a href="#" class="fa fa-rss"></a>
+                            <a href="/exit"  class="fa-solid fa-arrow-right-from-bracket"></a>
                         </li>
                     </ul>
                 </div>
@@ -114,7 +118,7 @@
     <div class="show-menu">
         <ul class="main-menu">
             <li>
-                <a class="show-1 active homebutton" href="#"><i class="fa fa-home"></i>登录</a>
+                <a class="show-1 active homebutton" href="#"><i class="fa fa-home"></i>首页</a>
             </li>
             <li>
                 <a class="show-2 aboutbutton" href="#"><i class="fa fa-user"></i>我的</a>
@@ -149,19 +153,26 @@
                                 class="green">mo</span>.com website. You can download, edit and use this layout for any
                             purpose. Please tell your friends about our
                             website. Thank you.</p>
-                        <form  onsubmit="return false;" class="subscribe-form">
-                            <div class="row">
-                                <fieldset class="col-md-offset-2 col-md-6">
-                                    <input name="QQemail" type="email" class="email" id="subscribe-email"
-                                           placeholder="QQ Email" required maxlength="17">
-                                </fieldset>
-                                <fieldset class="col-md-4 button-holder">
-                                    <input name="submit" type="submit" onclick="QQenrol(this);" class="button default" id="submit"
-                                           value="登录" >
-                                </fieldset>
-                            </div>
-                            <p class="subscribe-text">请输入您的QQ邮箱登录,若没有账号则为<strong>注册!</strong></p>
-                        </form>
+                        @if(!session()->has('email'))
+                            <script> var statu = false;</script>
+                        @csrf
+                            <form id="logForm" onsubmit="return false;" class="subscribe-form" >
+                                <div class="row">
+                                    <fieldset class="col-md-offset-2 col-md-6">
+                                        <input name="QQemail" type="email" class="email" id="subscribe-email"
+                                               placeholder="QQ Email" required maxlength="17">
+                                    </fieldset>
+                                    <fieldset class="col-md-4 button-holder">
+                                        <input name="submit" type="submit" readonly onclick="QQenrol(this);" class="button default tada" id="submit"
+                                               value="登录" ></input>
+                                    </fieldset>
+                                </div>
+                                <p class="subscribe-text">请输入您的QQ邮箱登录,若没有账号则为<strong>注册!</strong></p>
+                            </form>
+                        @else
+                            <script> var statu = true;</script>
+                        @endif
+
                     </div>
                 </div>
 
@@ -335,77 +346,79 @@
                                         <input name="account" type="text" class="name" id="name" placeholder="学号...">
                                     </fieldset>
                                     <fieldset>
+//endregion
 {{--                                        <input name="email" type="email" class="email" id="email" placeholder="QQEmail...">--}}
-                                    </fieldset>
-                                    <fieldset>
-                                        <input name="password" type="password" class="subject" id="subject" placeholder="密码...">
-                                    </fieldset>
-                                    <fieldset>
-                                        <input name="repassword" type="password" class="subject" id="subject1" placeholder="重复密码...">
-                                    </fieldset>
-                                    <fieldset>
+                        </fieldset>
+                        <fieldset>
+                            <input name="password" type="password" class="subject" id="subject" placeholder="密码...">
+                        </fieldset>
+                        <fieldset>
+                            <input name="repassword" type="password" class="subject" id="subject1"
+                                   placeholder="重复密码...">
+                        </fieldset>
+                        <fieldset>
                                         <textarea name="message" id="message" cols="30" rows="4"
                                                   placeholder="Message.."></textarea>
-                                    </fieldset>
-                                    <fieldset>
-                                        <input  type="submit" class="button" onclick="enrol(this);" id="button" value="认证账号">
-                                    </fieldset>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-4">
-                            <div class="box-content">
-                                <h3 class="widget-title">Stay In Touch</h3>
-                                <p>Sed ullamcorper, risus a tincidunt efficitur, massa mauris ultricies leo, eu interdum
-                                    eros erat non augue. <br><br> Suspendisse ornare sollicitudin lectus non egestas.
-                                    Nam fermentum imperdiet ligula congue venenatis.
-                                </p>
-                                <div class="about-social">
-                                    <ul>
-                                        <li>
-                                            <a href="#" class="fa fa-facebook"></a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="fa fa-twitter"></a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="fa fa-linkedin"></a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="fa fa-dribbble"></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <input type="submit" class="button" onclick="enrol(this);" id="button" value="认证账号">
+                        </fieldset>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <div class="box-content">
+                        <h3 class="widget-title">Stay In Touch</h3>
+                        <p>Sed ullamcorper, risus a tincidunt efficitur, massa mauris ultricies leo, eu interdum
+                            eros erat non augue. <br><br> Suspendisse ornare sollicitudin lectus non egestas.
+                            Nam fermentum imperdiet ligula congue venenatis.
+                        </p>
+                        <div class="about-social">
+                            <ul>
+                                <li>
+                                    <a href="#" class="fa fa-facebook"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="fa fa-twitter"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="fa fa-linkedin"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="fa fa-dribbble"></a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
-
-        <div class="col-md-3 hidden-sm">
-
-            <nav id="nav" class="main-navigation hidden-xs hidden-sm">
-                <ul class="main-menu">
-                    <li>
-                        <a class="show-1 active homebutton" href="#"><i class="fa fa-home"></i>登录</a>
-                    </li>
-                    <li>
-                        <a class="show-2 aboutbutton" href="#"><i class="fa fa-user"></i>我的</a>
-                    </li>
-                    <li>
-                        <a class="show-3 projectbutton" href="#"><i class="fa-solid fa-swatchbook"></i>预约</a>
-                    </li>
-                    <li>
-                        <a class="show-5 contactbutton" href="#"><i class="fa-brands fa-uniregistry"></i>认证</a>
-                    </li>
-                </ul>
-            </nav>
-
-        </div>
     </div>
+</div>
+
+
+<div class="col-md-3 hidden-sm">
+
+    <nav id="nav" class="main-navigation hidden-xs hidden-sm">
+        <ul class="main-menu">
+            <li>
+                <a class="show-1 active homebutton" href="#"><i class="fa fa-home"></i>首页</a>
+            </li>
+            <li>
+                <a class="show-2 aboutbutton" href="#"><i class="fa fa-user"></i>我的</a>
+            </li>
+            <li>
+                <a class="show-3 projectbutton" href="#"><i class="fa-solid fa-swatchbook"></i>预约</a>
+            </li>
+            <li>
+                <a class="show-5 contactbutton" href="#"><i class="fa-brands fa-uniregistry"></i>认证</a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+</div>
 </div>
 
 <!-- SITE-FOOTER -->
@@ -427,10 +440,9 @@
 <script src="/student/js/spop.min.js"></script>
 <script>
     //信息提示弹框
-
-    function message(world,close){
+    function message(world, close) {
         spop({
-            template: "<h4 class='spop-title'>"+ world+"</h4>",
+            template: "<h4 class='spop-title'>" + world + "</h4>",
             position: 'top-center',
             //error, info, success, warning
             style: 'warning',
@@ -446,6 +458,30 @@
                 }, 1000);
             },
         });
+    }
+    //判断是否登录
+    //调用一次
+    window.onload = function (){
+        var onece = true;
+        if (onece){
+            if(statu){
+                spop({
+                    template: '<h4 style="color: #207d59" class="spop-body">欢迎您的登录</h4>',
+                    position: 'top-center',
+                    style: 'success',
+                    autoclose: 1500,});
+
+            }else{
+                spop({
+                    template: '<h4 style="color: #207d59" class="spop-body">您未登录</h4>',
+                    position: 'top-center',
+                    style: 'info',
+                    autoclose: 2000,});
+            }
+            onece = false;
+        }else {
+            return;
+        }
     }
 
 </script>
@@ -532,44 +568,56 @@
     }
 
     //认证账号ajax
-    function enrol(obj){
+    function enrol(obj) {
         //表单序列化
         var str = $("enrolForm").serialize();
-        console.log(obj,str);
+        console.log(obj, str);
     }
 
     //QQ邮箱登录/注册
-    function QQenrol(obj){
+    function QQenrol(obj) {
 
         //获取qq邮箱
         const qqeamil = $("#subscribe-email").val();
         //js验证qq邮箱
         const qqEmail = /[1-9][0-9]{4,}@qq.com/;
-        if(qqeamil === "" || !qqEmail.test(qqeamil)){
-            return ;
+        if (qqeamil === "" || !qqEmail.test(qqeamil)) {
+            return;
         }
         //ajax
-        $.get('/library/ ',{email:qqeamil},function (data){
-            //注册
-            if(data == 0){
+        $.get('/library/ ', {email: qqeamil}, function (data) {
+            //注册 2
+            if (data == 2) {
                 spop({
                     template: '<h4 style="color: #eec50f" class="spop-body">请查收QQ邮箱验证注册 </h4>',
                     position: 'top-left',
                     style: 'success',
-                    autoclose: 3000,});
+                    autoclose: 3000,
+                });
 
-            }else {
+            } else if(data == 1){
+                //登录 1
                 spop({
                     template: '<h4 style="color: #eec50f" class="spop-body">请查收QQ邮箱验证登录 </h4>',
                     position: 'top-left',
                     style: 'success',
-                    autoclose: 3000,});
-
+                    autoclose: 3000,
+                });
+            }else if(data == 3){
+                spop({
+                    template: '<h4 style="color: #b85b53" class="spop-body">失败!登录太频繁,请30s后重试 </h4>',
+                    position: 'top-left',
+                    style: 'warning',
+                    autoclose: 3000,
+                });
             }
         });
     }
 
+
+
 </script>
+
 
 </body>
 

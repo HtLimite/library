@@ -19,7 +19,6 @@ class EmailController extends Controller
     //发送qq邮箱 qq邮箱 邮箱模板 状态(登录/注册)
     public function index($email1, $view, $status): array
     {
-        static $code ;
         $email = $email1;
         //$this->code = rand(0000000, 9999999);
         $code = md5(time());

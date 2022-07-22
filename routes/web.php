@@ -17,33 +17,46 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@css')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
 
 
-//学生登陆页面
-Route::get('/','Student\LoginController@index');
+////学生登陆页面
+//Route::get('/','Student\LoginController@index');
+//
+////注册
+//Route::post('/reg','Student\RegController@store');
+////邮箱
+//Route::get('/email','Student\EmailController@index');
+//Route::get('/verify','Student\EmailController@verify');
+//
+////登录
+//Route::post('/log','Student\LoginController@store');
+//
+////忘记密码
+//Route::post('/forget','Student\ForgetController@store');
+//
+//Route::group(['namespace' => 'Student','prefix' => 'student','middleware' => 'studentLogin'],function (){
+//
+////    学生信息页面
+//    Route::resource('/index','DisplayController');
+//
+//});
 
-//注册
-Route::post('/reg','Student\RegController@store');
-//邮箱
-Route::get('/email','Student\EmailController@index');
-Route::get('/verify','Student\EmailController@verify');
+
+//首页
+Route::get('/book','LibraryController@index');
+
+//QQ邮箱登录或注册
+Route::resource('/library','BookController');
+//退出登录
+Route::get('/exit','BookController@exit');
+
+//QQ邮箱验证
 Route::get('/logVerify','Student\EmailController@logVerify');
 
-//登录
-Route::post('/log','Student\LoginController@store');
 
-//忘记密码
-Route::post('/forget','Student\ForgetController@store');
 
-Route::group(['namespace' => 'Student','prefix' => 'student','middleware' => 'studentLogin'],function (){
-
-//    学生信息页面
-    Route::resource('/index','DisplayController');
+//图书资源
+Route::group(['middleware' => 'Library'],function (){
 
 });
-
-
-//QQ邮箱登录或注册  enrol
-
-Route::resource('/library','BookController');
