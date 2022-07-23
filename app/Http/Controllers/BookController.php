@@ -9,40 +9,9 @@ use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
-    // | POST      | library                    | library.store
-
-
-
-
-    //| GET|HEAD  | library                    | library.index 首页方法
-    public function index(){
-        //首页
-        return view('library.index');
-    }
-
-    //exit 退出方法
-    public function exit(Request $request){
-        $request->session()->flush();
-        return redirect('/book');
-    }
-
-
-    // GET|HEAD  | library/create             | library.create
-    public function create(Request $request){
-        $email = $request->all();
-        dd($email);
-    }
-
-
-
-
-    // | PUT|PATCH | library/{library}          | library.update
-
-
-
-
-    // | GET|HEAD  | library/{library}          | library.show 登录注册
-    public function show(Request $request){
+    // | POST      | library                    | library.store 登录注册
+    public function store(Request $request): int
+    {
         //获取qq邮箱
         $Email = $request->all();
         //查询是否存在邮箱
@@ -81,14 +50,47 @@ class BookController extends Controller
         }
     }
 
+    //| GET|HEAD  | library                    | library.index 首页方法
+    public function index(){
+        //首页
+        //登录用户展示座位信息
+        $seatIfo = DB::table('seat')->paginate(20);
+        return view('library.index',['seatInfo' => $seatIfo]);
+    }
+
+    //exit 退出登录方法
+    public function exit(Request $request){
+        $request->session()->flush();
+        return redirect('/library');
+    }
+
+    // GET|HEAD  | library/create             | library.create
+    public function create(Request $request){
+
+    }
+
+
+
+
+    // | PUT|PATCH | library/{library}          | library.update
+
+
+
+
+    // | GET|HEAD  | library/{library}          | library.show  座位展示
+    public function show(Request $request){
+        $statu = $request->get('statu');
+        $seatIfo = DB::table('seat')->paginate(10);
+        return view('library.index',['seatInfo' => $seatIfo]);
+    }
+
 
 
 
 
     //| DELETE    | library/{library}          | library.destroy
     public function destroy(Request $request){
-        $request->session()->flush();
-        redirect('/book');
+
     }
     // | GET|HEAD  | library/{library}/edit     | library.edit
 }

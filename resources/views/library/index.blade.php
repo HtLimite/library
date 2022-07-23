@@ -14,6 +14,11 @@
     <link rel="stylesheet" href="/index/css/bootstrap.min.css">
     <link rel="stylesheet" href="/index/css/templatemo-style.css">
 
+{{--    悬浮提示信息--}}
+    <link rel="stylesheet" href="/index/css/test.css">
+    <script src="/student/js/jquery-3.2.1.min.js"></script>
+    <script src="/index/js/test.js" type="text/javascript"></script>
+
     {{--    //管理员登录弹窗--}}
 <!-- <link rel="stylesheet" type="text/css" href="css/normalize.css" /> -->
     {{--    <link rel="stylesheet" type="text/css" href="/adminlogin/css/demo.css"/>--}}
@@ -46,7 +51,7 @@
                 {{--                </p>                --}}
                 <div class="phone-info" id="adminLogin"><span>图书馆系统</span>
 
-                    <div onclick="adminL();"
+                    <div id="adminL" onclick="adminL();"
                          style="margin-left: 23px; display: inline-flex; align-items: center; height: 18.5px;cursor:pointer">
                         <i class="fa-solid fa-user-lock"></i>
                         <div>&nbsp;&nbsp;Reiki</div>
@@ -100,9 +105,12 @@
                         <li>
                             <a href="#" class="fa fa-dribbble"></a>
                         </li>
-                        <li>
-                            <a href="/exit"  class="fa-solid fa-arrow-right-from-bracket"></a>
-                        </li>
+                        @if(session()->has('email'))
+                            <li>
+                                <a href="/exit"  id="exitLogin" class="fa-solid fa-arrow-right-from-bracket"></a>
+                            </li>
+                        @else
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -142,7 +150,7 @@
             <div id="menu-container">
 
                 <div class="logo-holder logo-top-margin">
-                    <a href="javascript:;" class="site-brand"><img src="/index/images/logo.png" alt=""></a>
+                    <a href="javascript:;" class="site-brand"><img onclick="logo();" id="myInfo" src="/index/images/logo.png" alt=""></a>
                 </div>
 
 
@@ -157,6 +165,7 @@
                             <script> var statu = false;</script>
                         @csrf
                             <form id="logForm" onsubmit="return false;" class="subscribe-form" >
+                                @csrf
                                 <div class="row">
                                     <fieldset class="col-md-offset-2 col-md-6">
                                         <input name="QQemail" type="email" class="email" id="subscribe-email"
@@ -276,14 +285,18 @@
                     <div class="box-content">
                         <h3 class="widget-title">Past Projects</h3>
                         <div class="row">
+                            @foreach($seatInfo as $info)
+
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="project-item">
                                     <img src="/index/images/1.jpg" alt="">
+                                    {{$info->id}}
                                     <div class="project-hover">
-                                        <h4>Great Nature Capture</h4>
+                                        <h4>{{ $info->name }}</h4>
                                     </div>
                                 </div>
                             </div>
+                            @endforeach
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="project-item">
                                     <img src="/index/images/2.jpg" alt="">
@@ -325,14 +338,22 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="project-pages">
-                            <ul>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">...</a></li>
-                            </ul>
+
+
+                        <div class="container">
+                            @foreach ($seatInfo as $info)
+                            @endforeach
                         </div>
+
+                        {{ $seatInfo->links() }}
+{{--                        <div class="project-pages">--}}
+{{--                            <ul>--}}
+{{--                                <li><a href="#">1</a></li>--}}
+{{--                                <li><a href="#">2</a></li>--}}
+{{--                                <li><a href="#">3</a></li>--}}
+{{--                                <li><a href="#">...</a></li>--}}
+{{--                            </ul>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
 
@@ -398,7 +419,7 @@
 </div>
 
 
-<div class="col-md-3 hidden-sm">
+<div class="col-md-3 hidden-sm" >
 
     <nav id="nav" class="main-navigation hidden-xs hidden-sm">
         <ul class="main-menu">
@@ -406,10 +427,10 @@
                 <a class="show-1 active homebutton" href="#"><i class="fa fa-home"></i>首页</a>
             </li>
             <li>
-                <a class="show-2 aboutbutton" href="#"><i class="fa fa-user"></i>我的</a>
+                <a id="shouye"  class="show-2 aboutbutton" href="#"><i class="fa fa-user"></i>我的</a>
             </li>
             <li>
-                <a class="show-3 projectbutton" href="#"><i class="fa-solid fa-swatchbook"></i>预约</a>
+                <a class="show-3 projectbutton" href="#" onclick="seat();"><i class="fa-solid fa-swatchbook"></i>预约</a>
             </li>
             <li>
                 <a class="show-5 contactbutton" href="#"><i class="fa-brands fa-uniregistry"></i>认证</a>
@@ -473,7 +494,7 @@
 
             }else{
                 spop({
-                    template: '<h4 style="color: #207d59" class="spop-body">您未登录</h4>',
+                    template: '<h4 style="color: #a5fed7" class="spop-body">您未登录</h4>',
                     position: 'top-center',
                     style: 'info',
                     autoclose: 2000,});
@@ -482,6 +503,33 @@
         }else {
             return;
         }
+    }
+    //座位展示
+    //监控浏览器屏幕大小
+    $(window).resize(function(){
+        if($(window).width() < 992) {
+            $(".col-md-4").css("width", "25%");
+        }else {
+            $(".col-md-4").css("width","20%");
+        }
+    });
+    //座位展示点击函数
+    function seat(){
+        $("#nav").hide();
+        $(".col-md-9").css("width","100%");
+        $(".col-md-4").css("width", "20%");
+        //ajax 展示 statu 登录状态 bool
+        $.get('library/{library}',{'statu': statu},function (data){
+
+        });
+
+    }
+    //LOGO
+    function logo(){
+        $("#shouye").click();
+        $("#nav").css("display","block");
+        $(".col-md-9").css("width","75%");
+        $(".col-md-4").css("width", "33.33333333%");
     }
 
 </script>
@@ -585,7 +633,7 @@
             return;
         }
         //ajax
-        $.get('/library/ ', {email: qqeamil}, function (data) {
+        $.post('/library ', {email: qqeamil,'_token':'{{csrf_token()}}'}, function (data) {
             //注册 2
             if (data == 2) {
                 spop({

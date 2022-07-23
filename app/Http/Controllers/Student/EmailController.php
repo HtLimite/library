@@ -95,7 +95,7 @@ class EmailController extends Controller
         //是否为有效链接
         if ($code === $result['code']) {
             //注册成功
-            return view('/library.index')->with('status', 1);
+            return redirect('/library');
         } else {
             $this->failed("警告!非法访问,不要试图挑战图书馆权威!");
         }

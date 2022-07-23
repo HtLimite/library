@@ -43,9 +43,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 //});
 
 
-//首页
-Route::get('/book','LibraryController@index');
-
 //QQ邮箱登录或注册
 Route::resource('/library','BookController');
 //退出登录
