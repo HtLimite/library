@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="/index/css/bootstrap.min.css">
     <link rel="stylesheet" href="/index/css/templatemo-style.css">
 
-{{--    悬浮提示信息--}}
+    {{--    悬浮提示信息--}}
     <link rel="stylesheet" href="/index/css/test.css">
     <script src="/student/js/jquery-3.2.1.min.js"></script>
     <script src="/index/js/test.js" type="text/javascript"></script>
@@ -107,7 +107,7 @@
                         </li>
                         @if(session()->has('email'))
                             <li>
-                                <a href="/exit"  id="exitLogin" class="fa-solid fa-arrow-right-from-bracket"></a>
+                                <a href="/exit" id="exitLogin" class="fa-solid fa-arrow-right-from-bracket"></a>
                             </li>
                         @else
                         @endif
@@ -150,7 +150,8 @@
             <div id="menu-container">
 
                 <div class="logo-holder logo-top-margin">
-                    <a href="javascript:;" class="site-brand"><img onclick="logo();" id="myInfo" src="/index/images/logo.png" alt=""></a>
+                    <a href="javascript:;" class="site-brand"><img onclick="logo();" id="myInfo"
+                                                                   src="/index/images/logo.png" alt=""></a>
                 </div>
 
 
@@ -163,8 +164,8 @@
                             website. Thank you.</p>
                         @if(!session()->has('email'))
                             <script> var statu = false;</script>
-                        @csrf
-                            <form id="logForm" onsubmit="return false;" class="subscribe-form" >
+
+                            <form id="logForm" onsubmit="return false;" class="subscribe-form">
                                 @csrf
                                 <div class="row">
                                     <fieldset class="col-md-offset-2 col-md-6">
@@ -172,8 +173,9 @@
                                                placeholder="QQ Email" required maxlength="17">
                                     </fieldset>
                                     <fieldset class="col-md-4 button-holder">
-                                        <input name="submit" type="submit" readonly onclick="QQenrol(this);" class="button default tada" id="submit"
-                                               value="登录" ></input>
+                                        <input name="submit" type="submit" readonly onclick="QQenrol(this);"
+                                               class="button default tada" id="submit"
+                                               value="登录"></input>
                                     </fieldset>
                                 </div>
                                 <p class="subscribe-text">请输入您的QQ邮箱登录,若没有账号则为<strong>注册!</strong></p>
@@ -281,21 +283,23 @@
                     </div>
                 </div>
 
+
                 <div id="menu-3" class="content gallery-section">
-                    <div class="box-content">
+                    <div class="box-content" id="seatDisplay">
                         <h3 class="widget-title">Past Projects</h3>
                         <div class="row">
+
                             @foreach($seatInfo as $info)
 
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                <div class="project-item">
-                                    <img src="/index/images/1.jpg" alt="">
-                                    {{$info->id}}
-                                    <div class="project-hover">
-                                        <h4>{{ $info->name }}</h4>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="project-item">
+                                        <img src="/index/images/1.jpg" alt="">
+                                        {{$info->id}}
+                                        <div class="project-hover">
+                                            <h4>{{ $info->name }}</h4>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             @endforeach
                             <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="project-item">
@@ -339,21 +343,22 @@
                             </div>
                         </div>
 
+                        <div class="project-pages">
+                            <ul>
+                                <li><a href="#" style="cursor:no-drop;"><i class="fa-solid fa-angle-left"></i></a></li>
 
-                        <div class="container">
-                            @foreach ($seatInfo as $info)
-                            @endforeach
+                                @for( $i = 1; $i <= $pageTot; $i++)
+                                    @if($i )
+                                        <li><a href="javascript:;" style="background: #5cb48e;color: white;" >{{$i}}</a></li>
+                                    @endif
+                                    <li><a href="javascript:;" onclick="page({{$i}});">{{$i}}</a></li>
+                                @endfor
+
+                                <li><a href="#">...</a></li>
+                                <li><a href="#">{{$pageTot}}</a></li>
+                                <li><a href="javascript:;" onclick="page({{ $i}});"><i class="fa-solid fa-angle-right"></i></a></li>
+                            </ul>
                         </div>
-
-                        {{ $seatInfo->links() }}
-{{--                        <div class="project-pages">--}}
-{{--                            <ul>--}}
-{{--                                <li><a href="#">1</a></li>--}}
-{{--                                <li><a href="#">2</a></li>--}}
-{{--                                <li><a href="#">3</a></li>--}}
-{{--                                <li><a href="#">...</a></li>--}}
-{{--                            </ul>--}}
-{{--                        </div>--}}
                     </div>
                 </div>
 
@@ -367,79 +372,78 @@
                                         <input name="account" type="text" class="name" id="name" placeholder="学号...">
                                     </fieldset>
                                     <fieldset>
-//endregion
-{{--                                        <input name="email" type="email" class="email" id="email" placeholder="QQEmail...">--}}
-                        </fieldset>
-                        <fieldset>
-                            <input name="password" type="password" class="subject" id="subject" placeholder="密码...">
-                        </fieldset>
-                        <fieldset>
-                            <input name="repassword" type="password" class="subject" id="subject1"
-                                   placeholder="重复密码...">
-                        </fieldset>
-                        <fieldset>
-                                        <textarea name="message" id="message" cols="30" rows="4"
-                                                  placeholder="Message.."></textarea>
-                        </fieldset>
-                        <fieldset>
-                            <input type="submit" class="button" onclick="enrol(this);" id="button" value="认证账号">
-                        </fieldset>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4">
-                    <div class="box-content">
-                        <h3 class="widget-title">Stay In Touch</h3>
-                        <p>Sed ullamcorper, risus a tincidunt efficitur, massa mauris ultricies leo, eu interdum
-                            eros erat non augue. <br><br> Suspendisse ornare sollicitudin lectus non egestas.
-                            Nam fermentum imperdiet ligula congue venenatis.
-                        </p>
-                        <div class="about-social">
-                            <ul>
-                                <li>
-                                    <a href="#" class="fa fa-facebook"></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="fa fa-twitter"></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="fa fa-linkedin"></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="fa fa-dribbble"></a>
-                                </li>
-                            </ul>
+                                        //endregion
+                                        {{--                                        <input name="email" type="email" class="email" id="email" placeholder="QQEmail...">--}}
+                                    </fieldset>
+                                    <fieldset>
+                                        <input name="password" type="password" class="subject" id="subject"
+                                               placeholder="密码...">
+                                    </fieldset>
+                                    <fieldset>
+                                        <input name="repassword" type="password" class="subject" id="subject1"
+                                               placeholder="重复密码...">
+                                    </fieldset>
+                                    <fieldset>
+                                            <textarea name="message" id="message" cols="30" rows="4"
+                                                      placeholder="Message.."></textarea>
+                                    </fieldset>
+                                    <fieldset>
+                                        <input type="submit" class="button" onclick="enrol(this);" id="button"
+                                               value="认证账号">
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <div class="box-content">
+                                <h3 class="widget-title">Stay In Touch</h3>
+                                <p>Sed ullamcorper, risus a tincidunt efficitur, massa mauris ultricies leo, eu interdum
+                                    eros erat non augue. <br><br> Suspendisse ornare sollicitudin lectus non egestas.
+                                    Nam fermentum imperdiet ligula congue venenatis.
+                                </p>
+                                <div class="about-social">
+                                    <ul>
+                                        <li>
+                                            <a href="#" class="fa fa-facebook"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="fa fa-twitter"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="fa fa-linkedin"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="fa fa-dribbble"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class="col-md-3 hidden-sm">
+
+            <nav id="nav" class="main-navigation hidden-xs hidden-sm">
+                <ul class="main-menu">
+                    <li>
+                        <a class="show-1 active homebutton" href="#"><i class="fa fa-home"></i>首页</a>
+                    </li>
+                    <li>
+                        <a id="shouye" class="show-2 aboutbutton" href="#"><i class="fa fa-user"></i>我的</a>
+                    </li>
+                    <li>
+                        <a class="show-3 projectbutton" href="#" onclick="seat();"><i class="fa-solid fa-swatchbook"></i>预约</a>
+                    </li>
+                    <li>
+                        <a class="show-5 contactbutton" href="#"><i class="fa-brands fa-uniregistry"></i>认证</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
-</div>
-
-
-<div class="col-md-3 hidden-sm" >
-
-    <nav id="nav" class="main-navigation hidden-xs hidden-sm">
-        <ul class="main-menu">
-            <li>
-                <a class="show-1 active homebutton" href="#"><i class="fa fa-home"></i>首页</a>
-            </li>
-            <li>
-                <a id="shouye"  class="show-2 aboutbutton" href="#"><i class="fa fa-user"></i>我的</a>
-            </li>
-            <li>
-                <a class="show-3 projectbutton" href="#" onclick="seat();"><i class="fa-solid fa-swatchbook"></i>预约</a>
-            </li>
-            <li>
-                <a class="show-5 contactbutton" href="#"><i class="fa-brands fa-uniregistry"></i>认证</a>
-            </li>
-        </ul>
-    </nav>
-
-</div>
-</div>
 </div>
 
 <!-- SITE-FOOTER -->
@@ -480,56 +484,82 @@
             },
         });
     }
+
     //判断是否登录
     //调用一次
-    window.onload = function (){
+    window.onload = function () {
         var onece = true;
-        if (onece){
-            if(statu){
+        if (onece) {
+            if (statu) {
                 spop({
                     template: '<h4 style="color: #207d59" class="spop-body">欢迎您的登录</h4>',
                     position: 'top-center',
                     style: 'success',
-                    autoclose: 1500,});
+                    autoclose: 1500,
+                });
 
-            }else{
+            } else {
                 spop({
                     template: '<h4 style="color: #a5fed7" class="spop-body">您未登录</h4>',
                     position: 'top-center',
                     style: 'info',
-                    autoclose: 2000,});
+                    autoclose: 2000,
+                });
             }
             onece = false;
-        }else {
+        } else {
             return;
         }
     }
     //座位展示
     //监控浏览器屏幕大小
-    $(window).resize(function(){
-        if($(window).width() < 992) {
+    $(window).resize(function () {
+        if ($(window).width() < 992) {
             $(".col-md-4").css("width", "25%");
-        }else {
-            $(".col-md-4").css("width","20%");
+        } else {
+            $(".col-md-4").css("width", "20%");
         }
     });
-    //座位展示点击函数
-    function seat(){
-        $("#nav").hide();
-        $(".col-md-9").css("width","100%");
-        $(".col-md-4").css("width", "20%");
-        //ajax 展示 statu 登录状态 bool
-        $.get('library/{library}',{'statu': statu},function (data){
 
-        });
+    //座位展示点击函数
+    function seat() {
+        $("#nav").hide();
+        $(".col-md-9").css("width", "100%");
+        $(".col-md-4").css("width", "20%");
+        ;
 
     }
+
     //LOGO
-    function logo(){
+    function logo() {
         $("#shouye").click();
-        $("#nav").css("display","block");
-        $(".col-md-9").css("width","75%");
+        $("#nav").css("display", "block");
+        $(".col-md-9").css("width", "75%");
         $(".col-md-4").css("width", "33.33333333%");
+    }
+
+    //分页ajax刷新
+    function page(pages) {
+        $.get('/library/1', {'page': pages}, function (data) {
+            if (data == 0) {
+                spop({
+                    template: '<h4 style="color: #a5fed7" class="spop-body">获取座位信息失败!</h4>',
+                    position: 'bottom-right',
+                    style: 'error',
+                    autoclose: 2000,
+                });
+            } else {
+
+                spop({
+                    template: '<h4 style="color: #a5fed7" class="spop-body">获取成功!</h4>',
+                    position: 'bottom-right',
+                    style: 'success',
+                    autoclose: 2000,
+                });
+                $("#seatDisplay").html(data);
+                // $"#seatDisplay").load(location.href + " #seatDisplay");
+            }
+        })
     }
 
 </script>
@@ -633,7 +663,7 @@
             return;
         }
         //ajax
-        $.post('/library ', {email: qqeamil,'_token':'{{csrf_token()}}'}, function (data) {
+        $.post('/library ', {email: qqeamil, '_token': '{{csrf_token()}}'}, function (data) {
             //注册 2
             if (data == 2) {
                 spop({
@@ -643,7 +673,7 @@
                     autoclose: 3000,
                 });
 
-            } else if(data == 1){
+            } else if (data == 1) {
                 //登录 1
                 spop({
                     template: '<h4 style="color: #eec50f" class="spop-body">请查收QQ邮箱验证登录 </h4>',
@@ -651,7 +681,7 @@
                     style: 'success',
                     autoclose: 3000,
                 });
-            }else if(data == 3){
+            } else if (data == 3) {
                 spop({
                     template: '<h4 style="color: #b85b53" class="spop-body">失败!登录太频繁,请30s后重试 </h4>',
                     position: 'top-left',
@@ -661,7 +691,6 @@
             }
         });
     }
-
 
 
 </script>
