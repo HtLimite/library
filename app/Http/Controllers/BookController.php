@@ -54,17 +54,7 @@ class BookController extends Controller
     public function index()
     {
         //首页
-        //登录用户展示座位信息
-//        $seatInfo = DB::table('seat')->paginate(20);
-//        $count = DB::table('seat')->count();
-
-        $count = DB::table('seat')->count();
-        $pageNum = 50;
-        //总页数
-        $pageTot = ceil($count/$pageNum);
-        //数据偏移
-        $seatInfo = DB::table('seat')->paginate($pageNum);
-        return view('library.index', ['seatInfo' => $seatInfo, 'count' => $count,'pageTot' => $pageTot]);
+        return view('library.index');
 
     }
 
@@ -101,7 +91,7 @@ class BookController extends Controller
         //设置每一页 展示数据
         $pageNum = 50;
         //总页数
-        $pageTot = ceil($count/$pageNum);
+        $pageTot = ceil($count / $pageNum);
         //数据偏移
         $offset = ($page - 1) * $pageNum;
         //数据库查询记录

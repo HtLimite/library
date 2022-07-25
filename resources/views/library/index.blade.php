@@ -141,17 +141,17 @@
     </div>
 </div>
 <div class="copyrights">Collect from <a href="https://www.webmoban.net">免费模板</a></div>
-<div class="container" id="page-content">
+<div class="container" id="page-content" style="min-height: 100vh;" >
     <div class="row">
 
 
-        <div class="col-md-9 col-sm-12 content-holder">
+        <div class="col-md-9 col-sm-12 content-holder" style="transition: all 1s;">
             <!-- CONTENT -->
             <div id="menu-container">
 
                 <div class="logo-holder logo-top-margin">
                     <a href="javascript:;" class="site-brand"><img onclick="logo();" id="myInfo"
-                                                                   src="/index/images/logo.png" alt=""></a>
+                                                                   src="/index/images/logo.png" alt="" style="height: 100px;width: 100px;"></a>
                 </div>
 
 
@@ -284,82 +284,10 @@
                 </div>
 
 
-                <div id="menu-3" class="content gallery-section">
-                    <div class="box-content" id="seatDisplay">
-                        <h3 class="widget-title">Past Projects</h3>
-                        <div class="row">
-
-                            @foreach($seatInfo as $info)
-
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <div class="project-item">
-                                        <img src="/index/images/1.jpg" alt="">
-                                        {{$info->id}}
-                                        <div class="project-hover">
-                                            <h4>{{ $info->name }}</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                <div class="project-item">
-                                    <img src="/index/images/2.jpg" alt="">
-                                    <div class="project-hover">
-                                        <h4>Another Image Caption</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                <div class="project-item">
-                                    <img src="/index/images/3.jpg" alt="">
-                                    <div class="project-hover">
-                                        <h4>Great Nature Capture</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                <div class="project-item">
-                                    <img src="/index/images/4.jpg" alt="">
-                                    <div class="project-hover">
-                                        <h4>Another Image Caption</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                <div class="project-item">
-                                    <img src="/index/images/5.jpg" alt="">
-                                    <div class="project-hover">
-                                        <h4>Great Nature Capture</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                <div class="project-item">
-                                    <img src="/index/images/6.jpg" alt="">
-                                    <div class="project-hover">
-                                        <h4>Another Image Caption</h4>
-                                    </div>
-                                </div>
-                            </div>
+                <div id="menu-3" class="content gallery-section" >
+                    <div  id="seatInfo" >
                         </div>
 
-                        <div class="project-pages">
-                            <ul>
-                                <li><a href="#" style="cursor:no-drop;"><i class="fa-solid fa-angle-left"></i></a></li>
-
-                                @for( $i = 1; $i <= $pageTot; $i++)
-                                    @if($i )
-                                        <li><a href="javascript:;" style="background: #5cb48e;color: white;" >{{$i}}</a></li>
-                                    @endif
-                                    <li><a href="javascript:;" onclick="page({{$i}});">{{$i}}</a></li>
-                                @endfor
-
-                                <li><a href="#">...</a></li>
-                                <li><a href="#">{{$pageTot}}</a></li>
-                                <li><a href="javascript:;" onclick="page({{ $i}});"><i class="fa-solid fa-angle-right"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
 
                 <div id="menu-4" class="content contact-section">
@@ -372,7 +300,6 @@
                                         <input name="account" type="text" class="name" id="name" placeholder="学号...">
                                     </fieldset>
                                     <fieldset>
-                                        //endregion
                                         {{--                                        <input name="email" type="email" class="email" id="email" placeholder="QQEmail...">--}}
                                     </fieldset>
                                     <fieldset>
@@ -424,9 +351,10 @@
             </div>
         </div>
 
-        <div class="col-md-3 hidden-sm">
+        <div class="col-md-3 hidden-sm" id="navhidden" style="transition: all 1s; overflow:hidden;
+" >
 
-            <nav id="nav" class="main-navigation hidden-xs hidden-sm">
+            <nav id="nav" class="main-navigation hidden-xs hidden-sm" >
                 <ul class="main-menu">
                     <li>
                         <a class="show-1 active homebutton" href="#"><i class="fa fa-home"></i>首页</a>
@@ -435,7 +363,8 @@
                         <a id="shouye" class="show-2 aboutbutton" href="#"><i class="fa fa-user"></i>我的</a>
                     </li>
                     <li>
-                        <a class="show-3 projectbutton" href="#" onclick="seat();"><i class="fa-solid fa-swatchbook"></i>预约</a>
+                        <a class="show-3 projectbutton" href="#" onclick="seat();"><i
+                                class="fa-solid fa-swatchbook"></i>预约</a>
                     </li>
                     <li>
                         <a class="show-5 contactbutton" href="#"><i class="fa-brands fa-uniregistry"></i>认证</a>
@@ -515,17 +444,24 @@
     //监控浏览器屏幕大小
     $(window).resize(function () {
         if ($(window).width() < 992) {
-            $(".col-md-4").css("width", "25%");
+            $(".seatBlock").css("width", "25%");
+            $("#navhidden").css("width","100%");
         } else {
-            $(".col-md-4").css("width", "20%");
+            $(".seatBlock").css("width", "20%");
         }
     });
 
     //座位展示点击函数
+
+    page(1,true);
+
     function seat() {
-        $("#nav").hide();
+        $("#navhidden").fadeOut("slow");
+        $("#navhidden").css("width","0");
+
         $(".col-md-9").css("width", "100%");
-        $(".col-md-4").css("width", "20%");
+        $(".seatBlock").css("width", "20%");
+
         ;
 
     }
@@ -533,13 +469,15 @@
     //LOGO
     function logo() {
         $("#shouye").click();
-        $("#nav").css("display", "block");
+        $("#navhidden").fadeIn("slow");
+        $("#navhidden").css("width","25%");
         $(".col-md-9").css("width", "75%");
         $(".col-md-4").css("width", "33.33333333%");
     }
 
     //分页ajax刷新
-    function page(pages) {
+    function page(pages,bool) {
+        var bool = bool;
         $.get('/library/1', {'page': pages}, function (data) {
             if (data == 0) {
                 spop({
@@ -549,14 +487,15 @@
                     autoclose: 2000,
                 });
             } else {
-
+                if(!bool){
                 spop({
-                    template: '<h4 style="color: #a5fed7" class="spop-body">获取成功!</h4>',
+                    template: '<h4 style="color: #bbced9" class="spop-body">座位信息已更新!</h4>',
                     position: 'bottom-right',
                     style: 'success',
-                    autoclose: 2000,
+                    autoclose: 1000,
                 });
-                $("#seatDisplay").html(data);
+                    }
+                $("#seatInfo").html(data);
                 // $"#seatDisplay").load(location.href + " #seatDisplay");
             }
         })
