@@ -80,12 +80,61 @@ class BookController extends Controller
     // | GET|HEAD  | library/{library}          | library.show  座位展示
     public function show(Request $request)
     {
+        //获取ajax请求状态 status
+        $status = $request->get('status');
+
         //获取ajax请求页数 page
         $page = $request->get('page');
         if (empty($page)) {
             //初始值
             $page = 1;
         }
+        //筛选ajax请求数据库操作
+        if (!empty($status)) {
+            //初始值
+            //获取总数据数
+            switch ($status) {
+                case ("weishiyong"):
+                    $status = "未使用";
+                    break;
+                case ("yuyuezhong"):
+                    $status = "预约中";
+                    break;
+                case ("yiyuyue"):
+                    $status = "已预约";
+                    break;
+                case ("shiyongzhong"):
+                    $status = "使用中";
+                    break;
+                case ("likai"):
+                    $status = "离开";
+                    break;
+                default:
+            }
+            //获取 status 种类总数目
+            $count = DB::table('seat')->where('status', $status)->count();
+
+            //设置每一页 展示数据
+            $pageNum = 50;
+            //总页数
+            $pageTot = ceil($count / $pageNum);
+            //数据偏移
+            $offset = ($page - 1) * $pageNum;
+            //种类 status 数据库查询记录
+            $seatInfo = DB::table('seat')->where('status',$status)->offset($offset)
+                ->limit($pageNum)->get();
+            if (empty($seatInfo)) {
+                return 0;
+            } else {
+                return view('library.seatStatus', [
+                    'seatInfo' => $seatInfo,
+                    'count' => $count,
+                    'pageTot' => $pageTot,
+                    'page' => $page]);
+            }
+
+        }
+
         //获取总数据数
         $count = DB::table('seat')->count();
         //设置每一页 展示数据

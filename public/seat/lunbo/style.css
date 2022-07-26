@@ -1,0 +1,155 @@
+
+.clearfix:after {
+    content: " ";
+    display: block;
+    clear: both;
+}
+
+.box {
+    position: relative;
+    /*width: 800px;*/
+    height: 237px;
+    margin-bottom: 43px;
+    margin-top: 30px;
+}
+
+.main {
+    width: 687px;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    margin-left: -350px;
+    overflow: hidden;
+}
+
+.item {
+    list-style: none;
+    width: 300px;
+    height: 173px;
+    position: absolute;
+    left: 0px;
+    top: 27px;
+    transition: all 0.3s ease;
+}
+.top-text > h3 {
+    text-align: center;
+    color: white;
+    margin-top: 7px;
+}
+.top-text{
+    width: 91.3%;
+    height: 30px;
+    position: absolute;
+    background: #3333335c;
+    z-index: 1;
+}
+.img-div{
+    height: 100%;
+    padding: 13px;
+}
+
+.p0 {
+    transform: translate3d(-400px, 0, 0) scale(1);
+    opacity: 0.1;
+    z-index: 1;
+}
+
+.p1 {
+    transform: translate3d(0px, 0, 0) scale(1);
+    opacity: 0.8;
+    z-index: 2;
+}
+
+.p2 {
+    transform: translate3d(400px, 0, 0) scale(1);
+    opacity: 0.8;
+    z-index: 3;
+}
+
+.p3 {
+    transform: translate3d(200px, 0, 0) scale(1.5);
+    opacity: 1;
+    z-index: 4;
+}
+
+.p4 {
+    transform: translate3d(800px, 0, 0) scale(1);
+    opacity: 0.1;
+    z-index: 3;
+}
+
+.newItem {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+.changeItem {
+    position: absolute;
+    left: 50%;
+    top: 0px;
+    margin-left: -202px;
+    transform: scale(1.4);
+}
+
+.item img {
+    width: 100%;
+    height: 87%;
+}
+
+.btnMain {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.left {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    margin-top: -15px;
+    z-index: 10;
+}
+
+.right {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    margin-top: -15px;
+    z-index: 10;
+}
+
+.left img,
+.right img {
+    width: 30px;
+    height: 30px;
+}
+
+.pressMain {
+    position: absolute;
+    left: 50%;
+    bottom: 43px;
+    width: 134px;
+    height: 24px;
+    margin-left: -37px;
+    z-index: 20;
+}
+
+.pressMain span {
+    display: inline-block;
+    margin: 2px 3px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.53);
+    text-align: center;
+    line-height: 20px;
+}
+
+.pressMain .active {
+    background: brown;
+}

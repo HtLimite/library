@@ -1,0 +1,66 @@
+.seatBlock {
+    width: 20%;
+
+}
+
+.seatNav{
+    position: relative;
+}
+
+.seatNav > ul > li > i {
+    font-size: 23px;
+}
+
+.seatDiv {
+    display: flex;
+    justify-content: space-between;
+}
+
+.seatDiv-fixed {
+    background: #ddddddc7;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    z-index: 99;
+    top: 0;
+    padding: 10px 30px;
+    height: 47px;
+    width: 100%;
+    left: 0;
+}
+
+.seatNav > ul {
+    display: flex;
+}
+
+.seatNav > ul > li {
+    margin-left: 27px;
+    cursor:pointer;
+}
+
+.seatType{
+    position: absolute;
+    width: 100px;
+    background: rgb(0 0 0 / 80%);
+    color: white;
+    z-index: 17;
+    height: auto;
+    display: none;
+    border: solid white;
+    overflow: hidden;
+    left: -7px;
+}
+
+.seatType > ul > li{
+    padding: 7px;
+    border-bottom: solid;
+    width: 100%;
+    cursor:pointer;
+}
+.seatType > ul > li:hover{
+    background: #ccc;
+}
+#seatOne, #seatTop, #dataSeat, #forSeat{
+    overflow: hidden;
+    height: auto;
+}

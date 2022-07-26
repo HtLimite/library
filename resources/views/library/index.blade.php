@@ -26,6 +26,10 @@
     <link rel="stylesheet" type="text/css" href="/adminlogin/css/content.css"/>
     <script src="/adminlogin/js/modernizr.custom.js"></script>
 
+<!--    seat style-->
+    <link rel="stylesheet" href="/seat/lunbo/style.css">
+    <link rel="stylesheet" href="/seat/style/style.css">
+
 
     <script src="/index/js/vendor/modernizr-2.6.2.min.js"></script>
 
