@@ -74,7 +74,7 @@
                 <li><a href="javascript:;" style="cursor:no-drop;"><i
                             class="fa-solid fa-angle-left"></i></a></li>
             @else
-                <li><a href="javascript:;" onclick="page({{ $page - 1 }});"><i
+                <li><a href="javascript:;" onclick="page({{ $page - 1 ,$status}});"><i
                             class="fa-solid fa-angle-left"></i></a>
                 </li>
             @endif
@@ -87,7 +87,7 @@
                                    style=" background: #5cb48e; color: white;">{{$i}}</a></li>
                             @continue
                         @endif
-                        <li><a href="javascript:;" onclick="page({{$i}});">{{$i}}</a></li>
+                        <li><a href="javascript:;" onclick="page({{$i}},true,'{{$status}}');">{{$i}}</a></li>
                     @endfor
 
 
@@ -98,7 +98,7 @@
                 <li><a href="javascript:;" style="cursor:no-drop;"><i
                             class="fa-solid fa-angle-right"></i></a></li>
             @else
-                <li><a href="javascript:;" onclick="page({{  $page +1 }});"><i
+                <li><a href="javascript:;" onclick="page({{  $page +1 ,1111,2222}});"><i
                             class="fa-solid fa-angle-right"></i></a></li>
             @endif
 

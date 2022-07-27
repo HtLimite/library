@@ -26,9 +26,15 @@
     <link rel="stylesheet" type="text/css" href="/adminlogin/css/content.css"/>
     <script src="/adminlogin/js/modernizr.custom.js"></script>
 
-<!--    seat style-->
+    <!--    seat style-->
     <link rel="stylesheet" href="/seat/lunbo/style.css">
     <link rel="stylesheet" href="/seat/style/style.css">
+
+<!--搜索-->
+    <link rel="stylesheet" href="/seat/search/css/search-form.css">
+
+
+
 
 
     <script src="/index/js/vendor/modernizr-2.6.2.min.js"></script>
@@ -145,7 +151,7 @@
     </div>
 </div>
 <div class="copyrights">Collect from <a href="https://www.webmoban.net">免费模板</a></div>
-<div class="container" id="page-content" style="min-height: 100vh;" >
+<div class="container" id="page-content" style="min-height: 100vh;">
     <div class="row">
 
 
@@ -155,7 +161,8 @@
 
                 <div class="logo-holder logo-top-margin">
                     <a href="javascript:;" class="site-brand"><img onclick="logo();" id="myInfo"
-                                                                   src="/index/images/logo.png" alt="" style="height: 100px;width: 100px;"></a>
+                                                                   src="/index/images/logo.png" alt=""
+                                                                   style="height: 100px;width: 100px;"></a>
                 </div>
 
 
@@ -288,10 +295,85 @@
                 </div>
 
 
-                <div id="menu-3" class="content gallery-section" >
-                    <div  id="seatInfo" >
-                        </div>
+                <div id="menu-3" class="content gallery-section">
 
+                    <div class="box-content" id="seatInfo">
+                        <!--导航菜单-->
+                        <div class="seatDiv" id="seatNav">
+                            <div><h3 class="widget-title"><i class="fa-solid fa-table "></i> 座位信息</h3>
+                            </div>
+                            <div class="seatNav">
+                                <ul>
+                                    <li class="searchLi">
+                                        <form onsubmit="return false;" class="searchForm">
+                                            <div class="search-wrapper">
+                                                <div class="input-holder">
+                                                    <input type="text" class="search-input" placeholder="Type to search" />
+                                                    <button  id="searchI" class="search-icon" onclick="searchToggle(this, event);">
+                                                        <span style="display: none;">
+                                                        </span>
+                                                        <i style="font-size: 21px" class="fa-solid fa-magnifying-glass"></i>
+                                                    </button>
+                                                </div>
+                                                <span class="close" onclick="searchToggle(this, event);"></span>
+                                                <div class="result-container">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </li>
+                                    <li id="seatType"><i class="fa-solid fa-list-ul"></i></li>
+                                    <li><i class="fa-solid fa-sitemap"></i></li>
+                                    <li><i class="fa-regular fa-calendar-check"></i></li>
+                                    <li><i  class="fa-solid fa-book-open"></i></li>
+                                </ul>
+                                <div class="seatType" id="seatType">
+                                    <ul>
+                                        <li id="weishiyong"><i class="fa-solid fa-square-check"></i> 未使用</li>
+                                        <li id="yuyuezhong"><i class="fa-solid fa-arrows-rotate"></i> 预约中...</li>
+                                        <li id="yiyuyue"><i class="fa-regular fa-clock"></i> 已预约</li>
+                                        <li id="shiyongzhong"><i class="fa-regular fa-circle-xmark"></i> 使用中</li>
+                                        <li id="likai" style="border: none"><i class="fa-regular fa-circle-pause"></i>
+                                            离开
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row seatRow">
+                            <!--vue轮播图-->
+                            <div id="app">
+                                <div class="box">
+                                    <!--<button @click="imgMove">点击</button>-->
+                                    <div class="main clearfix" @mouseover="btnOpen" @mouseout="btnHide">
+                                        <div class="minMain">
+                                            <div class="item" v-for="(item,index) in list" :key="index">
+                                                <div class="img-div" v-bind:style="item.div">
+                                                    <div class="top-text"><h3 v-text="item.text"></h3></div>
+                                                    <img :src="item.imgUrl" v-bind:style="item.style"/>
+                                                </div>
+                                            </div>
+                                            <div class="btnMain" v-show="btnShow">
+                                                <div class="left" @click="leftClick">
+                                                    <img src="/seat/lunbo/ljiantou.png"/>
+                                                </div>
+                                                <div class="right" @click="rightClick">
+                                                    <img src="/seat/lunbo/rjiantou.png"/>
+                                                </div>
+                                            </div>
+                                            <div class="pressMain">
+                                                <span v-for="(item,index) in pressList"
+                                                      :class="{active:item.isShow}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--座位信息-->
+                            <div id="seatOne">
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="menu-4" class="content contact-section">
@@ -356,9 +438,9 @@
         </div>
 
         <div class="col-md-3 hidden-sm" id="navhidden" style="transition: all 1s; overflow:hidden;
-" >
+">
 
-            <nav id="nav" class="main-navigation hidden-xs hidden-sm" >
+            <nav id="nav" class="main-navigation hidden-xs hidden-sm">
                 <ul class="main-menu">
                     <li>
                         <a class="show-1 active homebutton" href="#"><i class="fa fa-home"></i>首页</a>
@@ -379,6 +461,7 @@
     </div>
 </div>
 
+
 <!-- SITE-FOOTER -->
 <div class="site-footer">
     <div class="container">
@@ -396,6 +479,19 @@
 <script src="/index/js/plugins.js"></script>
 <script src="/index/js/main.js"></script>
 <script src="/student/js/spop.min.js"></script>
+
+
+<!--vue轮播图js-->
+<script src="/seat/lunbo/vue.min.2.2.2.js"></script>
+<script src="/seat/lunbo/lunbo.js"></script>
+
+<!--座位信息-->
+<script src="/seat/my.js"></script>
+
+
+
+
+
 <script>
     //信息提示弹框
     function message(world, close) {
@@ -449,7 +545,7 @@
     $(window).resize(function () {
         if ($(window).width() < 992) {
             $(".seatBlock").css("width", "25%");
-            $("#navhidden").css("width","100%");
+            $("#navhidden").css("width", "100%");
         } else {
             $(".seatBlock").css("width", "20%");
         }
@@ -457,11 +553,11 @@
 
     //座位展示点击函数
 
-    page(1,true);
+    page(1, true);
 
     function seat() {
         $("#navhidden").fadeOut("slow");
-        $("#navhidden").css("width","0");
+        $("#navhidden").css("width", "0");
 
         $(".col-md-9").css("width", "100%");
         $(".seatBlock").css("width", "20%");
@@ -474,15 +570,15 @@
     function logo() {
         $("#shouye").click();
         $("#navhidden").fadeIn("slow");
-        $("#navhidden").css("width","25%");
+        $("#navhidden").css("width", "25%");
         $(".col-md-9").css("width", "75%");
         $(".col-md-4").css("width", "33.33333333%");
     }
 
     //分页ajax刷新
-    function page(pages,bool) {
+    function page(pages, bool, status) {
         var bool = bool;
-        $.get('/library/1', {'page': pages}, function (data) {
+        $.get('/library/1', {'page': pages, 'status': status}, function (data) {
             if (data == 0) {
                 spop({
                     template: '<h4 style="color: #a5fed7" class="spop-body">获取座位信息失败!</h4>',
@@ -491,15 +587,21 @@
                     autoclose: 2000,
                 });
             } else {
-                if(!bool){
-                spop({
-                    template: '<h4 style="color: #bbced9" class="spop-body">座位信息已更新!</h4>',
-                    position: 'bottom-right',
-                    style: 'success',
-                    autoclose: 1000,
-                });
-                    }
-                $("#seatInfo").html(data);
+                if (!bool) {
+                    spop({
+                        template: '<h4 style="color: black" class="spop-body">座位信息已更新!</h4>',
+                        position: 'bottom-right',
+                        style: 'success',
+                        autoclose: 1000,
+                    });
+                }
+                if (status == undefined) {
+                    $("#seatOne").html(data);
+
+                } else {
+                    $("#dataSeat").html(data);
+
+                }
                 // $"#seatDisplay").load(location.href + " #seatDisplay");
             }
         })
@@ -636,6 +738,33 @@
     }
 
 
+</script>
+<!--搜索-->
+
+<script type="text/javascript">
+    function searchToggle(obj, evt) {
+        obj = obj;
+        var container = $(obj).closest('.search-wrapper');
+        var value = $(".search-input").val();
+
+
+
+        if (!container.hasClass('active')) {
+            container.addClass('active');
+            evt.preventDefault();
+
+        } else if (container.hasClass('active') && $(obj).closest('.input-holder').length == 0) {
+            container.removeClass('active');
+            // clear input
+            var text =  container.find('.search-input').val('');
+            // clear and hide result container when we press close
+            container.find('.result-container').fadeOut(100, function() {
+                $(this).empty();
+            });
+
+        }
+
+    }
 </script>
 
 

@@ -110,6 +110,7 @@ class BookController extends Controller
                     $status = "离开";
                     break;
                 default:
+                    $status;
             }
             //获取 status 种类总数目
             $count = DB::table('seat')->where('status', $status)->count();
@@ -130,7 +131,8 @@ class BookController extends Controller
                     'seatInfo' => $seatInfo,
                     'count' => $count,
                     'pageTot' => $pageTot,
-                    'page' => $page]);
+                    'page' => $page,
+                    'status' => $status]);
             }
 
         }

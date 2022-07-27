@@ -266,7 +266,7 @@ body{
 }
 .box-content .widget-title {
   font-size: 22px;
-  color: #333;
+    color: white;
   font-family: 'robotolight';
   margin-bottom: 30px;
 }

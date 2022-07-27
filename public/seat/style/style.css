@@ -14,10 +14,13 @@
 .seatDiv {
     display: flex;
     justify-content: space-between;
+    padding: 30px 30px 0px 30px;
+    color: white;
+    background: rgba(0, 0, 0, 0.8);
+
 }
 
 .seatDiv-fixed {
-    background: #ddddddc7;
     position: fixed;
     display: flex;
     justify-content: space-between;
@@ -34,7 +37,7 @@
 }
 
 .seatNav > ul > li {
-    margin-left: 27px;
+    margin-left: 37px;
     cursor:pointer;
 }
 
@@ -48,7 +51,7 @@
     display: none;
     border: solid white;
     overflow: hidden;
-    left: -7px;
+    left: 66px;
 }
 
 .seatType > ul > li{
@@ -60,7 +63,19 @@
 .seatType > ul > li:hover{
     background: #ccc;
 }
-#seatOne, #seatTop, #dataSeat, #forSeat{
+#seatOne, #seatTop, #dataSeat, #forSeat, #seatInfo{
     overflow: hidden;
     height: auto;
 }
+#seatInfo{
+    padding:0;
+}
+.seatRow{
+    padding: 37px;
+}
+.searchForm{
+    position: relative;
+    height:30px;
+    width:30px;
+}
+

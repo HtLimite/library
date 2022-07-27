@@ -1,15 +1,36 @@
 //座位状态筛选
 $("#seatType").click(function () {
-    $(".seatType").slideToggle(1000);
+    $(".seatType").slideToggle();
 });
-$("#seatType").hover(function () {
-    $(".seatType").slideDown(1000);
-});
+
 $(".seatType").hover(function () {
 
 }, function () {
     $(".seatType").slideUp(1000);
 })
+
+//搜索框展示
+let searBut = $("#searchI");
+searBut.click(function (){
+    $(".searchLi").nextAll().hide();
+    $(".searchLi").css("margin-right","233px");
+});
+$(".close").click(function(){
+    $(".searchLi").nextAll().show(700)
+    $(".searchLi").css("margin-right","0");
+});
+
+
+if( $(".search-wrapper").hasClass("active")){
+
+    alert(22);
+    searBut.click(function (){
+        //搜索ajax
+        let value = $(".search-input").val();
+        alert(111);
+    });
+}
+
 
 
 //ajax筛选结果
@@ -22,7 +43,7 @@ for (const [index, elem] of filterArray.entries()) {
         //设置或返回被选中元素的属性
         let seatStatus = elem.attr('id');
 
-        $.get('/library/2', {'status': seatStatus}, function (data) {
+        $.get('/library/4', {'status': seatStatus}, function (data) {
             if(data == 0){
                 spop({
                     template: '<h4 style="color: #a5fed7" class="spop-body">获取座位信息失败!</h4>',
