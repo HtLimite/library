@@ -117,6 +117,9 @@ $(function(){
     $("#adminL").suspensionTips({"content": "管理员登录", position:"bottom"});
     $("#img4").suspensionTips({"content": "这是出现在左方的提示信息。", position:"left"});
     $("#myInfo").suspensionTips({"content": "查看我的信息", position:"right"});
+    $("#seatIndex").suspensionTips({"content": "首页", position:"right"});
+    $("#returnTop").suspensionTips({"content": "返到最顶部", position:"left"});
+
 
 });
 

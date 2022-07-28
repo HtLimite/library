@@ -437,7 +437,7 @@ select {
  *    Known issue: inner spacing remains in IE 6.
  */
 
-button,
+/*button,*/
 html input[type="button"], /* 1 */
 input[type="reset"],
 input[type="submit"] {

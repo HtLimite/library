@@ -58,7 +58,7 @@ class BookController extends Controller
 
     }
 
-    //exit 退出登录方法
+    //自定义  exit                                |退出登录方法
     public function exit(Request $request)
     {
         $request->session()->flush();
@@ -71,10 +71,13 @@ class BookController extends Controller
 
     }
 
-
-
-
     // | PUT|PATCH | library/{library}          | library.update
+    public function update(){
+
+
+
+    }
+
 
 
     // | GET|HEAD  | library/{library}          | library.show  座位展示
@@ -166,5 +169,34 @@ class BookController extends Controller
     {
 
     }
-    // | GET|HEAD  | library/{library}/edit     | library.edit
+    // | GET|HEAD  | library/{library}/edit     | library.edit 搜索
+    public function edit(Request $request){
+        //获取搜索值
+        $result = $request->get('value');
+        //获取展示页数
+        $page = $request->get('page');
+        $array= DB::select("select id,name,seat,status,reserve from seat where
+                                            id like '%$result%'
+                                       or seat like '%$result%'
+                                       or status like '%$result%'
+                                       or reserve like '%$result%' ");
+        $count = count($array);
+        //设置每一页 展示数据
+        $pageNum = 50;
+        //总页数
+        $pageTot = ceil($count / $pageNum);
+        //数据偏移
+        $offset = ($page - 1) * $pageNum;
+        $pageArray = array_slice($array,$offset,50,true);
+        $pageArray = (object)$pageArray;
+
+        return view('library.search', [
+            'seatInfo' => $pageArray,
+            'count' => $count,
+            'pageTot' => $pageTot,
+            'page' => $page,
+            'value' => $result]);
+
+    }
+
 }

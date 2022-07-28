@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="/index/css/test.css">
     <script src="/student/js/jquery-3.2.1.min.js"></script>
     <script src="/index/js/test.js" type="text/javascript"></script>
+{{--    div在最后--}}
 
     {{--    //管理员登录弹窗--}}
 <!-- <link rel="stylesheet" type="text/css" href="css/normalize.css" /> -->
@@ -29,12 +30,10 @@
     <!--    seat style-->
     <link rel="stylesheet" href="/seat/lunbo/style.css">
     <link rel="stylesheet" href="/seat/style/style.css">
-
-<!--搜索-->
+    <!-- 时间选择-->
+{{--    <link href="/seat/style/index.css" rel="stylesheet">--}}
+    <!--搜索-->
     <link rel="stylesheet" href="/seat/search/css/search-form.css">
-
-
-
 
 
     <script src="/index/js/vendor/modernizr-2.6.2.min.js"></script>
@@ -83,9 +82,9 @@
                                                 </p>
                                                 <p style="position: relative"><label><i
                                                             class="fa-solid fa-lock"></i></label><input
-                                                        type="password"/></p>
+                                                     required   type="password"/></p>
                                                 <p>
-                                                    <button>登录</button>
+                                                    <button type="submit">登录</button>
                                                 </p>
                                                 <p>
                                                     <button>忘记密码?</button>
@@ -184,13 +183,14 @@
                                                placeholder="QQ Email" required maxlength="17">
                                     </fieldset>
                                     <fieldset class="col-md-4 button-holder">
-                                        <input name="submit" type="submit" readonly onclick="QQenrol(this);"
-                                               class="button default tada" id="submit"
-                                               value="登录"></input>
+                                        <input name="submit1" type="submit" readonly onclick="QQenrol(this);"
+                                               class="button default tada"
+                                               value="登录"/>
                                     </fieldset>
                                 </div>
                                 <p class="subscribe-text">请输入您的QQ邮箱登录,若没有账号则为<strong>注册!</strong></p>
                             </form>
+
                         @else
                             <script> var statu = true;</script>
                         @endif
@@ -228,7 +228,7 @@
                                 <div class="about-social">
                                     <ul>
                                         <li>
-                                            <a href="#" class="fa fa-facebook"></a>
+                                            <a class="fa-solid fa-gear"></a>
                                         </li>
                                         <li>
                                             <a href="#" class="fa fa-twitter"></a>
@@ -300,19 +300,30 @@
                     <div class="box-content" id="seatInfo">
                         <!--导航菜单-->
                         <div class="seatDiv" id="seatNav">
-                            <div><h3 class="widget-title"><i class="fa-solid fa-table "></i> 座位信息</h3>
+                            <div><h3 class="widget-title" style="cursor: pointer" id="seatIndex" onclick="page(1,true)"><i class="fa-solid fa-table "></i> 座位信息</h3>
                             </div>
                             <div class="seatNav">
                                 <ul>
                                     <li class="searchLi">
-                                        <form onsubmit="return false;" class="searchForm">
+                                        <form  onsubmit="return false"  class="searchForm">
                                             <div class="search-wrapper">
                                                 <div class="input-holder">
-                                                    <input type="text" class="search-input" placeholder="Type to search" />
-                                                    <button  id="searchI" class="search-icon" onclick="searchToggle(this, event);">
+                                                    <input  type="text" class="search-input"
+                                                           placeholder="Type to search" required  />
+                                                    <button  id="searchI" class="search-icon"
+                                                            onclick="searchToggle(this, event);">
                                                         <span style="display: none;">
                                                         </span>
-                                                        <i style="font-size: 21px" class="fa-solid fa-magnifying-glass"></i>
+                                                        <i style="font-size: 21px"
+                                                           class="fa-solid fa-magnifying-glass"></i>
+                                                    </button>
+                                                    <input type="submit" id="subSear" onclick="submitFn(this, event);" style="display: none">
+                                                    <button type="submit" style="display: none" onclick="subSearch1();" id="searchI1" class="search-icon"
+                                                            >
+                                                        <span style="display: none;">
+                                                        </span>
+                                                        <i style="font-size: 21px"
+                                                           class="fa-solid fa-magnifying-glass"></i>
                                                     </button>
                                                 </div>
                                                 <span class="close" onclick="searchToggle(this, event);"></span>
@@ -324,7 +335,7 @@
                                     <li id="seatType"><i class="fa-solid fa-list-ul"></i></li>
                                     <li><i class="fa-solid fa-sitemap"></i></li>
                                     <li><i class="fa-regular fa-calendar-check"></i></li>
-                                    <li><i  class="fa-solid fa-book-open"></i></li>
+                                    <li><i class="fa-solid fa-book-open"></i></li>
                                 </ul>
                                 <div class="seatType" id="seatType">
                                     <ul>
@@ -370,8 +381,10 @@
                             </div>
 
                             <!--座位信息-->
+
                             <div id="seatOne">
                             </div>
+                            <div class="returnTop" > <i id="returnTop" class="fa-solid fa-chevron-up"></i></div>
                         </div>
                     </div>
                 </div>
@@ -393,7 +406,7 @@
                                                placeholder="密码...">
                                     </fieldset>
                                     <fieldset>
-                                        <input name="repassword" type="password" class="subject" id="subject1"
+                                        <input name="repassword" type="password" required class="subject" id="subject1"
                                                placeholder="重复密码...">
                                     </fieldset>
                                     <fieldset>
@@ -401,9 +414,10 @@
                                                       placeholder="Message.."></textarea>
                                     </fieldset>
                                     <fieldset>
-                                        <input type="submit" class="button" onclick="enrol(this);" id="button"
+                                        <input type="submit" class="button" onclick="enrol(this);" id="button1"
                                                value="认证账号">
                                     </fieldset>
+
                                 </form>
                             </div>
                         </div>
@@ -469,6 +483,7 @@
             <div class="col-md-12 text-center">
                 <p>Copyright &copy; Reiki</p>
             </div>
+
         </div>
     </div>
 </div>
@@ -488,8 +503,12 @@
 <!--座位信息-->
 <script src="/seat/my.js"></script>
 
-
-
+<!--时钟选择-->
+<!--
+<script scr="/seat/components.js"></script>
+<script scr="/seat/leo-srcoll.js"></script>
+<script scr="/seat/index.js"></script>
+-->
 
 
 <script>
@@ -595,10 +614,13 @@
                         autoclose: 1000,
                     });
                 }
+                //判断状态分页
                 if (status == undefined) {
+                    //状态页面
                     $("#seatOne").html(data);
 
                 } else {
+                    //正常id顺序页面
                     $("#dataSeat").html(data);
 
                 }
@@ -703,8 +725,28 @@
         //获取qq邮箱
         const qqeamil = $("#subscribe-email").val();
         //js验证qq邮箱
+        if(qqeamil == ""){
+            return;
+        }
         const qqEmail = /[1-9][0-9]{4,}@qq.com/;
-        if (qqeamil === "" || !qqEmail.test(qqeamil)) {
+        if ( !qqEmail.test(qqeamil)) {
+            spop({
+                template: '<h4 style="color: white" class="spop-body">请输入正确的QQ邮箱!</h4>',
+                position: 'top-left',
+                style: 'warning',
+                autoclose: 7000,
+            })
+            return;
+        }
+        var regex = /^(.*)(select|insert|into |delete|from |count|drop|join|union|table|database|update|truncate|asc\(|mid\(|char\(|xp_cmdshell|exec |master|net localgroup administrators|\"|:|net user|\| or )(.*)$/gi;
+
+        if(regex.test(qqeamil)) {
+            spop({
+                template: '<h4 style="color: red" class="spop-body">当你看到这条信息时,摄像头前的你正在犯罪!</h4>',
+                position: 'bottom-right',
+                style: 'warning',
+                autoclose: 7000,
+            });
             return;
         }
         //ajax
@@ -738,33 +780,6 @@
     }
 
 
-</script>
-<!--搜索-->
-
-<script type="text/javascript">
-    function searchToggle(obj, evt) {
-        obj = obj;
-        var container = $(obj).closest('.search-wrapper');
-        var value = $(".search-input").val();
-
-
-
-        if (!container.hasClass('active')) {
-            container.addClass('active');
-            evt.preventDefault();
-
-        } else if (container.hasClass('active') && $(obj).closest('.input-holder').length == 0) {
-            container.removeClass('active');
-            // clear input
-            var text =  container.find('.search-input').val('');
-            // clear and hide result container when we press close
-            container.find('.result-container').fadeOut(100, function() {
-                $(this).empty();
-            });
-
-        }
-
-    }
 </script>
 
 

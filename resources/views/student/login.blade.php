@@ -252,6 +252,7 @@
                         <input class="btn btn-primary" type="submit" onclick="register()" value="注册"
                                style="color:white;"/>
                     </div>
+
                 </form>
             </div>
         </div>

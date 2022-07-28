@@ -1,26 +1,33 @@
 
-.common-tips-hide{
+.common-tips-hide {
     display: none;
 }
-.common-tips-container{
-    width:200px;
-    padding:10px;
-    font-size:14px;
+
+.common-tips-container {
+/*/ / 提示窗*/
+    background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+    z-index: 10;
+    width: 200px;
+    padding: 10px;
+    font-size: 14px;
     color: black;
-    border:1px white solid;
+    border: 1px white solid;
     position: absolute;
-    top:0;
-    left:200px;
+    top: 0;
+    left: 200px;
     border-radius: 5px;
 }
-.common-tips-animation{
-    animation:common-tips-show 0.3s ease-in;
-    -webkit-animation:common-tips-show 0.3s ease-in; /* Safari 和 Chrome */
+
+.common-tips-animation {
+    animation: common-tips-show 0.3s ease-in;
+    -webkit-animation: common-tips-show 0.3s ease-in; /* Safari 和 Chrome */
 }
+
 /*动画效果从下往上, 从左往右*/
-.common-tips-top-right{
+.common-tips-top-right {
     transform-origin: 10% 100%;
 }
+
 .common-tips-top-right:after {
     bottom: -7px;
     left: 16px;
@@ -33,16 +40,19 @@
     border-top: 0;
     border-left: 0;
     background-color: #fff;
+    background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+
 }
 
 /*动画效果从下往上, 从右往左*/
-.common-tips-top-left{
+.common-tips-top-left {
     transform-origin: 90% 100%;
 }
+
 .common-tips-top-left:after {
     bottom: -7px;
     right: 16px;
-    left:unset;
+    left: unset;
     position: absolute;
     width: 12px;
     height: 12px;
@@ -52,12 +62,15 @@
     border-top: 0;
     border-left: 0;
     background-color: #fff;
+    background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+
 }
 
 /*动画效果从上往下, 从右往左*/
-.common-tips-bottom-right{
+.common-tips-bottom-right {
     transform-origin: 10% 10%;
 }
+
 .common-tips-bottom-right:after {
     top: -7px;
     left: 16px;
@@ -70,16 +83,19 @@
     border-bottom: 0;
     border-right: 0;
     background-color: #fff;
+    background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+
 }
 
 /*动画效果从上往下, 从左往右*/
-.common-tips-bottom-left{
+.common-tips-bottom-left {
     transform-origin: 90% 10%;
 }
+
 .common-tips-bottom-left:after {
     top: -7px;
     right: 16px;
-    left:unset;
+    left: unset;
     position: absolute;
     width: 12px;
     height: 12px;
@@ -89,17 +105,21 @@
     border-bottom: 0;
     border-right: 0;
     background-color: #fff;
+    background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+
 }
-.common-tips-container-hide{
-    animation:common-tips-hide 0.3s ease-out;
-    -webkit-animation:common-tips-hide 0.3s ease-out; /* Safari 和 Chrome */
+
+.common-tips-container-hide {
+    animation: common-tips-hide 0.3s ease-out;
+    -webkit-animation: common-tips-hide 0.3s ease-out; /* Safari 和 Chrome */
 }
 
 /*动画效果从上往下, 从左往右*/
-.common-tips-right-right{
+.common-tips-right-right {
     transform-origin: 0% 10%;
 }
-.common-tips-right-right:after{
+
+.common-tips-right-right:after {
     left: -7px;
     top: 13px;
     position: absolute;
@@ -110,15 +130,15 @@
     border: 1px solid #ecedee;
     border-top: 0;
     border-right: 0;
-    background-color: #fff;
-
+    background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
 }
 
 /*动画效果从上往下, 从左往右*/
-.common-tips-left-left{
+.common-tips-left-left {
     transform-origin: 100% 10%;
 }
-.common-tips-left-left:after{
+
+.common-tips-left-left:after {
     right: -7px;
     top: 13px;
     position: absolute;
@@ -131,28 +151,29 @@
     border-left: 0;
     background-color: #fff;
     opacity: 1;
+    background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
 
 }
 
 @keyframes common-tips-show {
-    0%{
-        opacity:0;
+    0% {
+        opacity: 0;
         transform: scale(0.6);
     }
-    100%{
-        opacity:1;
+    100% {
+        opacity: 1;
         transform: scale(1);
     }
 }
 
 
 @keyframes common-tips-hide {
-    0%{
-        opacity:1;
+    0% {
+        opacity: 1;
         transform: scale(1);
     }
-    100%{
-        opacity:0;
+    100% {
+        opacity: 0;
         transform: scale(0.6);
     }
 }

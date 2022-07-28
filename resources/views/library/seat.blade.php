@@ -1,13 +1,35 @@
-
+{{--vue弹窗--}}
+{{--<script src="/js/vue2.5.js"></script>--}}
+<script src="/seat/vue-messagebox-demo.js"></script>
 <!--座位信息-->
+
 <div id="seatOne">
     <div id="seatTop">
-        <div class="col-md-4 col-sm-6 col-xs-12 seatBlock"
-             style=" filter: drop-shadow( 10px 10px 5px #0c5460);">
+        <div class="col-md-4 col-sm-6 col-xs-12 seatBlock"             style=" filter: drop-shadow( 10px 10px 5px #0c5460);">
             <div class="project-item">
-                <img src="/index/images/2.jpg" alt="">
+                <img id="tanchuang" @click="toast" src="/index/images/2.jpg" alt="">
                 <h4>未使用</h4>
             </div>
+            <!--vue弹窗js-->
+            <script type="text/javascript">
+
+                new Vue({
+                    el: '#tanchuang',
+                    methods: {
+                        toast: function () {
+                            this.$messagebox.show({
+                                'title': 'hello',
+                                'describe': 'everyOne'
+                            }, {
+                                cb: function () {
+                                    alert('点击确认以后的回调')
+                                },
+                                buttonName: ['关闭', '确定']
+                            });
+                        }
+                    }
+                })
+            </script>
         </div>
         <div class="col-md-4 col-sm-6 col-xs-12 seatBlock">
             <div class="project-item">
@@ -35,6 +57,7 @@
             </div>
         </div>
     </div>
+
     <div id="dataSeat">
         <!--循环数据-->
         <div id="forSeat">
@@ -192,6 +215,7 @@
         </div>
     </div>
 </div>
+
 
 
 
