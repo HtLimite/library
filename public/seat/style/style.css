@@ -3,7 +3,7 @@
 
 }
 
-.seatNav{
+.seatNav {
     position: relative;
 }
 
@@ -38,10 +38,10 @@
 
 .seatNav > ul > li {
     margin-left: 37px;
-    cursor:pointer;
+    cursor: pointer;
 }
 
-.seatType{
+.seatType {
     position: absolute;
     width: 100px;
     background: rgb(0 0 0 / 80%);
@@ -54,34 +54,41 @@
     left: 66px;
 }
 
-.seatType > ul > li{
+.seatType > ul > li {
     padding: 7px;
     border-bottom: solid;
     width: 100%;
-    cursor:pointer;
+    cursor: pointer;
 }
-.seatType > ul > li:hover{
+
+.seatType > ul > li:hover {
     background: #ccc;
 }
-#seatOne, #seatTop, #dataSeat, #forSeat, #seatInfo{
+
+#seatOne, #seatTop, #dataSeat, #forSeat, #seatInfo {
     overflow: hidden;
     height: auto;
 }
-#seatOne{
-    min-height:387px;
+
+#seatOne {
+    min-height: 387px;
 }
-#seatInfo{
-    padding:0;
+
+#seatInfo {
+    padding: 0;
 }
-.seatRow{
+
+.seatRow {
     padding: 37px;
 }
-.searchForm{
+
+.searchForm {
     position: relative;
-    height:30px;
-    width:30px;
+    height: 30px;
+    width: 30px;
 }
-.returnTop{
+
+.returnTop {
     display: none;
     width: 43px;
     height: 43px;
@@ -89,15 +96,84 @@
     bottom: 70px;
     right: 0;
     border: solid white;
-    background: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);    color: white;
+    background: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
+    color: white;
     border-radius: 5px 0 0 5px;
 }
-.returnTop i{
+
+.returnTop i {
     height: 43px;
     width: 43px;
     font-size: 45px;
 }
-.returnTop:hover{
-    background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898; background-blend-mode: multiply,multiply;
 
+.returnTop:hover {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(0, 0, 0, 0.15) 100%), radial-gradient(at top center, rgba(255, 255, 255, 0.40) 0%, rgba(0, 0, 0, 0.40) 120%) #989898;
+    background-blend-mode: multiply, multiply;
+
+}
+
+/*预约Form*/
+.dialog-inner div form {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.dialog-inner div form h2 {
+    margin-top: 20px;
+    padding-bottom: 15px;
+}
+
+.clockpicker {
+    margin-bottom: 7px;
+    font-size: 20px;
+}
+
+.clockpicker i {
+    font-size: 24px;
+}
+
+.clockpicker input {
+    cursor: pointer;
+    font-weight: 600;
+    margin-left: 17px;
+    width: 70px;
+    height: 30px;
+    background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);
+    border-radius: 5px;
+    border: solid white;
+}
+.clockpicker input:hover{
+    background-image: linear-gradient(-225deg, #FFE29F 0%, #FFA99F 48%, #FF719A 100%);
+}
+.endInput {
+    color: #ffb1b1;
+}
+
+.dialog-inner div h1 {
+    font-size: 33px;
+    margin: 20px auto 30px auto;
+}
+
+.numSeat {
+    margin-top: 23px;
+    font-size: 55px;
+}
+.timeType{
+    background: black;
+    color: #ababab;
+}
+.butYuyue{
+    border: none;
+    height: 30px;
+    width: 60px;
+    background-image: linear-gradient(to top, #d5d4d0 0%, #d5d4d0 1%, #eeeeec 31%, #efeeec 75%, #e9e9e7 100%);
+}
+.butYuyue:hover{
+    background-image: linear-gradient(-225deg, #B7F8DB 0%, #50A7C2 100%);
+}
+.endDiv{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 30px;
 }

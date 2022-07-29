@@ -1,6 +1,5 @@
 
 
-
 <h2 style="margin: 70px auto;text-align: center;font-size: 27px;">搜索{{$value}}结果如下:</h2>
 
 
@@ -15,7 +14,7 @@
             @case("未使用")
             <div class="col-md-4 col-sm-6 col-xs-12 seatBlock"
                  style=" filter: drop-shadow( 10px 10px 5px #0c5460);">
-                <div class="project-item">
+                <div class="project-item " style="cursor: pointer" onclick="yuyueForm({{$info->id}});">
                     <img src="/index/images/1.jpg" alt="">
                     {{$info->id}}
                     <div class="project-hover">

@@ -12,6 +12,7 @@ $(".seatType").hover(function () {
 let searBut = $("#searchI");
 searBut.click(function (){
     $(".searchLi").nextAll().hide();
+    $(".seatType").hide();
     $(".searchLi").css("margin-right","233px");
 });
 $(".close").click(function(){
@@ -165,6 +166,45 @@ $(".returnTop").click(function (){
     $('body,html').animate({ scrollTop: 0 }, 800);
     // $(window).scrollTop(0);
 });
+
+//预约表单
+function yuyueForm(id){
+    //弹出模态框
+    $(".trigger").click();
+    id = id;
+    // str = '<div class="numSeat">'+id+'</div>';
+    $(".numSeat").html(id);
+
+}
+//预约ajax
+function yuYue(obj) {
+    //获取值
+    var begin = $("#beginT").val();
+    var end = $("#endT").val();
+    //解析时间
+    begin = begin.split(":");
+    end = end.split(":");
+    //分钟比较
+    begin[1] = Number(begin[1]);
+    end[1] = Number(end[1]);
+    //有效预约时间 8:00-23:00 不小于30分钟 不能为23点
+    if(begin[0] > end[0] || begin[0] === end[0] && begin[1]+30 > end[1] || begin[0] < 8 || end[0] >= 23){
+        spop({
+            template: '<h4 style="color: #a5fed7" class="spop-body">无效的预约时间!</h4>',
+            position: 'top-center',
+            style: 'error',
+            autoclose: 2000,
+        });
+        return false;
+    }
+    //验证通过ajax预约
+
+
+    console.log(begin,end);
+    return false;
+}
+
+
 
 
 

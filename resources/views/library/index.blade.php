@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/index/css/test.css">
     <script src="/student/js/jquery-3.2.1.min.js"></script>
     <script src="/index/js/test.js" type="text/javascript"></script>
-{{--    div在最后--}}
+    {{--    div在最后--}}
 
     {{--    //管理员登录弹窗--}}
 <!-- <link rel="stylesheet" type="text/css" href="css/normalize.css" /> -->
@@ -32,8 +32,24 @@
     <link rel="stylesheet" href="/seat/style/style.css">
     <!-- 时间选择-->
 {{--    <link href="/seat/style/index.css" rel="stylesheet">--}}
-    <!--搜索-->
+<!--搜索-->
     <link rel="stylesheet" href="/seat/search/css/search-form.css">
+
+    <!-- css3 svg弹窗-->
+    <link rel="stylesheet" type="text/css" href="/seat/style/dialog.css"/>
+    <link rel="stylesheet" type="text/css" href="/seat/style/dialog-henry.css"/>
+    <script src="/seat/snap.svg-min.js"></script>
+    <script src="/seat/modernizr.custom.js"></script>
+
+    <!-- css3 svg弹窗-->
+    <script src="/seat/classie.js"></script>
+    <script src="/seat/dialogFx.js"></script>
+
+
+    <!--时间选择 -->
+    <!-- ClockPicker样式表 -->
+    <link rel="stylesheet" type="text/css" href="/seat/style/bootstrap-clockpicker.css">
+    <script type="text/javascript" src="/seat/bootstrap-clockpicker.js"></script>
 
 
     <script src="/index/js/vendor/modernizr-2.6.2.min.js"></script>
@@ -82,7 +98,7 @@
                                                 </p>
                                                 <p style="position: relative"><label><i
                                                             class="fa-solid fa-lock"></i></label><input
-                                                     required   type="password"/></p>
+                                                        required type="password"/></p>
                                                 <p>
                                                     <button type="submit">登录</button>
                                                 </p>
@@ -297,29 +313,33 @@
 
                 <div id="menu-3" class="content gallery-section">
 
+
                     <div class="box-content" id="seatInfo">
                         <!--导航菜单-->
                         <div class="seatDiv" id="seatNav">
-                            <div><h3 class="widget-title" style="cursor: pointer" id="seatIndex" onclick="page(1,true)"><i class="fa-solid fa-table "></i> 座位信息</h3>
+                            <div><h3 class="widget-title" style="cursor: pointer" id="seatIndex" onclick="page(1,true)">
+                                    <i class="fa-solid fa-table "></i> 座位信息</h3>
                             </div>
                             <div class="seatNav">
                                 <ul>
                                     <li class="searchLi">
-                                        <form  onsubmit="return false"  class="searchForm">
+                                        <form onsubmit="return false" class="searchForm">
                                             <div class="search-wrapper">
                                                 <div class="input-holder">
-                                                    <input  type="text" class="search-input"
-                                                           placeholder="Type to search" required  />
-                                                    <button  id="searchI" class="search-icon"
+                                                    <input type="text" class="search-input"
+                                                           placeholder="Type to search" required/>
+                                                    <button id="searchI" class="search-icon"
                                                             onclick="searchToggle(this, event);">
                                                         <span style="display: none;">
                                                         </span>
                                                         <i style="font-size: 21px"
                                                            class="fa-solid fa-magnifying-glass"></i>
                                                     </button>
-                                                    <input type="submit" id="subSear" onclick="submitFn(this, event);" style="display: none">
-                                                    <button type="submit" style="display: none" onclick="subSearch1();" id="searchI1" class="search-icon"
-                                                            >
+                                                    <input type="submit" id="subSear" onclick="submitFn(this, event);"
+                                                           style="display: none">
+                                                    <button type="submit" style="display: none" onclick="subSearch1();"
+                                                            id="searchI1" class="search-icon"
+                                                    >
                                                         <span style="display: none;">
                                                         </span>
                                                         <i style="font-size: 21px"
@@ -350,6 +370,141 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- css3 svg弹窗-->
+
+                        <div id="cssTan">
+                            <div class="button-wrap" style="display: none">
+                                <button data-dialog="somedialog" class="trigger">Open Dialog</button>
+                            </div>
+                            <div id="somedialog" class="dialog">
+                                <div class="dialog__overlay"></div>
+                                <div class="dialog__content" style="padding-top: 0;">
+                                    <div class="morph-shape"
+                                         data-morph-open="M0,0h80c0,0,0,9.977,0,29.834c0,19.945,0,30.249,0,30.249H0c0,0,0-10.055,0-30.332C0,8.219,0,0,0,0z"
+                                         data-morph-close="M0,29.75h80c0,0-3.083,0.014-3.083,0.041c0,0.028,3.083,0.042,3.083,0.042H0c0,0,3.084-0.014,3.084-0.042
+	C3.084,29.762,0,29.75,0,29.75z">
+                                        <svg width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none">
+                                            <path d="M0,29.75h80c0,0-3.083,0.014-3.083,0.041c0,0.028,3.083,0.042,3.083,0.042H0c0,0,3.084-0.014,3.084-0.042
+	C3.084,29.762,0,29.75,0,29.75z"></path>
+                                        </svg>
+                                    </div>
+
+                                    <!--内容-->
+                                    <div class="dialog-inner">
+
+                                        <div class="input ">
+
+                                            <h1><i class="fa-solid fa-book-open-reader"></i> 预约</h1>
+                                            <form class="" id="yuyueForm" onsubmit="return yuYue(this);">
+                                                <div>
+                                                    <h2 class="seatId">座位号</h2>
+                                                    <div class="numSeat">7</div>
+                                                </div>
+                                                <div>
+
+                                                    <fieldset>
+                                                        <div class="clockpicker"><i class="fa-regular fa-clock"></i>
+                                                            <span>开始时间</span>
+                                                            <input id="beginT" required>
+                                                        </div>
+                                                        <div class="clockpicker"><i class="fa-regular fa-clock"></i>
+                                                            <span>结束时间</span>
+                                                            <input required id="endT" class="endInput"></div>
+                                                    </fieldset>
+
+                                                    <fieldset>
+                                                        <p class="timeType"><span>&nbsp;有效预约时间:8:00-23:00</span></p>
+                                                    </fieldset>
+
+                                                    <fieldset>
+                                                        <div class="endDiv">
+                                                            <button type="button" class="action butYuyue"
+                                                                    data-dialog-close>关闭
+                                                            </button>
+
+                                                            <input type="submit" class="butYuyue" onclick=""
+                                                                   id="bn1"
+                                                                   value="预约">
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        {{--                    时间选择--}}
+                                        <script type="text/javascript">
+                                            $('.clockpicker').clockpicker()
+                                                .find('input').change(function () {
+                                                // TODO：时间改变
+                                                // console.log(this.value);
+                                            });
+                                            $('#demo-input').clockpicker({
+                                                autoclose: true
+                                            });
+
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                {{--            弹窗--}}
+                                (function () {
+
+
+                                    var dlgtrigger = document.querySelector('[data-dialog]'),
+
+
+                                        somedialog = document.getElementById(dlgtrigger.getAttribute('data-dialog')),
+
+                                        // svg..
+
+                                        morphEl = somedialog.querySelector('.morph-shape'),
+
+                                        s = Snap(morphEl.querySelector('svg')),
+
+                                        path = s.select('path'),
+
+                                        steps = {
+
+                                            open: morphEl.getAttribute('data-morph-open'),
+
+                                            close: morphEl.getAttribute('data-morph-close')
+
+                                        },
+
+                                        dlg = new DialogFx(somedialog, {
+
+                                            onOpenDialog: function (instance) {
+
+                                                // animate path
+
+                                                path.stop().animate({
+                                                    'path': steps.open
+                                                }, 400, mina.easeinout);
+
+                                            },
+
+                                            onCloseDialog: function (instance) {
+
+                                                // animate path
+
+                                                path.stop().animate({
+                                                    'path': steps.close
+                                                }, 400, mina.easeinout);
+
+                                            }
+
+                                        });
+
+
+                                    dlgtrigger.addEventListener('click', dlg.toggle.bind(dlg));
+
+
+                                })();
+                            </script>
+                        </div>
+
+
                         <div class="row seatRow">
                             <!--vue轮播图-->
                             <div id="app">
@@ -384,7 +539,7 @@
 
                             <div id="seatOne">
                             </div>
-                            <div class="returnTop" > <i id="returnTop" class="fa-solid fa-chevron-up"></i></div>
+                            <div class="returnTop"><i id="returnTop" class="fa-solid fa-chevron-up"></i></div>
                         </div>
                     </div>
                 </div>
@@ -633,6 +788,8 @@
 {{--管理员登录弹窗--}}
 <script src="/adminlogin/js/classie.js"></script>
 <script src="/adminlogin/js/uiMorphingButton_fixed.js"></script>
+
+
 <script>
     //模板函数
     (function () {
@@ -712,12 +869,7 @@
         document.getElementById("adminButton").click();
     }
 
-    //认证账号ajax
-    function enrol(obj) {
-        //表单序列化
-        var str = $("enrolForm").serialize();
-        console.log(obj, str);
-    }
+
 
     //QQ邮箱登录/注册
     function QQenrol(obj) {
@@ -725,11 +877,11 @@
         //获取qq邮箱
         const qqeamil = $("#subscribe-email").val();
         //js验证qq邮箱
-        if(qqeamil == ""){
+        if (qqeamil == "") {
             return;
         }
         const qqEmail = /[1-9][0-9]{4,}@qq.com/;
-        if ( !qqEmail.test(qqeamil)) {
+        if (!qqEmail.test(qqeamil)) {
             spop({
                 template: '<h4 style="color: white" class="spop-body">请输入正确的QQ邮箱!</h4>',
                 position: 'top-left',
@@ -740,7 +892,7 @@
         }
         var regex = /^(.*)(select|insert|into |delete|from |count|drop|join|union|table|database|update|truncate|asc\(|mid\(|char\(|xp_cmdshell|exec |master|net localgroup administrators|\"|:|net user|\| or )(.*)$/gi;
 
-        if(regex.test(qqeamil)) {
+        if (regex.test(qqeamil)) {
             spop({
                 template: '<h4 style="color: red" class="spop-body">当你看到这条信息时,摄像头前的你正在犯罪!</h4>',
                 position: 'bottom-right',
@@ -778,8 +930,6 @@
             }
         });
     }
-
-
 </script>
 
 
