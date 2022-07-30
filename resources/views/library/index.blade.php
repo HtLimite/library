@@ -189,7 +189,7 @@
                             purpose. Please tell your friends about our
                             website. Thank you.</p>
                         @if(!session()->has('email'))
-                            <script> var statu = false;</script>
+                            <script> var isLogined = false;</script>
 
                             <form id="logForm" onsubmit="return false;" class="subscribe-form">
                                 @csrf
@@ -208,7 +208,7 @@
                             </form>
 
                         @else
-                            <script> var statu = true;</script>
+                            <script> var isLogined = true;</script>
                         @endif
 
                     </div>
@@ -444,66 +444,82 @@
 
                                         </script>
                                     </div>
+                                    <script>
+                                        {{--            弹窗--}}
+                                        (function () {
+
+
+                                            var dlgtrigger = document.querySelector('[data-dialog]'),
+
+
+                                                somedialog = document.getElementById(dlgtrigger.getAttribute('data-dialog')),
+
+                                                // svg..
+
+                                                morphEl = somedialog.querySelector('.morph-shape'),
+
+                                                s = Snap(morphEl.querySelector('svg')),
+
+                                                path = s.select('path'),
+
+                                                steps = {
+
+                                                    open: morphEl.getAttribute('data-morph-open'),
+
+                                                    close: morphEl.getAttribute('data-morph-close')
+
+                                                },
+
+                                                dlg = new DialogFx(somedialog, {
+
+                                                    onOpenDialog: function (instance) {
+
+                                                        // animate path
+
+                                                        path.stop().animate({
+                                                            'path': steps.open
+                                                        }, 400, mina.easeinout);
+
+                                                    },
+
+                                                    onCloseDialog: function (instance) {
+
+                                                        // animate path
+
+                                                        path.stop().animate({
+                                                            'path': steps.close
+                                                        }, 400, mina.easeinout);
+
+                                                    }
+
+                                                });
+
+
+                                            dlgtrigger.addEventListener('click', dlg.toggle.bind(dlg));
+
+
+                                        })();
+                                    </script>
+
                                 </div>
                             </div>
-                            <script>
-                                {{--            弹窗--}}
-                                (function () {
-
-
-                                    var dlgtrigger = document.querySelector('[data-dialog]'),
-
-
-                                        somedialog = document.getElementById(dlgtrigger.getAttribute('data-dialog')),
-
-                                        // svg..
-
-                                        morphEl = somedialog.querySelector('.morph-shape'),
-
-                                        s = Snap(morphEl.querySelector('svg')),
-
-                                        path = s.select('path'),
-
-                                        steps = {
-
-                                            open: morphEl.getAttribute('data-morph-open'),
-
-                                            close: morphEl.getAttribute('data-morph-close')
-
-                                        },
-
-                                        dlg = new DialogFx(somedialog, {
-
-                                            onOpenDialog: function (instance) {
-
-                                                // animate path
-
-                                                path.stop().animate({
-                                                    'path': steps.open
-                                                }, 400, mina.easeinout);
-
-                                            },
-
-                                            onCloseDialog: function (instance) {
-
-                                                // animate path
-
-                                                path.stop().animate({
-                                                    'path': steps.close
-                                                }, 400, mina.easeinout);
-
-                                            }
-
-                                        });
-
-
-                                    dlgtrigger.addEventListener('click', dlg.toggle.bind(dlg));
-
-
-                                })();
-                            </script>
                         </div>
 
+                        <!--未登录弹窗-->
+
+                        <div class="input " id="unLoginDiv" style="display: none">
+                            <h1 style="font-size: 30px;padding: 30px"><i class="fa-solid fa-triangle-exclamation"></i>  未登录</h1>
+                            <fieldset>
+                                <div class="endDiv">
+                                    <button type="button" onclick="EscClose();" class="action butYuyue" data-dialog-close>关闭
+                                    </button>
+
+                                    <input type="button" class="butYuyue" onclick=""
+                                           id="bn1"
+                                           value="登录">
+                                </div>
+                            </fieldset>
+                        </div>
 
                         <div class="row seatRow">
                             <!--vue轮播图-->
@@ -693,7 +709,7 @@
     window.onload = function () {
         var onece = true;
         if (onece) {
-            if (statu) {
+            if (isLogined) {
                 spop({
                     template: '<h4 style="color: #207d59" class="spop-body">欢迎您的登录</h4>',
                     position: 'top-center',

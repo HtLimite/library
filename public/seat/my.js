@@ -10,15 +10,16 @@ $(".seatType").hover(function () {
 
 //搜索框展示
 let searBut = $("#searchI");
-searBut.click(function (){
+searBut.click(function () {
     $(".searchLi").nextAll().hide();
     $(".seatType").hide();
-    $(".searchLi").css("margin-right","233px");
+    $(".searchLi").css("margin-right", "233px");
 });
-$(".close").click(function(){
+$(".close").click(function () {
     $(".searchLi").nextAll().show(700)
-    $(".searchLi").css("margin-right","0");
+    $(".searchLi").css("margin-right", "0");
 });
+
 //button 绑定事件处理
 function searchToggle(obj, evt) {
     var container = $(obj).closest('.search-wrapper');
@@ -26,42 +27,45 @@ function searchToggle(obj, evt) {
 
     if (!container.hasClass('active')) {
         container.addClass('active');
-        $("#searchI").css("display","none");
-        $("#searchI1").css("display","block");
+        $("#searchI").css("display", "none");
+        $("#searchI1").css("display", "block");
         evt.preventDefault();
 
     } else if (container.hasClass('active') && $(obj).closest('.input-holder').length == 0) {
 
-        $("#searchI1").css("display","none");
+        $("#searchI1").css("display", "none");
 
-        $("#searchI").css("display","block");
+        $("#searchI").css("display", "block");
 
         container.removeClass('active');
         // clear input
         container.find('.search-input').val('');
         // clear and hide result container when we press close
-        container.find('.result-container').fadeOut(100, function() {
+        container.find('.result-container').fadeOut(100, function () {
             $(this).empty();
         });
     }
 }
+
 //button submit 属性不生效 input 隐藏域
-function subSearch1(){
+function subSearch1() {
     $("#subSear").click();
 }
+
 //搜索结果传递查询
 //函数节流
 let lock = true;
+
 function submitFn(obj, evt) {
     //获取结果,去除所有空格
-    value = $('.search-input').val().replace(/\s+/g,"");
+    value = $('.search-input').val().replace(/\s+/g, "");
     //ajax搜索结果
     //防sql注入
     var regex = /^(.*)(select|insert|into |delete|from |count|drop|join|union|table|database|update|truncate|asc\(|mid\(|char\(|xp_cmdshell|exec |master|net localgroup administrators|\"|:|net user|\| or )(.*)$/gi;
-    if (value === "" ){
+    if (value === "") {
         return;
     }
-    if(regex.test(value)) {
+    if (regex.test(value)) {
         //sql注入成功
         spop({
             template: '<h4 style="color: red" class="spop-body">当你看到这条信息时,摄像头前的你正在犯罪!</h4>',
@@ -73,30 +77,31 @@ function submitFn(obj, evt) {
     }
 
     //函数节流验证
-    if(lock){
+    if (lock) {
         //验证通过,调用请求
-        searchAjax(1,true);
+        searchAjax(1, true);
         //关锁
         lock = false;
-        setTimeout(function (){
+        setTimeout(function () {
             lock = true;
-        },3000);
+        }, 3000);
     }
 
 
 }
+
 //搜索ajax
-function searchAjax(page,bool){
+function searchAjax(page, bool) {
     var bool = bool;
-    $.get(' library/{1}/edit',{value:value,page:page},function (data){
-        if(data == 0){
+    $.get(' library/{1}/edit', {value: value, page: page}, function (data) {
+        if (data == 0) {
             spop({
                 template: '<h4 style="color: #a5fed7" class="spop-body">搜索失败!</h4>',
                 position: 'bottom-right',
                 style: 'error',
                 autoclose: 2000,
             });
-        }else {
+        } else {
             if (bool) {
                 spop({
                     template: '<h4 style="color: black" class="spop-body">搜索成功!</h4>',
@@ -112,8 +117,6 @@ function searchAjax(page,bool){
 }
 
 
-
-
 //ajax筛选结果
 var filterArray = [$("#weishiyong"), $("#yuyuezhong"), $("#yiyuyue"), $("#shiyongzhong"), $("#likai")];
 
@@ -125,14 +128,14 @@ for (const [index, elem] of filterArray.entries()) {
         let seatStatus = elem.attr('id');
 
         $.get('/library/4', {'status': seatStatus}, function (data) {
-            if(data == 0){
+            if (data == 0) {
                 spop({
                     template: '<h4 style="color: #a5fed7" class="spop-body">获取座位信息失败!</h4>',
                     position: 'bottom-right',
                     style: 'error',
                     autoclose: 2000,
                 });
-            }else {
+            } else {
                 spop({
                     template: '<h4 style="color: white" class="spop-body">查询成功!</h4>',
                     position: 'bottom-center',
@@ -146,63 +149,95 @@ for (const [index, elem] of filterArray.entries()) {
     });
 }
 //flex //返回顶部
-$(function (){
-    $(window).scroll(function (){
+$(function () {
+    $(window).scroll(function () {
         var offset = $(document).scrollTop();
-        if(offset >= 250){
+        if (offset >= 250) {
             $(".seatDiv").addClass("seatDiv-fixed");
-        }else {
+        } else {
             $(".seatDiv").removeClass("seatDiv-fixed");
         }
-        if (offset >= 700){
+        if (offset >= 700) {
             $(".returnTop").show();
 
-        }else {
+        } else {
             $(".returnTop").hide();
         }
     });
 });
-$(".returnTop").click(function (){
-    $('body,html').animate({ scrollTop: 0 }, 800);
+$(".returnTop").click(function () {
+    $('body,html').animate({scrollTop: 0}, 800);
     // $(window).scrollTop(0);
 });
 
 //预约表单
-function yuyueForm(id){
+function yuyueForm(id) {
     //弹出模态框
     $(".trigger").click();
-    id = id;
-    // str = '<div class="numSeat">'+id+'</div>';
-    $(".numSeat").html(id);
-
+    if (isLogined) {
+        //登录用户
+        id = id;
+        // str = '<div class="numSeat">'+id+'</div>';
+        $(".numSeat").html(id);
+        return;
+    } else {
+        let unLoginDiv = $("#unLoginDiv").html();
+        $(".dialog-inner").html(unLoginDiv);
+    }
 }
+function EscClose(e){
+    if (HTMLElement && !HTMLElement.prototype.pressKey) {
+        HTMLElement.prototype.pressKey = function(code) {
+            var evt = document.createEvent('UIEvents');
+            evt.keyCode = code;
+            evt.initEvent('keydown', true, true);
+            this.dispatchEvent(evt);
+        };
+    }
+    //主动触发ESC按键
+    document.body.pressKey(27);
+}
+
 //预约ajax
-function yuYue(obj) {
-    //获取值
-    var begin = $("#beginT").val();
-    var end = $("#endT").val();
-    //解析时间
-    begin = begin.split(":");
-    end = end.split(":");
-    //分钟比较
-    begin[1] = Number(begin[1]);
-    end[1] = Number(end[1]);
-    //有效预约时间 8:00-23:00 不小于30分钟 不能为23点
-    if(begin[0] > end[0] || begin[0] === end[0] && begin[1]+30 > end[1] || begin[0] < 8 || end[0] >= 23){
-        spop({
-            template: '<h4 style="color: #a5fed7" class="spop-body">无效的预约时间!</h4>',
-            position: 'top-center',
-            style: 'error',
-            autoclose: 2000,
+    function yuYue(obj) {
+        //获取值
+        var begin1 = $("#beginT").val();
+        var end1 = $("#endT").val();
+        //解析时间
+        begin = begin1.split(":");
+        end = end1.split(":");
+        //分钟比较
+        begin[1] = Number(begin[1]);
+        end[1] = Number(end[1]);
+        //有效预约时间 8:00-23:00 不小于30分钟 不能为23点
+        if (begin[0] > end[0] || begin[0] < 8 || end[0] >= 23) {
+            spop({
+                template: '<h4 style="color: #a5fed7" class="spop-body">无效的预约时间!</h4>',
+                position: 'top-center',
+                style: 'error',
+                autoclose: 2000,
+            });
+            return false;
+        }
+        if (begin[0] === end[0] && begin[1] + 30 > end[1]) {
+            spop({
+                template: '<h4 style="color: #a5fed7" class="spop-body">预约时间不能短于30分钟!</h4>',
+                position: 'top-center',
+                style: 'error',
+                autoclose: 2000,
+            });
+            return false;
+        }
+        //验证通过ajax预约
+        $.get('/reserve/create', {beginTime: begin1, endTime: end1}, function (data) {
+
         });
+
+
+        console.log(begin, end);
         return false;
     }
-    //验证通过ajax预约
 
-
-    console.log(begin,end);
-    return false;
-}
 
 
 

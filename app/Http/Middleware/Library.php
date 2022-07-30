@@ -18,7 +18,7 @@ class Library
         if($request->session()->has('email')){
             return $next($request);
         }else{
-            return redirect('/library/index');
+            return redirect('/library');
         }
 
     }

@@ -55,5 +55,4 @@ Route::get('/logVerify','Student\EmailController@logVerify');
 
 //图书资源
 Route::group(['middleware' => 'Library'],function (){
-
-});
+    Route::resource('/reserve','ReserveController');});
