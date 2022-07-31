@@ -165,7 +165,6 @@
         </ul>
     </div>
 </div>
-<div class="copyrights">Collect from <a href="https://www.webmoban.net">免费模板</a></div>
 <div class="container" id="page-content" style="min-height: 100vh;">
     <div class="row">
 
@@ -217,21 +216,41 @@
                 <div id="menu-2" class="content about-section">
                     <div class="row">
                         <div class="col-md-8 col-sm-8">
-                            <div class="box-content profile">
-                                <h3 class="widget-title">Learn 我的</h3>
+                            <div class="box-content profile" id="leftDiv">
+                                <h3 class="widget-title"><i class="fa-solid fa-user-clock"></i>&nbsp;&nbsp;我的信息</h3>
                                 <div class="profile-thumb">
                                     <img src="/index/images/8.jpg" alt="">
                                 </div>
                                 <div class="profile-content">
-                                    <h5 class="profile-name">Linda Beauty</h5>
-                                    <span class="profile-role">Creative Director</span>
-                                    <p>Most of the /index/images are from <a rel="nofollow" href="#">Unsplash.com</a>
-                                        website.
-                                        Curabitur auctor justo pretium purus varius sagittis. Aliquam porttitor leo
-                                        sapien, hendrerit dapibus lorem.<br><br> Change icons
-                                        by <a rel="nofollow" href="#/font-awesome-icon-world-map/">Font Awesome</a>
-                                        (version 4). Example: <span class="blue">&lt;i class=&quot;fa fa-refresh&quot;&gt;&lt;/i&gt;</span>
-                                    </p>
+                                    <h5 class="profile-name"><i class="fa-solid fa-envelope">&nbsp;邮箱</i>1445919044@qq.com
+                                    </h5>
+                                    <span class="profile-role"></span>
+                                    <div class="myLi">
+                                        <ul>
+                                            <li><i class="fa-solid fa-chair"></i>&nbsp;座位号<span>77</span></li>
+                                            <li><i class="fa-regular fa-hourglass"></i>&nbsp;预约时间</li>
+                                            <li><i class="fa-solid fa-clock"></i>&nbsp;2022-7-31 8:00</li>
+                                            <li><i class="fa-solid fa-clock"></i>&nbsp;2022-7-31 23:00</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="myBottomDiv">
+                                    <div class="profile-content-seatOne">
+                                        <div class="progressbar"></div>
+                                        <ul>
+                                            <li></li>
+                                            <li></li>
+                                            <li></li>
+                                        </ul>
+                                    </div>
+                                        <div class="profile-content-seatTwo">
+                                        <ul>
+                                            <li>已预约</li>
+                                            <li>使用中</li>
+                                            <li>已结束</li>
+                                        </ul>
+                                        </div>
+
                                 </div>
                             </div>
                         </div>
@@ -317,7 +336,7 @@
                     <div class="box-content" id="seatInfo">
                         <!--导航菜单-->
                         <div class="seatDiv" id="seatNav">
-                            <div><h3 class="widget-title" style="cursor: pointer" id="seatIndex" onclick="page(1,true)">
+                            <div><h3 class="widget-title" style="cursor: pointer;color: white;" id="seatIndex" onclick="page(1,true)">
                                     <i class="fa-solid fa-table "></i> 座位信息</h3>
                             </div>
                             <div class="seatNav">
@@ -508,13 +527,15 @@
                         <!--未登录弹窗-->
 
                         <div class="input " id="unLoginDiv" style="display: none">
-                            <h1 style="font-size: 30px;padding: 30px"><i class="fa-solid fa-triangle-exclamation"></i>  未登录</h1>
+                            <h1 style="font-size: 30px;padding: 30px"><i class="fa-solid fa-triangle-exclamation"></i>
+                                未登录</h1>
                             <fieldset>
                                 <div class="endDiv">
-                                    <button type="button" onclick="EscClose();" class="action butYuyue" data-dialog-close>关闭
+                                    <button type="button" onclick="EscClose();" class="action butYuyue"
+                                            data-dialog-close>关闭
                                     </button>
 
-                                    <input type="button" class="butYuyue" onclick=""
+                                    <input type="button" class="butYuyue" onclick="homebutton();"
                                            id="bn1"
                                            value="登录">
                                 </div>
@@ -631,7 +652,8 @@
                         <a class="show-1 active homebutton" href="#"><i class="fa fa-home"></i>首页</a>
                     </li>
                     <li>
-                        <a id="shouye" class="show-2 aboutbutton" href="#"><i class="fa fa-user"></i>我的</a>
+                        <a id="shouye" class="show-2 aboutbutton" onclick="myMessage(student);" href="#"><i
+                                class="fa fa-user"></i>我的</a>
                     </li>
                     <li>
                         <a class="show-3 projectbutton" href="#" onclick="seat();"><i
@@ -730,6 +752,8 @@
             return;
         }
     }
+    //用户邮箱传入js全局变量
+    var student = "<?php echo session('email');?>";
     //座位展示
     //监控浏览器屏幕大小
     $(window).resize(function () {
@@ -886,7 +910,6 @@
     }
 
 
-
     //QQ邮箱登录/注册
     function QQenrol(obj) {
 
@@ -922,7 +945,7 @@
             //注册 2
             if (data == 2) {
                 spop({
-                    template: '<h4 style="color: #eec50f" class="spop-body">请查收QQ邮箱验证注册 </h4>',
+                    template: '<h4 style="color: black" class="spop-body">请查收QQ邮箱验证注册 </h4>',
                     position: 'top-left',
                     style: 'success',
                     autoclose: 3000,
@@ -931,7 +954,7 @@
             } else if (data == 1) {
                 //登录 1
                 spop({
-                    template: '<h4 style="color: #eec50f" class="spop-body">请查收QQ邮箱验证登录 </h4>',
+                    template: '<h4 style="color: black" class="spop-body">请查收QQ邮箱验证登录 </h4>',
                     position: 'top-left',
                     style: 'success',
                     autoclose: 3000,

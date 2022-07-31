@@ -139,10 +139,9 @@
 }
 
 .spop--error, .spop--info, .spop--success, .spop--warning {
-    color: #fff;
-    background-color: #207d5954;
+    color: black;
+    background-image: linear-gradient(to top, #bdc2e8 0%, #bdc2e8 1%, #e6dee9 100%);
 }
-
 @-webkit-keyframes spopIn {
     0% {
         -webkit-transform: scale(.2, .2);

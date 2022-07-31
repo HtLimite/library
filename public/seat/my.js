@@ -185,6 +185,7 @@ function yuyueForm(id) {
         $(".dialog-inner").html(unLoginDiv);
     }
 }
+//关闭未登录弹窗
 function EscClose(e){
     if (HTMLElement && !HTMLElement.prototype.pressKey) {
         HTMLElement.prototype.pressKey = function(code) {
@@ -197,20 +198,25 @@ function EscClose(e){
     //主动触发ESC按键
     document.body.pressKey(27);
 }
+//跳转登录
+function homebutton(){
+    $(".homebutton").click();
+}
 
 //预约ajax
     function yuYue(obj) {
         //获取值
         var begin1 = $("#beginT").val();
         var end1 = $("#endT").val();
+        let id = $(".numSeat").text();
         //解析时间
         begin = begin1.split(":");
         end = end1.split(":");
         //分钟比较
         begin[1] = Number(begin[1]);
         end[1] = Number(end[1]);
-        //有效预约时间 8:00-23:00 不小于30分钟 不能为23点
-        if (begin[0] > end[0] || begin[0] < 8 || end[0] >= 23) {
+        //有效预约时间 8:00-23:00 不小于30分钟
+        if (begin[0] > end[0] || begin[0] < 8 || end[0] >  23) {
             spop({
                 template: '<h4 style="color: #a5fed7" class="spop-body">无效的预约时间!</h4>',
                 position: 'top-center',
@@ -229,14 +235,54 @@ function EscClose(e){
             return false;
         }
         //验证通过ajax预约
-        $.get('/reserve/create', {beginTime: begin1, endTime: end1}, function (data) {
+        //button中...
+        $("#bn1").attr({'value':'预约中...'});
+        $("#bn1").css('background-image','linear-gradient(-225deg, #B7F8DB 0%, #50A7C2 100%)');
+        //ajax
+        $.get('/reserve/create', {id:id,beginTime: begin1, endTime: end1}, function (data) {
+            if(data[0] == 1){
+                spop({
+                    template: '<h4 style="color: #a5fed7" class="spop-body">预约成功</h4>',
+                    position: 'top-center',
+                    style: 'success',
+                    autoclose: 3000,
+                });
+                //button变化
+                $("#bn1").attr({'value':'已预约'});
+                $("#bn1").css('background-image','');
+                //跳转我的信息
+                logo();
+                //我的信息
+                myMessage(data[1]);
 
+            }else {
+                spop({
+                    template: '<h4 style="color: #a5fed7" class="spop-body">预约失败,请稍后再试!</h4>',
+                    position: 'top-center',
+                    style: 'error',
+                    autoclose: 3000,
+                });
+                $("#bn1").attr({'value':'预约'});
+                $("#bn1").css('background-image','');
+                console.log(data);
+            }
         });
-
-
-        console.log(begin, end);
         return false;
     }
+    //我的信息
+function myMessage(student){
+    //展示我的信息
+    if(student == ""){
+        //未登录用户
+        str = '<h1 style="font-size: 23px;margin: 40px;"><i class="fa-solid fa-user-xmark"></i>&nbsp;&nbsp;您未登录,请登录后查看</h1>';
+        $("#leftDiv").html(str);
+        return;
+    }
+    console.log(student);
+    $.get("/reserve/"+student,function (){
+
+    });
+}
 
 
 
