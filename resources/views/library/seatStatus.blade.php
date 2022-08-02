@@ -1,5 +1,6 @@
     <!--循环数据-->
     <div id="forSeat">
+        <h2 style="margin: 70px auto;text-align: center;font-size: 27px;">{{$status}}</h2>
         @foreach($seatInfo as $info)
 
 

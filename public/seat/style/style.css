@@ -115,6 +115,7 @@
 
 /*预约Form*/
 .dialog-inner div form {
+    color: black;
     display: flex;
     justify-content: space-evenly;
 }
@@ -173,7 +174,16 @@
     background-image: linear-gradient(-225deg, #B7F8DB 0%, #50A7C2 100%);
 }
 .endDiv{
+    color: black;
     display: flex;
     justify-content: space-evenly;
     margin-top: 30px;
+}
+/*未登录 我的信息*/
+.unLoginH3{
+    font-size: 23px;
+    background: white;
+    margin: 15px;
+    height: 370px;
+    padding: 30px;
 }

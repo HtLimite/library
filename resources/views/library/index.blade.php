@@ -122,7 +122,7 @@
                             <a href="#" class="fa-brands fa-facebook-f"></a>
                         </li>
                         <li>
-                            <a href="#" class="fa fa-twitter"></a>
+                            <a href="#" class="fa-solid fa-pen-to-square"></a>
                         </li>
                         <li>
                             <a href="#" class="fa fa-linkedin"></a>
@@ -143,6 +143,7 @@
     </div>
 </div>
 <!-- .top-header -->
+
 
 <div class="visible-xs visible-sm responsive-menu">
     <a href="#" class="toggle-menu">
@@ -213,45 +214,13 @@
                     </div>
                 </div>
 
-                <div id="menu-2" class="content about-section">
-                    <div class="row">
-                        <div class="col-md-8 col-sm-8">
-                            <div class="box-content profile" id="leftDiv">
-                                <h3 class="widget-title"><i class="fa-solid fa-user-clock"></i>&nbsp;&nbsp;我的信息</h3>
-                                <div class="profile-thumb">
-                                    <img src="/index/images/8.jpg" alt="">
-                                </div>
-                                <div class="profile-content">
-                                    <h5 class="profile-name"><i class="fa-solid fa-envelope">&nbsp;邮箱</i>1445919044@qq.com
-                                    </h5>
-                                    <span class="profile-role"></span>
-                                    <div class="myLi">
-                                        <ul>
-                                            <li><i class="fa-solid fa-chair"></i>&nbsp;座位号<span>77</span></li>
-                                            <li><i class="fa-regular fa-hourglass"></i>&nbsp;预约时间</li>
-                                            <li><i class="fa-solid fa-clock"></i>&nbsp;2022-7-31 8:00</li>
-                                            <li><i class="fa-solid fa-clock"></i>&nbsp;2022-7-31 23:00</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="myBottomDiv">
-                                    <div class="profile-content-seatOne">
-                                        <div class="progressbar"></div>
-                                        <ul>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                        </ul>
-                                    </div>
-                                        <div class="profile-content-seatTwo">
-                                        <ul>
-                                            <li>已预约</li>
-                                            <li>使用中</li>
-                                            <li>已结束</li>
-                                        </ul>
-                                        </div>
 
-                                </div>
+                <div id="menu-2" class="content about-section">
+                    <div class="row" id="leftDiv">
+                        <!--我的预约信息-->
+
+                        <div class="col-md-8 col-sm-8">
+                            <div class="box-content profile">
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-4">
@@ -260,13 +229,15 @@
                                 <p>Vestibulum pellentesque ante sit amet tristique hendrerit. Sed consequat, nunc
                                     lobortis faucibus pretium, enim nibh blandit est, nec sollicitudin est quam a neque.
                                     Aenean eget malesuada justo.</p>
+
                                 <div class="about-social">
+
                                     <ul>
                                         <li>
                                             <a class="fa-solid fa-gear"></a>
                                         </li>
                                         <li>
-                                            <a href="#" class="fa fa-twitter"></a>
+                                            <a href="#" onclick="editSeatInfo(8)" class="fa-solid fa-pen-to-square"></a>
                                         </li>
                                         <li>
                                             <a href="#" class="fa fa-linkedin"></a>
@@ -336,7 +307,8 @@
                     <div class="box-content" id="seatInfo">
                         <!--导航菜单-->
                         <div class="seatDiv" id="seatNav">
-                            <div><h3 class="widget-title" style="cursor: pointer;color: white;" id="seatIndex" onclick="page(1,true)">
+                            <div><h3 class="widget-title" style="cursor: pointer;color: white;" id="seatIndex"
+                                     onclick="page(1,true)">
                                     <i class="fa-solid fa-table "></i> 座位信息</h3>
                             </div>
                             <div class="seatNav">
@@ -390,139 +362,6 @@
                             </div>
                         </div>
 
-                        <!-- css3 svg弹窗-->
-
-                        <div id="cssTan">
-                            <div class="button-wrap" style="display: none">
-                                <button data-dialog="somedialog" class="trigger">Open Dialog</button>
-                            </div>
-                            <div id="somedialog" class="dialog">
-                                <div class="dialog__overlay"></div>
-                                <div class="dialog__content" style="padding-top: 0;">
-                                    <div class="morph-shape"
-                                         data-morph-open="M0,0h80c0,0,0,9.977,0,29.834c0,19.945,0,30.249,0,30.249H0c0,0,0-10.055,0-30.332C0,8.219,0,0,0,0z"
-                                         data-morph-close="M0,29.75h80c0,0-3.083,0.014-3.083,0.041c0,0.028,3.083,0.042,3.083,0.042H0c0,0,3.084-0.014,3.084-0.042
-	C3.084,29.762,0,29.75,0,29.75z">
-                                        <svg width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none">
-                                            <path d="M0,29.75h80c0,0-3.083,0.014-3.083,0.041c0,0.028,3.083,0.042,3.083,0.042H0c0,0,3.084-0.014,3.084-0.042
-	C3.084,29.762,0,29.75,0,29.75z"></path>
-                                        </svg>
-                                    </div>
-
-                                    <!--内容-->
-                                    <div class="dialog-inner">
-
-                                        <div class="input ">
-
-                                            <h1><i class="fa-solid fa-book-open-reader"></i> 预约</h1>
-                                            <form class="" id="yuyueForm" onsubmit="return yuYue(this);">
-                                                <div>
-                                                    <h2 class="seatId">座位号</h2>
-                                                    <div class="numSeat">7</div>
-                                                </div>
-                                                <div>
-
-                                                    <fieldset>
-                                                        <div class="clockpicker"><i class="fa-regular fa-clock"></i>
-                                                            <span>开始时间</span>
-                                                            <input id="beginT" required>
-                                                        </div>
-                                                        <div class="clockpicker"><i class="fa-regular fa-clock"></i>
-                                                            <span>结束时间</span>
-                                                            <input required id="endT" class="endInput"></div>
-                                                    </fieldset>
-
-                                                    <fieldset>
-                                                        <p class="timeType"><span>&nbsp;有效预约时间:8:00-23:00</span></p>
-                                                    </fieldset>
-
-                                                    <fieldset>
-                                                        <div class="endDiv">
-                                                            <button type="button" class="action butYuyue"
-                                                                    data-dialog-close>关闭
-                                                            </button>
-
-                                                            <input type="submit" class="butYuyue" onclick=""
-                                                                   id="bn1"
-                                                                   value="预约">
-                                                        </div>
-                                                    </fieldset>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        {{--                    时间选择--}}
-                                        <script type="text/javascript">
-                                            $('.clockpicker').clockpicker()
-                                                .find('input').change(function () {
-                                                // TODO：时间改变
-                                                // console.log(this.value);
-                                            });
-                                            $('#demo-input').clockpicker({
-                                                autoclose: true
-                                            });
-
-                                        </script>
-                                    </div>
-                                    <script>
-                                        {{--            弹窗--}}
-                                        (function () {
-
-
-                                            var dlgtrigger = document.querySelector('[data-dialog]'),
-
-
-                                                somedialog = document.getElementById(dlgtrigger.getAttribute('data-dialog')),
-
-                                                // svg..
-
-                                                morphEl = somedialog.querySelector('.morph-shape'),
-
-                                                s = Snap(morphEl.querySelector('svg')),
-
-                                                path = s.select('path'),
-
-                                                steps = {
-
-                                                    open: morphEl.getAttribute('data-morph-open'),
-
-                                                    close: morphEl.getAttribute('data-morph-close')
-
-                                                },
-
-                                                dlg = new DialogFx(somedialog, {
-
-                                                    onOpenDialog: function (instance) {
-
-                                                        // animate path
-
-                                                        path.stop().animate({
-                                                            'path': steps.open
-                                                        }, 400, mina.easeinout);
-
-                                                    },
-
-                                                    onCloseDialog: function (instance) {
-
-                                                        // animate path
-
-                                                        path.stop().animate({
-                                                            'path': steps.close
-                                                        }, 400, mina.easeinout);
-
-                                                    }
-
-                                                });
-
-
-                                            dlgtrigger.addEventListener('click', dlg.toggle.bind(dlg));
-
-
-                                        })();
-                                    </script>
-
-                                </div>
-                            </div>
-                        </div>
 
                         <!--未登录弹窗-->
 
@@ -573,7 +412,6 @@
                             </div>
 
                             <!--座位信息-->
-
                             <div id="seatOne">
                             </div>
                             <div class="returnTop"><i id="returnTop" class="fa-solid fa-chevron-up"></i></div>
@@ -676,11 +514,88 @@
             <div class="col-md-12 text-center">
                 <p>Copyright &copy; Reiki</p>
             </div>
-
         </div>
     </div>
 </div>
 <!-- .site-footer -->
+
+<!-- css3 svg弹窗 全局-->
+
+<div id="cssTan">
+    <div class="button-wrap" style="display: none">
+        <button data-dialog="somedialog" class="trigger">Open Dialog</button>
+    </div>
+    <div id="somedialog" class="dialog">
+        <div class="dialog__overlay"></div>
+        <div class="dialog__content" style="padding-top: 0;">
+            <div class="morph-shape"
+                 data-morph-open="M0,0h80c0,0,0,9.977,0,29.834c0,19.945,0,30.249,0,30.249H0c0,0,0-10.055,0-30.332C0,8.219,0,0,0,0z"
+                 data-morph-close="M0,29.75h80c0,0-3.083,0.014-3.083,0.041c0,0.028,3.083,0.042,3.083,0.042H0c0,0,3.084-0.014,3.084-0.042
+	C3.084,29.762,0,29.75,0,29.75z">
+                <svg width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none">
+                    <path d="M0,29.75h80c0,0-3.083,0.014-3.083,0.041c0,0.028,3.083,0.042,3.083,0.042H0c0,0,3.084-0.014,3.084-0.042
+	C3.084,29.762,0,29.75,0,29.75z"></path>
+                </svg>
+            </div>
+
+            <!--内容-->
+            <div class="dialog-inner">
+
+                <div class="input ">
+
+                    <h1><i class="fa-solid fa-book-open-reader"></i> <span class="editH1">预约</span></h1>
+                    <form class="" id="yuyueForm" onsubmit="return yuYue(this);">
+                        <div>
+                            <h2 class="seatId">座位号</h2>
+                            <div class="numSeat">7</div>
+                        </div>
+                        <div id="seatEditMo">
+                            <fieldset>
+                                <div class="clockpicker"><i class="fa-regular fa-clock"></i>
+                                    <span>开始时间</span>
+                                    <input id="beginT" autocomplete="off" required>
+                                </div>
+                                <div class="clockpicker"><i class="fa-regular fa-clock"></i>
+                                    <span>结束时间</span>
+                                    <input required id="endT" autocomplete="off" class="endInput"></div>
+                            </fieldset>
+
+                            <fieldset>
+                                <p class="timeType"><span>&nbsp;有效预约时间:8:00-23:00</span></p>
+                            </fieldset>
+
+                            <fieldset>
+                                <div class="endDiv">
+                                    <button type="button" class="action butYuyue"
+                                            data-dialog-close>关闭
+                                    </button>
+
+                                    <input type="submit" class="butYuyue" onclick=""
+                                           id="bn1"
+                                           value="预约">
+                                </div>
+
+
+                            </fieldset>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{{--时间选择--}}
+<script type="text/javascript">
+    $('.clockpicker').clockpicker()
+        .find('input').change(function () {
+        // TODO：时间改变
+        // console.log(this.value);
+    });
+
+</script>
 
 {{--<script src="/index/js/vendor/jquery-1.10.2.min.js"></script>--}}
 <script src="/js/jquery-3.6.0.js"></script>
@@ -692,6 +607,7 @@
 <!--vue轮播图js-->
 <script src="/seat/lunbo/vue.min.2.2.2.js"></script>
 <script src="/seat/lunbo/lunbo.js"></script>
+
 
 <!--座位信息-->
 <script src="/seat/my.js"></script>
@@ -705,6 +621,7 @@
 
 
 <script>
+
     //信息提示弹框
     function message(world, close) {
         spop({
@@ -754,6 +671,25 @@
     }
     //用户邮箱传入js全局变量
     var student = "<?php echo session('email');?>";
+
+    //是否预约
+    function isReserve() {
+        if (student) {
+            $.get("/reserve/" + student, function (data) {
+                if (data == 0) {
+                    seatLock = true;
+                } else {
+                    seatLock = false;
+                }
+            });
+        } else {
+            seatLock = true;
+        }
+    }
+
+    isReserve();
+
+
     //座位展示
     //监控浏览器屏幕大小
     $(window).resize(function () {
@@ -775,7 +711,10 @@
 
         $(".col-md-9").css("width", "100%");
         $(".seatBlock").css("width", "20%");
-
+        //调用预约检查锁
+        isReserve();
+        //触发弹窗函数
+        TanChuang();
         ;
 
     }
@@ -811,12 +750,13 @@
                 }
                 //判断状态分页
                 if (status == undefined) {
+                    //正常id顺序页面
+                    $("#seatOne").html(data);
+                } else {
                     //状态页面
                     $("#seatOne").html(data);
 
-                } else {
-                    //正常id顺序页面
-                    $("#dataSeat").html(data);
+                    // $("#dataSeat").html(data);
 
                 }
                 // $"#seatDisplay").load(location.href + " #seatDisplay");

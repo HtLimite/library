@@ -1,5 +1,5 @@
 <!--座位信息-->
-<div id="seatOne">
+{{--<div id="seatOne">--}}
 
     <div id="seatTop">
         <div class="col-md-4 col-sm-6 col-xs-12 seatBlock " style=" filter: drop-shadow( 10px 10px 5px #0c5460);">
@@ -34,6 +34,7 @@
             </div>
         </div>
     </div>
+
 
     <div id="dataSeat">
 
@@ -192,7 +193,8 @@
             </ul>
         </div>
     </div>
-</div>
+{{--</div>--}}
+
 
 
 

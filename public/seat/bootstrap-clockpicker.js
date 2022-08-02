@@ -309,7 +309,7 @@
 			align = this.options.align,
 			styles = {},
 			self = this;
-		
+
 		popover.show();
 
 		// Place the popover

@@ -56,6 +56,7 @@ function subSearch1() {
 //函数节流
 let lock = true;
 
+
 function submitFn(obj, evt) {
     //获取结果,去除所有空格
     value = $('.search-input').val().replace(/\s+/g, "");
@@ -120,6 +121,7 @@ function searchAjax(page, bool) {
 //ajax筛选结果
 var filterArray = [$("#weishiyong"), $("#yuyuezhong"), $("#yiyuyue"), $("#shiyongzhong"), $("#likai")];
 
+//for遍历键值对
 for (const [index, elem] of filterArray.entries()) {
 
     filterArray[index].click(index, function () {
@@ -170,25 +172,52 @@ $(".returnTop").click(function () {
     // $(window).scrollTop(0);
 });
 
-//预约表单
+
+//预约表单弹出
+//预约锁 预约成功后锁住  false
+let seatLock = true;
+
+
 function yuyueForm(id) {
+    //函数节流
+    if(!lock){
+        return;
+    }
+    if(!seatLock){
+        //预约用户
+        spop({
+            template: '<h4 style="color: black" class="spop-body">已预约,请结束使用后再预约</h4>',
+            position: 'top-center',
+            style: 'error',
+            autoclose: 3000,
+        });
+        //关锁
+        lock = false;
+        setTimeout(function (){
+            lock = true;
+        },3000);
+        return;
+    }
     //弹出模态框
     $(".trigger").click();
-    if (isLogined) {
-        //登录用户
+    if (isLogined && seatLock) {
+        //登录用户 和 未预约用户
         id = id;
         // str = '<div class="numSeat">'+id+'</div>';
         $(".numSeat").html(id);
         return;
-    } else {
+    } else{
+        //未登录
         let unLoginDiv = $("#unLoginDiv").html();
         $(".dialog-inner").html(unLoginDiv);
     }
+
 }
+
 //关闭未登录弹窗
-function EscClose(e){
+function EscClose(e) {
     if (HTMLElement && !HTMLElement.prototype.pressKey) {
-        HTMLElement.prototype.pressKey = function(code) {
+        HTMLElement.prototype.pressKey = function (code) {
             var evt = document.createEvent('UIEvents');
             evt.keyCode = code;
             evt.initEvent('keydown', true, true);
@@ -198,91 +227,179 @@ function EscClose(e){
     //主动触发ESC按键
     document.body.pressKey(27);
 }
+
 //跳转登录
-function homebutton(){
+function homebutton() {
+
     $(".homebutton").click();
+    //关闭弹窗
+    EscClose();
 }
 
 //预约ajax
-    function yuYue(obj) {
-        //获取值
-        var begin1 = $("#beginT").val();
-        var end1 = $("#endT").val();
-        let id = $(".numSeat").text();
-        //解析时间
-        begin = begin1.split(":");
-        end = end1.split(":");
-        //分钟比较
-        begin[1] = Number(begin[1]);
-        end[1] = Number(end[1]);
-        //有效预约时间 8:00-23:00 不小于30分钟
-        if (begin[0] > end[0] || begin[0] < 8 || end[0] >  23) {
-            spop({
-                template: '<h4 style="color: #a5fed7" class="spop-body">无效的预约时间!</h4>',
-                position: 'top-center',
-                style: 'error',
-                autoclose: 2000,
-            });
-            return false;
-        }
-        if (begin[0] === end[0] && begin[1] + 30 > end[1]) {
-            spop({
-                template: '<h4 style="color: #a5fed7" class="spop-body">预约时间不能短于30分钟!</h4>',
-                position: 'top-center',
-                style: 'error',
-                autoclose: 2000,
-            });
-            return false;
-        }
-        //验证通过ajax预约
-        //button中...
-        $("#bn1").attr({'value':'预约中...'});
-        $("#bn1").css('background-image','linear-gradient(-225deg, #B7F8DB 0%, #50A7C2 100%)');
-        //ajax
-        $.get('/reserve/create', {id:id,beginTime: begin1, endTime: end1}, function (data) {
-            if(data[0] == 1){
-                spop({
-                    template: '<h4 style="color: #a5fed7" class="spop-body">预约成功</h4>',
-                    position: 'top-center',
-                    style: 'success',
-                    autoclose: 3000,
-                });
-                //button变化
-                $("#bn1").attr({'value':'已预约'});
-                $("#bn1").css('background-image','');
-                //跳转我的信息
-                logo();
-                //我的信息
-                myMessage(data[1]);
-
-            }else {
-                spop({
-                    template: '<h4 style="color: #a5fed7" class="spop-body">预约失败,请稍后再试!</h4>',
-                    position: 'top-center',
-                    style: 'error',
-                    autoclose: 3000,
-                });
-                $("#bn1").attr({'value':'预约'});
-                $("#bn1").css('background-image','');
-                console.log(data);
-            }
+function yuYue(obj) {
+    //获取值
+    var begin1 = $("#beginT").val();
+    var end1 = $("#endT").val();
+    let id = $(".numSeat").text();
+    //获取现在时间
+    var nowDate = new Date();
+    //解析时间
+    begin = begin1.split(":");
+    end = end1.split(":");
+    //是否为数字
+    if(isNaN(begin[0]) || isNaN(begin[1]) || isNaN(end[0]) || isNaN(end[1])){
+        spop({
+            template: '<h4 style="color: #a5fed7" class="spop-body">请输入正确的时间!</h4>',
+            position: 'top-center',
+            style: 'error',
+            autoclose: 2000,
         });
         return false;
     }
-    //我的信息
-function myMessage(student){
+    //分钟比较
+    begin[1] = Number(begin[1]);
+    end[1] = Number(end[1]);
+    //有效预约时间 8:00-23:00 不小于30分钟 大于此时此刻 nowDate
+    if (begin[0] > end[0] || begin[0] < 8 || end[0] > 24 || begin[0] < nowDate.getHours() ) {
+        spop({
+            template: '<h4 style="color: #a5fed7" class="spop-body">无效的预约时间!</h4>',
+            position: 'top-center',
+            style: 'error',
+            autoclose: 2000,
+        });
+        return false;
+    }
+    if(begin[0] == nowDate.getHours() && begin[1] <= nowDate.getMinutes()){
+        //小于当前时间
+        spop({
+            template: '<h4 style="color: #a5fed7" class="spop-body">无效的预约时间!<br>时光倒流?</h4>',
+            position: 'top-center',
+            style: 'error',
+            autoclose: 2000,
+        });
+        return false;
+    }
+
+    if ((begin[0] === end[0] && begin[1] + 30 > end[1]) || (end[0] - begin[0] == 1 && (60 - begin[1] + end[1]) < 30  )) {
+        spop({
+            template: '<h4 style="color: #a5fed7" class="spop-body">预约时间不能短于30分钟!</h4>',
+            position: 'top-center',
+            style: 'error',
+            autoclose: 2000,
+        });
+        return false;
+    }
+    //验证通过ajax预约
+    //button中...
+    $("#bn1").attr({'value': '预约中...'});
+    $("#bn1").css('background-image', 'linear-gradient(-225deg, #B7F8DB 0%, #50A7C2 100%)');
+    //ajax
+    //函数节流
+    if(!true){
+        return ;
+    }
+    $.get('/reserve/create', {id: id, beginTime: begin1, endTime: end1}, function (data) {
+        if (data[0] == 1) {
+            spop({
+                template: '<h4 style="color: #a5fed7" class="spop-body">预约成功</h4>',
+                position: 'top-center',
+                style: 'success',
+                autoclose: 3000,
+            });
+            // ajax刷新
+            page(1, true);
+            // window.location.reload("#adminTable");
+
+            //button变化
+            $("#bn1").attr({'value': '已预约'});
+            $("#bn1").css('background-image', '');
+            //跳转我的信息
+            logo();
+            //我的信息
+            EscClose();
+            myMessage(data[1]);
+
+        } else {
+            spop({
+                template: '<h4 style="color: #a5fed7" class="spop-body">预约失败,请稍后再试!</h4>',
+                position: 'top-center',
+                style: 'error',
+                autoclose: 3000,
+            });
+            $("#bn1").attr({'value': '预约'});
+            $("#bn1").css('background-image', '');
+            //关锁
+            lock = false;
+            setTimeout(function (){
+                lock = true;
+            },3000);
+        }
+    });
+    return false;
+}
+
+//我的信息
+function myMessage(student) {
     //展示我的信息
-    if(student == ""){
+    if (student == "") {
         //未登录用户
-        str = '<h1 style="font-size: 23px;margin: 40px;"><i class="fa-solid fa-user-xmark"></i>&nbsp;&nbsp;您未登录,请登录后查看</h1>';
+        str = '<h1 class="unLoginH3"><i class="fa-solid fa-user-xmark"></i>&nbsp;&nbsp;您未登录,请登录后查看</h1>';
         $("#leftDiv").html(str);
         return;
     }
-    console.log(student);
-    $.get("/reserve/"+student,function (){
-
+    $.get("/reserve/" + student, function (data) {
+        if (data == 0) {
+            str = '<h1 class="unLoginH3"><i class="fa-solid fa-user"></i>&nbsp;&nbsp;' + student + '<br><br><br>无预约信息</h1>';
+            $("#leftDiv").html(str);
+        } else {
+            //写进我的展示页面
+            $("#leftDiv").html(data);
+            //锁住预约表单
+            seatLock = false;
+        }
     });
 }
+
+//编辑预约信息
+function editSeatInfo(id){
+
+    TanChuang();
+    $(".triggerEdit").click();
+
+
+}
+// {{--            弹窗--}}
+ function  TanChuang () {
+    (function () {
+        var dlgtrigger = document.querySelector('[data-dialog]'),
+            somedialog = document.getElementById(dlgtrigger.getAttribute('data-dialog')),
+            // svg..
+            morphEl = somedialog.querySelector('.morph-shape'),
+            s = Snap(morphEl.querySelector('svg')),
+            path = s.select('path'),
+            steps = {
+                open: morphEl.getAttribute('data-morph-open'),
+                close: morphEl.getAttribute('data-morph-close')
+            },
+            dlg = new DialogFx(somedialog, {
+                onOpenDialog: function (instance) {
+                    // animate path
+                    path.stop().animate({
+                        'path': steps.open
+                    }, 400, mina.easeinout);
+                },
+                onCloseDialog: function (instance) {
+                    // animate path
+                    path.stop().animate({
+                        'path': steps.close
+                    }, 400, mina.easeinout);
+                }
+            });
+        dlgtrigger.addEventListener('click', dlg.toggle.bind(dlg));
+    })();
+}
+
 
 
 
