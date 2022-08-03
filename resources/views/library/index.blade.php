@@ -224,30 +224,6 @@
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-4">
-                            <div class="box-content">
-                                <h3 class="widget-title">Background</h3>
-                                <p>Vestibulum pellentesque ante sit amet tristique hendrerit. Sed consequat, nunc
-                                    lobortis faucibus pretium, enim nibh blandit est, nec sollicitudin est quam a neque.
-                                    Aenean eget malesuada justo.</p>
-
-                                <div class="about-social">
-
-                                    <ul>
-                                        <li>
-                                            <a class="fa-solid fa-gear"></a>
-                                        </li>
-                                        <li>
-                                            <a href="#" onclick="editSeatInfo(8)" class="fa-solid fa-pen-to-square"></a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="fa fa-linkedin"></a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="fa fa-dribbble"></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -519,7 +495,7 @@
 </div>
 <!-- .site-footer -->
 
-<!-- css3 svg弹窗 全局-->
+<!-- css3 svg弹窗 预约-->
 
 <div id="cssTan">
     <div class="button-wrap" style="display: none">
@@ -544,7 +520,7 @@
                 <div class="input ">
 
                     <h1><i class="fa-solid fa-book-open-reader"></i> <span class="editH1">预约</span></h1>
-                    <form class="" id="yuyueForm" onsubmit="return yuYue(this);">
+                    <form class="" id="yuyueForm" onsubmit="return yuYue('预约','{{csrf_token()}}');">
                         <div>
                             <h2 class="seatId">座位号</h2>
                             <div class="numSeat">7</div>

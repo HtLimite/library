@@ -235,13 +235,8 @@ function homebutton() {
     //关闭弹窗
     EscClose();
 }
-
-//预约ajax
-function yuYue(obj) {
-    //获取值
-    var begin1 = $("#beginT").val();
-    var end1 = $("#endT").val();
-    let id = $(".numSeat").text();
+//时间段预约验证 参数 开始时间 结束时间 座位id
+function timesVerify(begin1,end1,id){
     //获取现在时间
     var nowDate = new Date();
     //解析时间
@@ -290,19 +285,46 @@ function yuYue(obj) {
         });
         return false;
     }
+    return [id,begin1,end1];
+}
+
+//预约
+function yuYue(message,_token) {
+    //获取值
+    var begin1 = $("#beginT").val();
+    var end1 = $("#endT").val();
+    var id = $(".numSeat").text();
+    //时间段验证
+    let Formdata = timesVerify(begin1, end1, id);
+    //接收返回值
+    var id = Formdata[0],
+        begin = Formdata[1],
+        end = Formdata[2];
+    //ajax
+    if(Formdata){
+        updateAjax(message,id,begin,end,_token);
+
+    }
+    return false;
+
+}
+
+//post  ajax 更新
+function updateAjax(message,id,begin,end,_token){
     //验证通过ajax预约
     //button中...
-    $("#bn1").attr({'value': '预约中...'});
+    var value = message + '中...';
+    $("#bn1").attr({'value': value});
     $("#bn1").css('background-image', 'linear-gradient(-225deg, #B7F8DB 0%, #50A7C2 100%)');
     //ajax
     //函数节流
     if(!true){
         return ;
     }
-    $.get('/reserve/create', {id: id, beginTime: begin1, endTime: end1}, function (data) {
+    $.post('/reserve', {id: id, beginTime: begin, endTime: end, _token:_token}, function (data) {
         if (data[0] == 1) {
             spop({
-                template: '<h4 style="color: #a5fed7" class="spop-body">预约成功</h4>',
+                template: '<h4 style="color: #a5fed7" class="spop-body">'+message+'成功</h4>',
                 position: 'top-center',
                 style: 'success',
                 autoclose: 3000,
@@ -312,7 +334,8 @@ function yuYue(obj) {
             // window.location.reload("#adminTable");
 
             //button变化
-            $("#bn1").attr({'value': '已预约'});
+            value = '已'+message;
+            $("#bn1").attr({'value': value});
             $("#bn1").css('background-image', '');
             //跳转我的信息
             logo();
@@ -322,12 +345,12 @@ function yuYue(obj) {
 
         } else {
             spop({
-                template: '<h4 style="color: #a5fed7" class="spop-body">预约失败,请稍后再试!</h4>',
+                template: '<h4 style="color: #a5fed7" class="spop-body">'+message+'失败,请稍后再试!</h4>',
                 position: 'top-center',
                 style: 'error',
                 autoclose: 3000,
             });
-            $("#bn1").attr({'value': '预约'});
+            $("#bn1").attr({'value': message});
             $("#bn1").css('background-image', '');
             //关锁
             lock = false;
@@ -363,10 +386,9 @@ function myMessage(student) {
 
 //编辑预约信息
 function editSeatInfo(id){
-
+    //弹窗调用
     TanChuang();
     $(".triggerEdit").click();
-
 
 }
 // {{--            弹窗--}}
@@ -399,6 +421,23 @@ function editSeatInfo(id){
         dlgtrigger.addEventListener('click', dlg.toggle.bind(dlg));
     })();
 }
+//预约信息修改
+function yuEdit(message,_token) {
+    //获取值
+    var begin1 = $("#EbeginT").val();
+    var end1 = $("#EendT").val();
+    var id = $(".numSeatE").text();
+    //时间段验证
+    let Formdata = timesVerify(begin1, end1, id);
+    //接收返回值
+    var id = Formdata[0],
+        begin = Formdata[1],
+        end = Formdata[2];
+    //ajax
+    updateAjax(message,id,begin,end,_token);
+    return false;
+}
+
 
 
 
