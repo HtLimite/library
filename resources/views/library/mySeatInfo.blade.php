@@ -17,12 +17,18 @@
                 <ul>
                     <li><i class="fa-solid fa-chair"></i>&nbsp;座位号<span>{{$mySeatInfo->id}}</span></li>
                     <li><i class="fa-regular fa-hourglass"></i>&nbsp;预约时间</li>
-                    <li><i class="fa-solid fa-clock"></i>&nbsp;{{$mySeatInfo->beginTime}}</li>
-                    <li><i class="fa-solid fa-clock"></i>&nbsp;{{$mySeatInfo->endTime}}</li>
+                    <!--预约时间 隐藏域-->
+                    <input id="updated_at" style="display: none" value="{{$mySeatInfo->updated_at}}">
+                    <li id="beginTtext"><i class="fa-solid fa-clock"></i>&nbsp;{{$mySeatInfo->beginTime}}</li>
+                    <li id="endTtext"><i class="fa-solid fa-clock"></i>&nbsp;{{$mySeatInfo->endTime}}</li>
                 </ul>
             </div>
         </div>
         <div class="myBottomDiv">
+            <div>
+                <span>预约进度:</span><div>{{$mySeatInfo->status}}</div>
+
+            </div>
             <div class="profile-content-seatOne">
                 <div class="progressbar"></div>
                 <ul>
@@ -38,7 +44,6 @@
                     <li>已结束</li>
                 </ul>
             </div>
-            <div>{{$mySeatInfo->status}}</div>
         </div>
     </div>
 </div>
@@ -50,7 +55,7 @@
         <div class="about-social">
             <ul>
                 <li>
-                    <a class="fa-solid fa-gear" title="设置"></a>
+                    <a class="fa-solid fa-gear" onclick="picUp();" title="设置"></a>
                 </li>
                 <li>
                     <a href="javascript:;" title="修改" onclick="editSeatInfo({{$mySeatInfo->id}});"
@@ -69,7 +74,8 @@
     </div>
 </div>
 {{--</div>--}}
-<!-- css3 svg弹窗 全局-->
+<!-- css3 svg弹窗  修改预约信息-->
+<div  id="mySide"></div>
 <div id="cssTan">
     <div class="button-wrap" style="display: none">
         <button data-dialog="somedialog" class="triggerEdit">Open Dialog</button>
@@ -130,6 +136,52 @@
         </div>
     </div>
 </div>
+<!-- css3 svg弹窗  个人信息-->
+<div id="pictureT">
+    <div class="button-wrap" style="display: none">
+        <button data-dialog="pictureTan" class="triggerPic">Open Dialog</button>
+    </div>
+    <div id="pictureTan" class="dialog">
+        <div class="dialog__overlay"></div>
+        <div class="dialog__content" style="">
+            <div class="morph-shape"
+                 data-morph-open="M0,0h80c0,0,0,9.977,0,29.834c0,19.945,0,30.249,0,30.249H0c0,0,0-10.055,0-30.332C0,8.219,0,0,0,0z"
+                 data-morph-close="M0,29.75h80c0,0-3.083,0.014-3.083,0.041c0,0.028,3.083,0.042,3.083,0.042H0c0,0,3.084-0.014,3.084-0.042
+	C3.084,29.762,0,29.75,0,29.75z">
+                <svg width="100%" height="100%" viewBox="0 0 80 60" preserveAspectRatio="none">
+                    <path d="M0,29.75h80c0,0-3.083,0.014-3.083,0.041c0,0.028,3.083,0.042,3.083,0.042H0c0,0,3.084-0.014,3.084-0.042
+	C3.084,29.762,0,29.75,0,29.75z"></path>
+                </svg>
+            </div>
+
+            <!--内容-->
+            <div class="">
+
+                <div class=" ">
+
+                    <div class="imgDisplay">
+                        <img src="/index/images/8.jpg" alt="">
+                    </div>
+                    <div class="imgDisplay">
+                        选择图片: <input type="file" name="img" multiple>
+
+                        <input value="选择图片" type="file" multiple>
+                    </div>
+
+
+                    <form class="" id="" onsubmit="return pictuteUp();">
+
+                        <fieldset>
+                            <button type="button" class="action butYuyue" data-dialog-close>关闭</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     //删除 结束使用
     function endReserve(id, student) {
@@ -204,5 +256,53 @@
         // console.log(this.value);
     });
 
+    //进度条
+        var colorDiv =$(".progressbar");
+        //获取时间
+        //创造预约时间
+        var updatedT = $("#updated_at").val();
+        var beT = $("#beginTtext").text();
+        var enT = $("#endTtext").text();
+        //去除前面空格 大坑!!!
+        beT = beT.trim();
+        enT = enT.trim();
+        upT = updatedT.trim();
+       // 转化js时间
+        beT = new Date(beT);
+        enT = new Date(enT);
+        upT = new Date(upT);
+
+        //预约总时间
+        var totT = enT - beT;
+   //进度条 width 方法
+    function progressRefresh (){
+        var nowT = new Date();
+        //相差时间 绝对值
+        var gap = Math.abs(nowT - beT);
+        /*0  58  133 203 256*/
+        //使用中执行
+        if(nowT >= beT){
+            //进入预约时间
+            //颜色宽度
+            var width = gap/totT*(203-133) + 133;
+            if(width >= 256){
+                width = 256;
+            }
+        }else if(nowT < beT ){
+            //未到使用时间
+            //分母时间
+            gap1 = beT - upT;
+            //颜色宽度
+            width = (1-gap/gap1)*(133-58) + 58;
+        }
+        colorDiv.css('width',width);
+    }
+    progressRefresh();
+    // //更新进度条
+    setInterval(progressRefresh,3000);
+
+
+
 
 </script>
+

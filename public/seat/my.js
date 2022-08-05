@@ -391,6 +391,15 @@ function editSeatInfo(id){
     $(".triggerEdit").click();
 
 }
+//图片上传弹窗
+function picUp(){
+    //弹窗调用
+    let cssTan = $("#cssTan");
+    cssTan.remove();
+    TanChuang();
+    $(".triggerPic").click();
+    $("#mySide").append(cssTan);
+}
 // {{--            弹窗--}}
  function  TanChuang () {
     (function () {

@@ -17,9 +17,10 @@
     {{--    悬浮提示信息--}}
     <link rel="stylesheet" href="/index/css/test.css">
     <script src="/student/js/jquery-3.2.1.min.js"></script>
+
+
     <script src="/index/js/test.js" type="text/javascript"></script>
     {{--    div在最后--}}
-
     {{--    //管理员登录弹窗--}}
 <!-- <link rel="stylesheet" type="text/css" href="css/normalize.css" /> -->
     {{--    <link rel="stylesheet" type="text/css" href="/adminlogin/css/demo.css"/>--}}
@@ -55,6 +56,7 @@
     <script src="/index/js/vendor/modernizr-2.6.2.min.js"></script>
 
 </head>
+
 
 <body>
 <!--[if lt IE 7]>
@@ -456,7 +458,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-3 hidden-sm" id="navhidden" style="transition: all 1s; overflow:hidden;
 ">
 
@@ -481,8 +482,6 @@
         </div>
     </div>
 </div>
-
-
 <!-- SITE-FOOTER -->
 <div class="site-footer">
     <div class="container">
@@ -493,6 +492,7 @@
         </div>
     </div>
 </div>
+
 <!-- .site-footer -->
 
 <!-- css3 svg弹窗 预约-->
@@ -691,8 +691,8 @@
         isReserve();
         //触发弹窗函数
         TanChuang();
-        ;
-
+        //调用第一页座位信息展示
+        page(1, true);
     }
 
     //LOGO

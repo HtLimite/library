@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DateTime;
 use http\Exception\BadMessageException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use mysql_xdevapi\Exception;
 use phpDocumentor\Reflection\Exception\PcreException;
@@ -24,6 +25,7 @@ class ReserveController extends Controller
         $format = 'H:i';
         $beginTime = DateTime::createFromFormat($format, $timeData['beginTime']);
         $endTime = DateTime::createFromFormat($format, $timeData['endTime']);
+        $updated_at = Date::now();
         if(!$beginTime || !$endTime ){
             return 0;
         }
@@ -32,7 +34,8 @@ class ReserveController extends Controller
             'beginTime' => $beginTime,
             'endTime' => $endTime,
             'status' => "已预约",
-            'student' => session('email')
+            'student' => session('email'),
+            'updated_at' => $updated_at
         ]);
 
         if ($message) {
