@@ -55,4 +55,8 @@ Route::get('/logVerify','Student\EmailController@logVerify');
 
 //图书资源
 Route::group(['middleware' => 'Library'],function (){
-    Route::resource('/reserve','ReserveController');});
+    //座位预约
+    Route::resource('/reserve','ReserveController');
+    //个人信息
+    Route::resource('userInfo','UserInfoController');
+});

@@ -180,10 +180,10 @@ let seatLock = true;
 
 function yuyueForm(id) {
     //函数节流
-    if(!lock){
+    if (!lock) {
         return;
     }
-    if(!seatLock){
+    if (!seatLock) {
         //预约用户
         spop({
             template: '<h4 style="color: black" class="spop-body">已预约,请结束使用后再预约</h4>',
@@ -193,9 +193,9 @@ function yuyueForm(id) {
         });
         //关锁
         lock = false;
-        setTimeout(function (){
+        setTimeout(function () {
             lock = true;
-        },3000);
+        }, 3000);
         return;
     }
     //弹出模态框
@@ -206,7 +206,7 @@ function yuyueForm(id) {
         // str = '<div class="numSeat">'+id+'</div>';
         $(".numSeat").html(id);
         return;
-    } else{
+    } else {
         //未登录
         let unLoginDiv = $("#unLoginDiv").html();
         $(".dialog-inner").html(unLoginDiv);
@@ -235,15 +235,16 @@ function homebutton() {
     //关闭弹窗
     EscClose();
 }
+
 //时间段预约验证 参数 开始时间 结束时间 座位id
-function timesVerify(begin1,end1,id){
+function timesVerify(begin1, end1, id) {
     //获取现在时间
     var nowDate = new Date();
     //解析时间
     begin = begin1.split(":");
     end = end1.split(":");
     //是否为数字
-    if(isNaN(begin[0]) || isNaN(begin[1]) || isNaN(end[0]) || isNaN(end[1])){
+    if (isNaN(begin[0]) || isNaN(begin[1]) || isNaN(end[0]) || isNaN(end[1])) {
         spop({
             template: '<h4 style="color: #a5fed7" class="spop-body">请输入正确的时间!</h4>',
             position: 'top-center',
@@ -256,7 +257,7 @@ function timesVerify(begin1,end1,id){
     begin[1] = Number(begin[1]);
     end[1] = Number(end[1]);
     //有效预约时间 8:00-23:00 不小于30分钟 大于此时此刻 nowDate
-    if (begin[0] > end[0] || begin[0] < 8 || end[0] > 24 || begin[0] < nowDate.getHours() ) {
+    if (begin[0] > end[0] || begin[0] < 8 || end[0] > 24 || begin[0] < nowDate.getHours()) {
         spop({
             template: '<h4 style="color: #a5fed7" class="spop-body">无效的预约时间!</h4>',
             position: 'top-center',
@@ -265,7 +266,7 @@ function timesVerify(begin1,end1,id){
         });
         return false;
     }
-    if(begin[0] == nowDate.getHours() && begin[1] <= nowDate.getMinutes()){
+    if (begin[0] == nowDate.getHours() && begin[1] <= nowDate.getMinutes()) {
         //小于当前时间
         spop({
             template: '<h4 style="color: #a5fed7" class="spop-body">无效的预约时间!<br>时光倒流?</h4>',
@@ -276,7 +277,7 @@ function timesVerify(begin1,end1,id){
         return false;
     }
 
-    if ((begin[0] === end[0] && begin[1] + 30 > end[1]) || (end[0] - begin[0] == 1 && (60 - begin[1] + end[1]) < 30  )) {
+    if ((begin[0] === end[0] && begin[1] + 30 > end[1]) || (end[0] - begin[0] == 1 && (60 - begin[1] + end[1]) < 30)) {
         spop({
             template: '<h4 style="color: #a5fed7" class="spop-body">预约时间不能短于30分钟!</h4>',
             position: 'top-center',
@@ -285,11 +286,11 @@ function timesVerify(begin1,end1,id){
         });
         return false;
     }
-    return [id,begin1,end1];
+    return [id, begin1, end1];
 }
 
 //预约
-function yuYue(message,_token) {
+function yuYue(message, _token) {
     //获取值
     var begin1 = $("#beginT").val();
     var end1 = $("#endT").val();
@@ -301,8 +302,8 @@ function yuYue(message,_token) {
         begin = Formdata[1],
         end = Formdata[2];
     //ajax
-    if(Formdata){
-        updateAjax(message,id,begin,end,_token);
+    if (Formdata) {
+        updateAjax(message, id, begin, end, _token);
 
     }
     return false;
@@ -310,7 +311,7 @@ function yuYue(message,_token) {
 }
 
 //post  ajax 更新
-function updateAjax(message,id,begin,end,_token){
+function updateAjax(message, id, begin, end, _token) {
     //验证通过ajax预约
     //button中...
     var value = message + '中...';
@@ -318,13 +319,13 @@ function updateAjax(message,id,begin,end,_token){
     $("#bn1").css('background-image', 'linear-gradient(-225deg, #B7F8DB 0%, #50A7C2 100%)');
     //ajax
     //函数节流
-    if(!true){
-        return ;
+    if (!lock) {
+        return;
     }
-    $.post('/reserve', {id: id, beginTime: begin, endTime: end, _token:_token}, function (data) {
+    $.post('/reserve', {id: id, beginTime: begin, endTime: end, _token: _token}, function (data) {
         if (data[0] == 1) {
             spop({
-                template: '<h4 style="color: #a5fed7" class="spop-body">'+message+'成功</h4>',
+                template: '<h4 style="color: #a5fed7" class="spop-body">' + message + '成功</h4>',
                 position: 'top-center',
                 style: 'success',
                 autoclose: 3000,
@@ -334,7 +335,7 @@ function updateAjax(message,id,begin,end,_token){
             // window.location.reload("#adminTable");
 
             //button变化
-            value = '已'+message;
+            value = '已' + message;
             $("#bn1").attr({'value': value});
             $("#bn1").css('background-image', '');
             //跳转我的信息
@@ -345,7 +346,7 @@ function updateAjax(message,id,begin,end,_token){
 
         } else {
             spop({
-                template: '<h4 style="color: #a5fed7" class="spop-body">'+message+'失败,请稍后再试!</h4>',
+                template: '<h4 style="color: #a5fed7" class="spop-body">' + message + '失败,请稍后再试!</h4>',
                 position: 'top-center',
                 style: 'error',
                 autoclose: 3000,
@@ -354,9 +355,9 @@ function updateAjax(message,id,begin,end,_token){
             $("#bn1").css('background-image', '');
             //关锁
             lock = false;
-            setTimeout(function (){
+            setTimeout(function () {
                 lock = true;
-            },3000);
+            }, 3000);
         }
     });
     return false;
@@ -384,15 +385,18 @@ function myMessage(student) {
     });
 }
 
+myMessage();
+
 //编辑预约信息
-function editSeatInfo(id){
+function editSeatInfo(id) {
     //弹窗调用
     TanChuang();
     $(".triggerEdit").click();
 
 }
+
 //图片上传弹窗
-function picUp(){
+function picUp() {
     //弹窗调用
     let cssTan = $("#cssTan");
     cssTan.remove();
@@ -400,8 +404,9 @@ function picUp(){
     $(".triggerPic").click();
     $("#mySide").append(cssTan);
 }
+
 // {{--            弹窗--}}
- function  TanChuang () {
+function TanChuang() {
     (function () {
         var dlgtrigger = document.querySelector('[data-dialog]'),
             somedialog = document.getElementById(dlgtrigger.getAttribute('data-dialog')),
@@ -430,8 +435,9 @@ function picUp(){
         dlgtrigger.addEventListener('click', dlg.toggle.bind(dlg));
     })();
 }
+
 //预约信息修改
-function yuEdit(message,_token) {
+function yuEdit(message, _token) {
     //获取值
     var begin1 = $("#EbeginT").val();
     var end1 = $("#EendT").val();
@@ -443,11 +449,139 @@ function yuEdit(message,_token) {
         begin = Formdata[1],
         end = Formdata[2];
     //ajax
-    updateAjax(message,id,begin,end,_token);
+    updateAjax(message, id, begin, end, _token);
     return false;
 }
 
+/*图片上传*/
+function picClick(e) {
+    $(".picBut input").click();
+}
 
+function pictureUpJs(e) {
+    const picFile = $("#pictureFile")[0].files;
+    //上传按钮
+    let upBt = $("#uploadPic");
+    upBt.hide();
+    //预览图片
+    let img = $("#picUpImg");
+    img.attr('src', '');
+    //是否取消上传
+    if (picFile[0] === undefined || picFile.length <= 0) return;
+    //图片格式
+    //图片后缀名
+    // var typePic = picFile[0]['name'].split('.').pop();
+    //图片类型 正则
+    var regx_img = /.+\.( bmp|jpg|png|tif|gif|pcx|tga|exif|fpx|svg|psd|cdr|pcd|dxf|ufo|eps|ai|raw|WMF|webp|avif|apng)$/;
+    if (!regx_img.test(picFile[0]['name'])) {
+        //图片格式不符合
+        spop({
+            template: '<h4 style="color: darkred" class="spop-body">图片格式不正确</h4>',
+            position: 'top-center',
+            style: 'error',
+            autoclose: 3000,
+        });
+        return;
+    }
+    //限制图片大小 files对象 b
+    if (picFile[0]['size'] > 1024 * 1024 * 7) {
+        //大小超过 7M
+        spop({
+            template: '<h4 style="color: rebeccapurple" class="spop-body">图片太大!,最大7MB</h4>',
+            position: 'top-center',
+            style: 'error',
+            autoclose: 3000,
+        });
+        return;
+    }
+    //转换对象 blod url
+    let blodUrl = window.URL.createObjectURL(picFile[0]);
+    //预览图
+
+    img.attr('src', blodUrl);
+    upBt.show();
+    return true;
+}
+
+//图片上传
+function pictureUp(_token) {
+    //上传Button
+    var upB = $("#uploadPic");
+    //验证
+    if (!pictureUpJs()) {
+        spop({
+            template: '<h4 style="color: black" class="spop-body">上传失败!</h4>',
+            position: 'top-center',
+            style: 'error',
+            autoclose: 3000,
+        });
+        return;
+    }
+    //发送上传
+    let imgfile = $("#pictureFile")[0].files;
+    var formData = new FormData();
+    formData.append('myfile', imgfile[0]);
+
+    //另一种方法
+    // var formData = new FormData();
+    // formData.append("myfile", document.getElementById("pictureFile").files[0]);
+    //节流
+    if (!lock) {
+        return;
+    }
+    //只能post
+    $.ajax({
+        headers: {'X-CSRF-TOKEN': _token},
+        url: "userInfo ",
+        type: "post",
+        data: formData,
+        contentType: false,
+        processData: false,
+        beforeSend(xhr) {
+            upB.text('上传中>>>');
+            upB.attr('background-image', ' linear-gradient(-225deg, #B7F8DB 0%, #50A7C2 100%)');
+        },
+        success: function (data) {
+            if (data == 0) {
+                spop({
+                    template: '<h4 style="color: rebeccapurple" class="spop-body">上传失败!</h4>',
+                    position: 'top-center',
+                    style: 'error',
+                    autoclose: 3000,
+                });
+            } else {
+                spop({
+                    template: '<h4 style="color: dodgerblue" class="spop-body">上传成功!!</h4>',
+                    position: 'top-center',
+                    style: 'success',
+                    autoclose: 3000,
+                });
+                upB.text('已上传');
+                $(".picMy").attr('src', data.filePath);
+                EscClose();
+            }
+
+        },
+        error: function (data) {
+            spop({
+                template: '<h4 style="color: #ba8b00" class="spop-body">上传失败!</h4>',
+                position: 'top-center',
+                style: 'error',
+                autoclose: 3000,
+            });
+            upB.text('上传图片');
+            upB.attr('background-image', 'linear-gradient(to top, #d5d4d0 0%, #d5d4d0 1%, #eeeeec 31%, #efeeec 75%, #e9e9e7 100%)');
+        }
+
+    });
+
+    //关锁
+    lock = false;
+    setTimeout(function () {
+        lock = true;
+    }, 7000);
+
+}
 
 
 

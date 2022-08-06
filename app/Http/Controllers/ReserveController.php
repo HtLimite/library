@@ -61,6 +61,19 @@ class ReserveController extends Controller
             //无预约信息
             return 0;
         }
+        //更新我的预约状况
+        $nowT = Date::now();
+        if($nowT >= $mySeatInfo->beginTime && $nowT <= $mySeatInfo->endTime && $mySeatInfo->status != '离开'){
+            $status = '使用中';
+        }else if ($nowT > $mySeatInfo->endTime){
+            $status = '已结束';
+        }else{
+            $status = '已预约';
+
+        }
+        $update = DB::table('seat')->where('id',$mySeatInfo->id)->update(['status' => $status]);
+
+
 
         //反解析时间 格式化
         $format = 'Y-m-d H:i:s';

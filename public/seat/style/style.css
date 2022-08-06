@@ -188,6 +188,9 @@
     padding: 30px;
 }
 /*图片弹框*/
+.picDiv{
+    color: black;
+}
 .imgDisplay{
     width: 174px;
     height: 174px;
@@ -198,4 +201,59 @@
 }
 .imgDisplay img{
     width: 100%;
+}
+.imgDisplay div{
+    color:#fed6e3;
+}
+.imgDisplay div:hover{
+    animation: myRotate 3s infinite;
+}
+.picBut{
+    color: black;
+    transition: all 1s;
+}
+.picBut button{
+    width: 83px;
+    margin: 30px 0 ;
+
+}
+.picBut button:hover{
+
+}
+.picF{
+
+}
+.picF h3{
+    font-size: 23px;
+    margin-bottom: 30px;
+}
+.closePic{
+    cursor: pointer;
+    font-size: 37px;
+    color: #333;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    transition: all 1s;
+}
+.closePic:hover{
+    transform:rotate(360deg);
+}
+/*动画*/
+@keyframes myRotate {
+    0%{
+        transform: rotate(0deg);
+    }
+    25%{
+        transform: rotate(45deg);
+    }
+    50%{
+        transform: rotate(0deg);
+    }
+    75%{
+        transform: rotate(-45deg);
+    }
+    100%{
+        transform: rotate(0deg);
+    }
 }

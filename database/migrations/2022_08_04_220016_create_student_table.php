@@ -22,6 +22,7 @@ class CreateStudentTable extends Migration
             $table->string('verification_code',250)->nullable();
             $table->dateTime('verification_expire')->nullable();
             $table->string('password',30)->nullable();
+            $table->string('avatar',70)->nullable();
             $table->integer('log')->nullable();
             $table->integer('reg')->nullable();
             $table->integer('status')->nullable();

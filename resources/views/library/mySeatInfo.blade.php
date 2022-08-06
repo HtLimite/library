@@ -7,7 +7,7 @@
 
         <h3 class="widget-title"><i class="fa-solid fa-user-clock"></i>&nbsp;&nbsp;我的信息</h3>
         <div class="profile-thumb">
-            <img src="/index/images/8.jpg" alt="">
+            <img class="picMy" src="/index/images/8.jpg" alt="">
         </div>
         <div class="profile-content">
             <h5 class="profile-name"><i class="fa-solid fa-envelope">&nbsp;邮箱</i>{{$mySeatInfo->student}}
@@ -55,7 +55,7 @@
         <div class="about-social">
             <ul>
                 <li>
-                    <a class="fa-solid fa-gear" onclick="picUp();" title="设置"></a>
+                    <a href="javascript:;" class="fa-solid fa-gear" onclick="picUp();" title="设置"></a>
                 </li>
                 <li>
                     <a href="javascript:;" title="修改" onclick="editSeatInfo({{$mySeatInfo->id}});"
@@ -143,7 +143,7 @@
     </div>
     <div id="pictureTan" class="dialog">
         <div class="dialog__overlay"></div>
-        <div class="dialog__content" style="">
+        <div class="dialog__content" style="max-width: 655px;width: 600px">
             <div class="morph-shape"
                  data-morph-open="M0,0h80c0,0,0,9.977,0,29.834c0,19.945,0,30.249,0,30.249H0c0,0,0-10.055,0-30.332C0,8.219,0,0,0,0z"
                  data-morph-close="M0,29.75h80c0,0-3.083,0.014-3.083,0.041c0,0.028,3.083,0.042,3.083,0.042H0c0,0,3.084-0.014,3.084-0.042
@@ -155,24 +155,24 @@
             </div>
 
             <!--内容-->
-            <div class="">
-
+            <div class="picDiv">
+                <div class="closePic"><i class="fa-solid fa-xmark" data-dialog-close></i></div>
                 <div class=" ">
-
+                    <form class="picF" id="" onsubmit="return false;">
+                    <h3>我的头像</h3>
                     <div class="imgDisplay">
-                        <img src="/index/images/8.jpg" alt="">
+                        <img class="picMy" src="/index/images/8.jpg" alt="">
+                        </div>
+                    <div class="imgDisplay" onclick="picClick();" style="cursor: pointer">
+                        <div>
+                            <img id="picUpImg" src="">
+                            <i class="fa-solid fa-plus"></i>  <p>将图片拖进此处<span>即可上传</span></p>
+                        </div>
                     </div>
-                    <div class="imgDisplay">
-                        选择图片: <input type="file" name="img" multiple>
-
-                        <input value="选择图片" type="file" multiple>
-                    </div>
-
-
-                    <form class="" id="" onsubmit="return pictuteUp();">
-
-                        <fieldset>
-                            <button type="button" class="action butYuyue" data-dialog-close>关闭</button>
+                        <fieldset class="picBut">
+                            <input type="file" onchange="pictureUpJs();" id="pictureFile"  style="display: none">
+                            <button type="button" id="selectPic" onclick="picClick();" class="action butYuyue" >选择图片</button>
+                            <button type="button" onclick="pictureUp('{{csrf_token()}}')" id="uploadPic" class="action butYuyue" style="display: none" >上传图片</button>
                         </fieldset>
                     </form>
                 </div>
