@@ -7,17 +7,22 @@ $(".seatType").hover(function () {
 }, function () {
     $(".seatType").slideUp(1000);
 })
+//函数节流
+var lock = true;
+
 
 //搜索框展示
-let searBut = $("#searchI");
+var searBut = $("#searchI");
+var searLi = $(".searchLi");
+
 searBut.click(function () {
-    $(".searchLi").nextAll().hide();
+    searLi.nextAll().hide();
     $(".seatType").hide();
-    $(".searchLi").css("margin-right", "233px");
+    searLi.css("margin-right", "233px");
 });
 $(".close").click(function () {
-    $(".searchLi").nextAll().show(700)
-    $(".searchLi").css("margin-right", "0");
+   searLi.nextAll().show(700)
+    searLi.css("margin-right", "0");
 });
 
 //button 绑定事件处理
@@ -53,10 +58,6 @@ function subSearch1() {
 }
 
 //搜索结果传递查询
-//函数节流
-let lock = true;
-
-
 function submitFn(obj, evt) {
     //获取结果,去除所有空格
     value = $('.search-input').val().replace(/\s+/g, "");
@@ -173,12 +174,15 @@ $(".returnTop").click(function () {
 });
 
 
+
 //预约表单弹出
 //预约锁 预约成功后锁住  false
 let seatLock = true;
 
 
 function yuyueForm(id) {
+    //弹出模态框
+    $(".trigger").click();
     //函数节流
     if (!lock) {
         return;
@@ -198,8 +202,7 @@ function yuyueForm(id) {
         }, 3000);
         return;
     }
-    //弹出模态框
-    $(".trigger").click();
+
     if (isLogined && seatLock) {
         //登录用户 和 未预约用户
         id = id;
@@ -214,7 +217,7 @@ function yuyueForm(id) {
 
 }
 
-//关闭未登录弹窗
+//关闭弹窗
 function EscClose(e) {
     if (HTMLElement && !HTMLElement.prototype.pressKey) {
         HTMLElement.prototype.pressKey = function (code) {
@@ -257,15 +260,15 @@ function timesVerify(begin1, end1, id) {
     begin[1] = Number(begin[1]);
     end[1] = Number(end[1]);
     //有效预约时间 8:00-23:00 不小于30分钟 大于此时此刻 nowDate
-    if (begin[0] > end[0] || begin[0] < 8 || end[0] > 24 || begin[0] < nowDate.getHours()) {
-        spop({
-            template: '<h4 style="color: #a5fed7" class="spop-body">无效的预约时间!</h4>',
-            position: 'top-center',
-            style: 'error',
-            autoclose: 2000,
-        });
-        return false;
-    }
+    // if (begin[0] > end[0] || begin[0] < 8 || end[0] > 24 || begin[0] < nowDate.getHours()) {
+    //     spop({
+    //         template: '<h4 style="color: #a5fed7" class="spop-body">无效的预约时间!</h4>',
+    //         position: 'top-center',
+    //         style: 'error',
+    //         autoclose: 2000,
+    //     });
+    //     return false;
+    // }
     if (begin[0] == nowDate.getHours() && begin[1] <= nowDate.getMinutes()) {
         //小于当前时间
         spop({
@@ -323,6 +326,11 @@ function updateAjax(message, id, begin, end, _token) {
         return;
     }
     $.post('/reserve', {id: id, beginTime: begin, endTime: end, _token: _token}, function (data) {
+        //关锁
+        lock = false;
+        setTimeout(function () {
+            lock = true;
+        }, 3000);
         if (data[0] == 1) {
             spop({
                 template: '<h4 style="color: #a5fed7" class="spop-body">' + message + '成功</h4>',
@@ -353,11 +361,6 @@ function updateAjax(message, id, begin, end, _token) {
             });
             $("#bn1").attr({'value': message});
             $("#bn1").css('background-image', '');
-            //关锁
-            lock = false;
-            setTimeout(function () {
-                lock = true;
-            }, 3000);
         }
     });
     return false;
@@ -365,28 +368,38 @@ function updateAjax(message, id, begin, end, _token) {
 
 //我的信息
 function myMessage(student) {
+    //函数节流
+    if (!lock) {
+        return;
+    }
+
     //展示我的信息
-    if (student == "") {
+    if (student === undefined || student === '') {
         //未登录用户
         str = '<h1 class="unLoginH3"><i class="fa-solid fa-user-xmark"></i>&nbsp;&nbsp;您未登录,请登录后查看</h1>';
         $("#leftDiv").html(str);
-        return;
+        return ;
+    }else {
+        $.get("/reserve/" + student, function (data) {
+            //关锁
+            lock = false;
+            setTimeout(function () {
+                lock = true;
+            }, 3000);
+            if (data == 0) {
+                str = '<h1 class="unLoginH3"><i class="fa-solid fa-user"></i>&nbsp;&nbsp;' + student + '<br><br><br>无预约信息</h1>';
+                $("#leftDiv").html(str);
+            } else {
+                //写进我的展示页面
+                $("#leftDiv").html(data);
+                //锁住预约表单
+                seatLock = false;
+            }
+        });
     }
-    $.get("/reserve/" + student, function (data) {
-        if (data == 0) {
-            str = '<h1 class="unLoginH3"><i class="fa-solid fa-user"></i>&nbsp;&nbsp;' + student + '<br><br><br>无预约信息</h1>';
-            $("#leftDiv").html(str);
-        } else {
-            //写进我的展示页面
-            $("#leftDiv").html(data);
-            //锁住预约表单
-            seatLock = false;
-        }
-    });
 }
 
-myMessage();
-
+myMessage(student);
 //编辑预约信息
 function editSeatInfo(id) {
     //弹窗调用
@@ -403,6 +416,8 @@ function picUp() {
     TanChuang();
     $(".triggerPic").click();
     $("#mySide").append(cssTan);
+    $("#uploadPic").hide();
+    $("#picUpImg").attr('src', '');
 }
 
 // {{--            弹窗--}}
@@ -454,6 +469,7 @@ function yuEdit(message, _token) {
 }
 
 /*图片上传*/
+
 function picClick(e) {
     $(".picBut input").click();
 }
@@ -462,10 +478,11 @@ function pictureUpJs(e) {
     const picFile = $("#pictureFile")[0].files;
     //上传按钮
     let upBt = $("#uploadPic");
+    //图片预览
+    let yuLanI = $("#picUpImg");
+
     upBt.hide();
-    //预览图片
-    let img = $("#picUpImg");
-    img.attr('src', '');
+    yuLanI.attr('src', '');
     //是否取消上传
     if (picFile[0] === undefined || picFile.length <= 0) return;
     //图片格式
@@ -497,16 +514,14 @@ function pictureUpJs(e) {
     //转换对象 blod url
     let blodUrl = window.URL.createObjectURL(picFile[0]);
     //预览图
-
-    img.attr('src', blodUrl);
+    yuLanI.attr('src', blodUrl);
+    upBt.text('上传图片');
     upBt.show();
     return true;
 }
 
 //图片上传
 function pictureUp(_token) {
-    //上传Button
-    var upB = $("#uploadPic");
     //验证
     if (!pictureUpJs()) {
         spop({
@@ -517,6 +532,9 @@ function pictureUp(_token) {
         });
         return;
     }
+    //上传按钮
+    let upBt = $("#uploadPic");
+
     //发送上传
     let imgfile = $("#pictureFile")[0].files;
     var formData = new FormData();
@@ -538,8 +556,8 @@ function pictureUp(_token) {
         contentType: false,
         processData: false,
         beforeSend(xhr) {
-            upB.text('上传中>>>');
-            upB.attr('background-image', ' linear-gradient(-225deg, #B7F8DB 0%, #50A7C2 100%)');
+            $("#uploadPic").text('上传中>>>');
+            $("#uploadPic").attr('background-image', ' linear-gradient(-225deg, #B7F8DB 0%, #50A7C2 100%)');
         },
         success: function (data) {
             if (data == 0) {
@@ -556,7 +574,7 @@ function pictureUp(_token) {
                     style: 'success',
                     autoclose: 3000,
                 });
-                upB.text('已上传');
+                upBt.text('已上传');
                 $(".picMy").attr('src', data.filePath);
                 EscClose();
             }
@@ -569,8 +587,8 @@ function pictureUp(_token) {
                 style: 'error',
                 autoclose: 3000,
             });
-            upB.text('上传图片');
-            upB.attr('background-image', 'linear-gradient(to top, #d5d4d0 0%, #d5d4d0 1%, #eeeeec 31%, #efeeec 75%, #e9e9e7 100%)');
+            upBt.text('上传图片');
+            upBt.attr('background-image', 'linear-gradient(to top, #d5d4d0 0%, #d5d4d0 1%, #eeeeec 31%, #efeeec 75%, #e9e9e7 100%)');
         }
 
     });

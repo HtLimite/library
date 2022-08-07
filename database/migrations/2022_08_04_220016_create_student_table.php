@@ -16,12 +16,12 @@ class CreateStudentTable extends Migration
         //学生表
         Schema::create('student', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('account')->nullable();
+            $table->bigInteger('account')->nullable();
             $table->char('email',18);
             $table->char('is_verification',3)->nullable();
             $table->string('verification_code',250)->nullable();
             $table->dateTime('verification_expire')->nullable();
-            $table->string('password',30)->nullable();
+            $table->string('password',500)->nullable();
             $table->string('avatar',70)->nullable();
             $table->integer('log')->nullable();
             $table->integer('reg')->nullable();

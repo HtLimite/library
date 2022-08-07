@@ -1,6 +1,6 @@
 
 
-<h2 style="margin: 70px auto;text-align: center;font-size: 27px;">搜索{{$value}}结果如下:</h2>
+<h2 style="margin: 70px auto;text-align: center;font-size: 27px;">搜索&nbsp;&nbsp;&nbsp;{{$value}}&nbsp;&nbsp;&nbsp;结果如下:</h2>
 
 
 <!--循环数据-->

@@ -7,7 +7,7 @@
 
         <h3 class="widget-title"><i class="fa-solid fa-user-clock"></i>&nbsp;&nbsp;我的信息</h3>
         <div class="profile-thumb">
-            <img class="picMy" src="/index/images/8.jpg" alt="">
+            <img class="picMy" src="{{$studentInfo->avatar}}" alt="">
         </div>
         <div class="profile-content">
             <h5 class="profile-name"><i class="fa-solid fa-envelope">&nbsp;邮箱</i>{{$mySeatInfo->student}}
@@ -161,7 +161,7 @@
                     <form class="picF" id="" onsubmit="return false;">
                     <h3>我的头像</h3>
                     <div class="imgDisplay">
-                        <img class="picMy" src="/index/images/8.jpg" alt="">
+                        <img class="picMy" src="{{$studentInfo->avatar}}" alt="">
                         </div>
                     <div class="imgDisplay" onclick="picClick();" style="cursor: pointer">
                         <div>
@@ -183,6 +183,8 @@
 </div>
 
 <script type="text/javascript">
+    //用户头像
+
     //删除 结束使用
     function endReserve(id, student) {
         //button响应

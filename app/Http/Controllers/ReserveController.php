@@ -19,14 +19,15 @@ class ReserveController extends Controller
     }
 
     //| POST      | reserve                | reserve.store   预约
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $timeData = $request->all();
         //解析时间 格式化
         $format = 'H:i';
         $beginTime = DateTime::createFromFormat($format, $timeData['beginTime']);
         $endTime = DateTime::createFromFormat($format, $timeData['endTime']);
         $updated_at = Date::now();
-        if(!$beginTime || !$endTime ){
+        if (!$beginTime || !$endTime) {
             return 0;
         }
         //更新座位信息
@@ -37,13 +38,38 @@ class ReserveController extends Controller
             'student' => session('email'),
             'updated_at' => $updated_at
         ]);
-
         if ($message) {
             //预约成功
+            //记录用户预约信息
+            $record = DB::table('record')->where('email',session('email'))->first();
+            $differT = strtotime($timeData['endTime']) - strtotime($timeData['beginTime']);
+            if (empty($record)) {
+                //首次记录 初始化
+                $recordData = array(
+                    'email'  => session('email'),
+                    'total_num' => 1,
+                    'total_time' => $differT,
+                    'integrity' => 0,
+                    'total_day' => 1
+                );
+
+            } else {
+                $recordData = array(
+                    'total_num' => 1 + $record->total_num,
+                    'total_time' => $differT + $record->total_time,
+                    'integrity' => 1 + $record->integrity,
+                    'total_day' => 1 + $record->total_day
+                );
+            }
+            //存入record表
+            $recordResult = DB::table('record')->updateOrInsert(['email' => session('email')],$recordData);
+            if(!$recordResult){
+                //记录失败
+            }
             return [1, session('email')];
         }
         return 0;
-}
+    }
 
 
     //| GET|HEAD  | reserve/create         | reserve.create
@@ -57,22 +83,23 @@ class ReserveController extends Controller
     {
         //查询数据库展示
         $mySeatInfo = DB::table('seat')->where('student', $email)->first();
+        //预约人信息
+        $studentInfo = DB::table('student')->where('email', $email)->first();
         if (empty($mySeatInfo)) {
             //无预约信息
             return 0;
         }
         //更新我的预约状况
         $nowT = Date::now();
-        if($nowT >= $mySeatInfo->beginTime && $nowT <= $mySeatInfo->endTime && $mySeatInfo->status != '离开'){
+        if ($nowT >= $mySeatInfo->beginTime && $nowT <= $mySeatInfo->endTime && $mySeatInfo->status != '离开') {
             $status = '使用中';
-        }else if ($nowT > $mySeatInfo->endTime){
+        } else if ($nowT > $mySeatInfo->endTime) {
             $status = '已结束';
-        }else{
+        } else {
             $status = '已预约';
 
         }
-        $update = DB::table('seat')->where('id',$mySeatInfo->id)->update(['status' => $status]);
-
+        $update = DB::table('seat')->where('id', $mySeatInfo->id)->update(['status' => $status]);
 
 
         //反解析时间 格式化
@@ -83,7 +110,7 @@ class ReserveController extends Controller
         $mySeatInfo->endT = $endTime->format('H:i');
 
 
-        return view('library.mySeatInfo', ['mySeatInfo' => $mySeatInfo]);
+        return view('library.mySeatInfo', ['mySeatInfo' => $mySeatInfo, 'studentInfo' => $studentInfo]);
     }
 
 
@@ -91,9 +118,9 @@ class ReserveController extends Controller
     public function update($id): int
     {
 
-        $result = DB::table('seat')->where('id',$id)->update(['status'=>'离开']);
-        if(!$result){
-            if(DB::table('seat')->where('id',$id)->update(['status'=>'使用中'])){
+        $result = DB::table('seat')->where('id', $id)->update(['status' => '离开']);
+        if (!$result) {
+            if (DB::table('seat')->where('id', $id)->update(['status' => '使用中'])) {
                 //使用状态
                 return 2;
             }
@@ -109,14 +136,14 @@ class ReserveController extends Controller
     public function destroy($id): int
     {
         //清空座位预约
-        $result = DB::table('seat')->where('id',$id)->update([
-            'student'=> null,
+        $result = DB::table('seat')->where('id', $id)->update([
+            'student' => null,
             'beginTime' => null,
             'endTime' => null,
-            'status'=>'未使用']);
-        if($result){
+            'status' => '未使用']);
+        if ($result) {
             return 1;
-        }else{
+        } else {
             return 0;
         }
     }

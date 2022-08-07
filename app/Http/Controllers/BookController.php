@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Http\Controllers\Student\EmailController;
 use App\Model\Library;
 use Illuminate\Http\Request;
@@ -10,14 +9,14 @@ use Illuminate\Support\Facades\DB;
 class BookController extends Controller
 {
     // | POST      | library                    | library.store 登录注册
-    public function store(Request $request): int
+    public function store(Request $request): array
     {
         //获取qq邮箱
         $Email = $request->all();
         //查询是否存在邮箱
         $user = new Library();
-        $count = $user->where('email', $Email['email'])->count();
-        if ($count == 0) {
+        $user1 = $user->where('email', $Email['email'])->first();
+        if (empty($user1)) {
             //注册
             //注册时间
             $user->reg = time();
@@ -25,28 +24,30 @@ class BookController extends Controller
             //调用邮箱注册
             $regEmail = new EmailController();
             $regEmail->index($Email['email'], "library.email", 0);
-            //存入数据库
+            //邮件类获取验证码,验证过期时间
+            $user->verification_code = $regEmail->code;
+            $user->verification_expire = $regEmail->expireTime;
+            //默认激活
+            $user->is_verification = 1;
             $user->email = $Email['email'];
+            //存入数据库
             $user->save();
-            //存入session
-            session(['email' => $Email['email']]);
-            return 2;
-
+            return ['code' => 2];
         } else {
             //登录
             //限制登录时间间隔
-            $logtime = $user->where('email', $Email['email'])->first();
-            if (time() - $logtime->log < 30) {
+            if (time() - $user1->log < 30) {
                 //登陆时间小于30s 返回 3
-                return 3;
+                return ['code' => 3];
             }
             $regEmail = new EmailController();
             $regEmail->index($Email['email'], "library.email", 1);
-
-
-            DB::table('student')->where('email', $Email['email'])->update(['log' => time()]);
-            session(['email' => $Email['email']]);
-            return 1;
+            //邮件类获取验证码,验证过期时间
+            $user1->verification_code = $regEmail->code;
+            $user1->verification_expire = $regEmail->expireTime;
+            $user1->log = time();
+            $user1->save();
+            return ['code'=>1,'avatar' => $user1->avatar];
         }
     }
 
@@ -175,9 +176,10 @@ class BookController extends Controller
         $result = $request->get('value');
         //获取展示页数
         $page = $request->get('page');
-        $array= DB::select("select id,name,seat,status,reserve from seat where
+        $array= DB::select("select id,name,student,status,reserve from seat where
                                             id like '%$result%'
-                                       or seat like '%$result%'
+                                       or name like '%$result%'
+                                       or student like '%$result%'
                                        or status like '%$result%'
                                        or reserve like '%$result%' ");
         $count = count($array);

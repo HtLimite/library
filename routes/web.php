@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
+//
 ////学生登陆页面
 //Route::get('/','Student\LoginController@index');
 //
@@ -49,7 +49,7 @@ Route::resource('/library','BookController');
 Route::get('/exit','BookController@exit');
 
 //QQ邮箱验证
-Route::get('/logVerify','Student\EmailController@logVerify');
+Route::get('/logVerify','Student\EmailController@Verify');
 
 
 

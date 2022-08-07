@@ -571,7 +571,10 @@
         // console.log(this.value);
     });
 
+    //用户邮箱传入js全局变量
+    var student = "<?php echo session('email');?>";
 </script>
+
 
 {{--<script src="/index/js/vendor/jquery-1.10.2.min.js"></script>--}}
 <script src="/js/jquery-3.6.0.js"></script>
@@ -597,7 +600,6 @@
 
 
 <script>
-
     //信息提示弹框
     function message(world, close) {
         spop({
@@ -645,8 +647,6 @@
             return;
         }
     }
-    //用户邮箱传入js全局变量
-    var student = "<?php echo session('email');?>";
 
     //是否预约
     function isReserve() {
@@ -666,6 +666,7 @@
     isReserve();
 
 
+
     //座位展示
     //监控浏览器屏幕大小
     $(window).resize(function () {
@@ -678,7 +679,6 @@
     });
 
     //座位展示点击函数
-
     page(1, true);
 
     function seat() {
@@ -687,12 +687,13 @@
 
         $(".col-md-9").css("width", "100%");
         $(".seatBlock").css("width", "20%");
+        // //调用第一页座位信息展示
+        // page(1, true);
         //调用预约检查锁
         isReserve();
         //触发弹窗函数
         TanChuang();
-        //调用第一页座位信息展示
-        page(1, true);
+
     }
 
     //LOGO
@@ -705,9 +706,19 @@
     }
 
     //分页ajax刷新
+
     function page(pages, bool, status) {
+        //节流
+        if (!lock) {
+            return;
+        }
         var bool = bool;
         $.get('/library/1', {'page': pages, 'status': status}, function (data) {
+            //关锁
+            lock = false;
+            setTimeout(function () {
+                lock = true;
+            }, 3000);
             if (data == 0) {
                 spop({
                     template: '<h4 style="color: #a5fed7" class="spop-body">获取座位信息失败!</h4>',
@@ -778,7 +789,7 @@
                     scrollPage();
                 }, 60);
             }
-        };
+        }
 
         function scrollPage() {
             scrollPosition = {
@@ -786,7 +797,7 @@
                 y: window.pageYOffset || docElem.scrollTop
             };
             didScroll = false;
-        };
+        }
 
         scrollFn();
 
@@ -845,6 +856,7 @@
             })
             return;
         }
+        //防sql注入
         var regex = /^(.*)(select|insert|into |delete|from |count|drop|join|union|table|database|update|truncate|asc\(|mid\(|char\(|xp_cmdshell|exec |master|net localgroup administrators|\"|:|net user|\| or )(.*)$/gi;
 
         if (regex.test(qqeamil)) {
@@ -859,7 +871,8 @@
         //ajax
         $.post('/library ', {email: qqeamil, '_token': '{{csrf_token()}}'}, function (data) {
             //注册 2
-            if (data == 2) {
+
+            if (data.code == 2) {
                 spop({
                     template: '<h4 style="color: black" class="spop-body">请查收QQ邮箱验证注册 </h4>',
                     position: 'top-left',
@@ -875,6 +888,9 @@
                     style: 'success',
                     autoclose: 3000,
                 });
+                if(data.filePath != null){
+                    $(".picMy").attr('src',data.filePath);
+                }
             } else if (data == 3) {
                 spop({
                     template: '<h4 style="color: #b85b53" class="spop-body">失败!登录太频繁,请30s后重试 </h4>',
