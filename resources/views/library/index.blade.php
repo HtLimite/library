@@ -60,7 +60,7 @@
 
 <body>
 <!--[if lt IE 7]>
-<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="javascript:;">upgrade
     your browser</a> to improve your experience.</p>
 <![endif]-->
 
@@ -92,20 +92,18 @@
                                 <div class="morph-content" style="background: #5b938b;">
                                     <div>
                                         <div class="content-style-form content-style-form-1">
-                                            <span class="icon icon-close">Close the dialog</span>
-                                            <h2 style="font-size: 37px;">管理员</h2>
-                                            <form>
-                                                <p style="position: relative"><label> <i
-                                                            class="fa-solid fa-user"></i></label><input type="text"/>
+                                            <span id="AdminClose" class="icon icon-close">Close the dialog</span>
+                                            <h2 style="font-size: 37px;">Admin</h2>
+                                            <form onsubmit="return Admin();"  action="/admin/login" method="post" target="_blank" id="AdminForm" >
+                                                @csrf
+                                                <p style="position: relative"><label> <i class="fa-solid fa-user">  account</i><span id="AdminMessA" style="color: red;float: right;"></span></label>
+                                                    <input id="AdminAccount" name="account" autocomplete="off" required type="text"/>
                                                 </p>
-                                                <p style="position: relative"><label><i
-                                                            class="fa-solid fa-lock"></i></label><input
-                                                        required type="password"/></p>
+                                                <p style="position: relative"><label><i class="fa-solid fa-lock">  password</i><span id="AdminMessB" style="color: red;float: right;"></span></label>
+                                                    <input id="AdminPassword" name="password" required type="password"/></p>
                                                 <p>
-                                                    <button type="submit">登录</button>
-                                                </p>
-                                                <p>
-                                                    <button>忘记密码?</button>
+                                                    <input id="AdminI" type="submit" style="display: none">
+                                                    <button id="AdminB" type="submit" >登录</button>
                                                 </p>
                                             </form>
                                         </div>
@@ -144,6 +142,12 @@
         </div>
     </div>
 </div>
+@if (session('error'))
+    <div class="alert alert-danger" style="position: fixed; top: 0;;z-index: 999">
+        {{ session('error') }}
+    </div>
+    <script>setTimeout(function (){$(".alert-danger").toggle();},3000)</script>
+@endif
 <!-- .top-header -->
 
 
@@ -168,6 +172,7 @@
         </ul>
     </div>
 </div>
+
 <div class="container" id="page-content" style="min-height: 100vh;">
     <div class="row">
 
@@ -217,8 +222,9 @@
                 </div>
 
 
-                <div id="menu-2" class="content about-section">
-                    <div class="row" id="leftDiv">
+                <div id="menu-2"  class="content about-section">
+                    <div id="leftDiv">
+                    <div class="row" >
                         <!--我的预约信息-->
 
                         <div class="col-md-8 col-sm-8">
@@ -242,7 +248,7 @@
                         </div>
                         <div class="col-md-7 col-sm-7">
                             <div class="box-content">
-                                <h3 class="widget-title">Our Technical Skills</h3>
+                                <h3 class="widget-title">近来预约记录</h3>
                                 <ul class="progess-bars">
                                     <li>
                                         <span>HTML CSS 80%</span>
@@ -275,6 +281,7 @@
                                 </ul>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
 
@@ -401,7 +408,7 @@
                     <div class="row">
                         <div class="col-md-8 col-sm-8">
                             <div class="box-content">
-                                <h3 class="widget-title">认证您的图书馆账号</h3>
+                                <h3 class="widget-title"></h3>
                                 <form class="contact-form" id="enrolForm" onsubmit=" return false;">
                                     <fieldset>
                                         <input name="account" type="text" class="name" id="name" placeholder="学号...">
@@ -432,23 +439,21 @@
                         <div class="col-md-4 col-sm-4">
                             <div class="box-content">
                                 <h3 class="widget-title">Stay In Touch</h3>
-                                <p>Sed ullamcorper, risus a tincidunt efficitur, massa mauris ultricies leo, eu interdum
-                                    eros erat non augue. <br><br> Suspendisse ornare sollicitudin lectus non egestas.
-                                    Nam fermentum imperdiet ligula congue venenatis.
+                                <p>几个个人社交帐号,只为装饰 <br><br>最后一个是网易云歌单外链.
                                 </p>
                                 <div class="about-social">
                                     <ul>
                                         <li>
-                                            <a href="#" class="fa fa-facebook"></a>
+                                            <a href="https://github.com/htwrold" target="_blank" class="fa-brands fa-github"></a>
                                         </li>
                                         <li>
-                                            <a href="#" class="fa fa-twitter"></a>
+                                            <a href="https://twitter.com/honor_ht" target="_blank" class="fa-brands fa-twitter"></a>
                                         </li>
                                         <li>
-                                            <a href="#" class="fa fa-linkedin"></a>
+                                            <a href="javascript:;"  class="fa-brands fa-youtube"></a>
                                         </li>
                                         <li>
-                                            <a href="#" class="fa fa-dribbble"></a>
+                                            <a href="//music.163.com/outchain/player?type=0&id=7339847963&auto=1&height=430" target="_blank" class="fa-solid fa-headphones"></a>
                                         </li>
                                     </ul>
                                 </div>
@@ -475,7 +480,7 @@
                                 class="fa-solid fa-swatchbook"></i>预约</a>
                     </li>
                     <li>
-                        <a class="show-5 contactbutton" href="#"><i class="fa-brands fa-uniregistry"></i>认证</a>
+                        <a class="show-5 contactbutton" href="#"><i class="fa-brands fa-uniregistry"></i>关于</a>
                     </li>
                 </ul>
             </nav>
@@ -880,7 +885,7 @@
                     autoclose: 3000,
                 });
 
-            } else if (data == 1) {
+            } else if (data.code == 1) {
                 //登录 1
                 spop({
                     template: '<h4 style="color: black" class="spop-body">请查收QQ邮箱验证登录 </h4>',

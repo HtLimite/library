@@ -239,6 +239,17 @@
 .closePic:hover{
     transform:rotate(360deg);
 }
+/*预约记录*/
+.recordI{
+    margin-left: 50px;
+}
+
+
+
+
+
+
+
 /*动画*/
 @keyframes myRotate {
     0%{

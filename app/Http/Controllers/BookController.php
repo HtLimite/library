@@ -116,6 +116,8 @@ class BookController extends Controller
                 default:
                     $status;
             }
+            //更新 已结束 初始化
+
             //获取 status 种类总数目
             $count = DB::table('seat')->where('status', $status)->count();
 

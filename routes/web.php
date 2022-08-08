@@ -51,10 +51,18 @@ Route::get('/exit','BookController@exit');
 //QQ邮箱验证
 Route::get('/logVerify','Student\EmailController@Verify');
 
+//Admin
+//登录处理
+Route::post('/admin/login','AdminLoginController@store');
+//Admin 资源路由
+Route::group(['middleware' => 'adminLogin','prefix' => 'admin'],function (){
+    Route::resource('/','AdminController');
+});
+
 
 
 //图书资源
-Route::group(['middleware' => 'Library'],function (){
+Route::group(['middleware' => 'libraryLogin'],function (){
     //座位预约
     Route::resource('/reserve','ReserveController');
     //个人信息

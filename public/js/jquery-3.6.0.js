@@ -1,5 +1,5 @@
 /*!
- * jQuery JavaScript Library v3.6.0
+ * jQuery JavaScript libraryLogin v3.6.0
  * https://jquery.com/
  *
  * Includes Sizzle.js

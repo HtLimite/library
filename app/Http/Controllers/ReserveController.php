@@ -41,12 +41,12 @@ class ReserveController extends Controller
         if ($message) {
             //预约成功
             //记录用户预约信息
-            $record = DB::table('record')->where('email',session('email'))->first();
+            $record = DB::table('record')->where('email', session('email'))->first();
             $differT = strtotime($timeData['endTime']) - strtotime($timeData['beginTime']);
             if (empty($record)) {
                 //首次记录 初始化
                 $recordData = array(
-                    'email'  => session('email'),
+                    'email' => session('email'),
                     'total_num' => 1,
                     'total_time' => $differT,
                     'integrity' => 0,
@@ -62,8 +62,8 @@ class ReserveController extends Controller
                 );
             }
             //存入record表
-            $recordResult = DB::table('record')->updateOrInsert(['email' => session('email')],$recordData);
-            if(!$recordResult){
+            $recordResult = DB::table('record')->updateOrInsert(['email' => session('email')], $recordData);
+            if (!$recordResult) {
                 //记录失败
             }
             return [1, session('email')];
@@ -85,8 +85,13 @@ class ReserveController extends Controller
         $mySeatInfo = DB::table('seat')->where('student', $email)->first();
         //预约人信息
         $studentInfo = DB::table('student')->where('email', $email)->first();
-        if (empty($mySeatInfo)) {
-            //无预约信息
+        //预约记录
+        $record = DB::table('record')->where('email', $email)->first();
+        //事件处理
+        //小时转化
+        $record->total_time = ($record->total_time) / 3600;
+        if (empty($mySeatInfo) || empty($record)) {
+            //无预约信息  预约记录
             return 0;
         }
         //更新我的预约状况
@@ -110,7 +115,11 @@ class ReserveController extends Controller
         $mySeatInfo->endT = $endTime->format('H:i');
 
 
-        return view('library.mySeatInfo', ['mySeatInfo' => $mySeatInfo, 'studentInfo' => $studentInfo]);
+        return view('library.mySeatInfo', [
+            'mySeatInfo' => $mySeatInfo,
+            'studentInfo' => $studentInfo,
+            'record' => $record
+        ]);
     }
 
 

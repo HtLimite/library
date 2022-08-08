@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class Library
+class adminLogin
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class Library
      */
     public function handle($request, Closure $next)
     {
-        if($request->session()->has('email')){
+        if(session('account')){
             return $next($request);
         }else{
             return redirect('/library');

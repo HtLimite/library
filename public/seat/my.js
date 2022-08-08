@@ -600,7 +600,54 @@ function pictureUp(_token) {
     }, 7000);
 
 }
+//Admin
+//提交表单
+$("#AdminB").click(function (){
+    $("#AdminI").click();
+})
+//表单返回函数
+function Admin(){
+    //获取
+    let account = $("#AdminAccount").val();
+    let password = $("#AdminPassword").val();
+    let MessA = $("#AdminMessA");
+    let MessB = $("#AdminMessB");
+    let button = $("#AdminB");
+    //验证
+    //十位数字
+    var regExp1 = /^\d{10}$/;
+    //^[a-zA-Z]\w{5,17}$ 正确格式为：以字母开头，长度在6-18之间，只能包含字符、数字和下划线。
+    var regExp2 = /^[a-zA-Z]\w{5,17}$/;
+    if(!regExp1.test(account)){
+        MessA.text('错误');
+        return false;
+    }
+    MessA.text('');
+    //防sql注入
+    var regex = /^(.*)(select|insert|into |delete|from |count|drop|join|union|table|database|update|truncate|asc\(|mid\(|char\(|xp_cmdshell|exec |master|net localgroup administrators|\"|:|net user|\| or )(.*)$/gi;
+    if(!regExp2.test(password)){
+        MessB.text('错误');
+        return false;
+    }
+    if(regex.test(password)){
+        //sql注入
+        MessB.text('警告!!!摄像头前的你,正在犯罪!')
+        return false;
+    }
+    MessB.text('');
+    //通过
+    button.text('登录中...');
+    button.css('background','#864745');
 
+    setTimeout(function (){
+        //表单重置
+        $("#AdminForm")[0].reset();
+        button.text('登录');
+        button.css('background','#e75854');
+        $("#AdminClose").click();
+    },3000)
+    return true;
+}
 
 
 
