@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Index;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\Student\EmailController;
 use App\Model\Library;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use function redirect;
+use function view;
 
 class BookController extends Controller
 {

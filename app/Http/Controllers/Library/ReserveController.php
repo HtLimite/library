@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Library;
 
+use App\Http\Controllers\Controller;
 use DateTime;
-use http\Exception\BadMessageException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
-use mysql_xdevapi\Exception;
-use phpDocumentor\Reflection\Exception\PcreException;
+use function session;
+use function view;
 
 class ReserveController extends Controller
 {

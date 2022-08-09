@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use function back;
+use function redirect;
+use function session;
 
 class AdminLoginController extends Controller
 {
@@ -27,6 +30,6 @@ class AdminLoginController extends Controller
         }
         //存入session
         session(['adminInfo' => $admin->account]);
-        return redirect('admin/');
+        return redirect('/admin/admin');
     }
 }

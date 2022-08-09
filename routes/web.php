@@ -14,10 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+//
+//Auth::routes();
+//
+//Route::get('/home', 'HomeController@index')->name('home');
 
 //
 ////学生登陆页面
@@ -44,25 +44,34 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 //QQ邮箱登录或注册
-Route::resource('/library','BookController');
+Route::resource('/library','Index\BookController');
 //退出登录
-Route::get('/exit','BookController@exit');
+Route::get('/exit','Index\BookController@exit');
 
 //QQ邮箱验证
 Route::get('/logVerify','Student\EmailController@Verify');
 
 //Admin
 //登录处理
-Route::post('/admin/login','AdminLoginController@store');
-//Admin 资源路由
-Route::group(['middleware' => 'adminLogin','prefix' => 'admin'],function (){
-    Route::resource('/','AdminController');
+Route::post('/admin/login','Admin\AdminLoginController@store');
+
+//Admin后台
+Route::group(['middleware' => 'adminLogin','prefix' => 'admin','namespace' => 'Admin'],function (){
+    //admin 资源路由
+    Route::resource('/admin','AdminController');
+    //admin 退出
+    Route::get('/logout','AdminController@logout');
+    //seat 资源路由
+    Route::resource('/seat','SeatController');
+    //student 资源路由
+    Route::resource('/student','StudentController');
+    //record 统计
+    Route::post('/record','RecordController@index');
+
 });
 
-
-
-//图书资源
-Route::group(['middleware' => 'libraryLogin'],function (){
+//图书资源前台
+Route::group(['middleware' => 'libraryLogin','namespace' => 'Library'],function (){
     //座位预约
     Route::resource('/reserve','ReserveController');
     //个人信息
