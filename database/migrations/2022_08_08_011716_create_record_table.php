@@ -15,7 +15,7 @@ class CreateRecordTable extends Migration
     {
         Schema::create('record', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->char('email',20);
+            $table->char('email',30);
             $table->integer('total_num')->nullable();
             $table->bigInteger('total_time')->nullable();
             $table->integer('integrity')->nullable();

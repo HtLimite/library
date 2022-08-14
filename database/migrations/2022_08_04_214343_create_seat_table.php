@@ -20,7 +20,7 @@ class CreateSeatTable extends Migration
             $table->char('status', 10);
             $table->dateTime('beginTime')->nullable();
             $table->dateTime('endTime')->nullable();
-            $table->char('student', 18)->nullable();
+            $table->char('student', 30)->nullable();
 
             $table->timestamps();
         });

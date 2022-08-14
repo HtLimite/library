@@ -14,13 +14,13 @@
 Route::get('/', function () {
     return view('library.index');
 });
-//
+//laravel 登录注册
 //Auth::routes();
 //
 //Route::get('/home', 'HomeController@index')->name('home');
 
-//
-////学生登陆页面
+////独立登录注册页面  最后舍弃
+//学生登陆页面
 //Route::get('/','Student\LoginController@index');
 //
 ////注册
@@ -43,14 +43,14 @@ Route::get('/', function () {
 //});
 
 
-//QQ邮箱登录或注册
+//电子邮箱登录或注册
 Route::resource('/library','Index\BookController');
 //退出登录
 Route::get('/exit','Index\BookController@exit');
 
-//QQ邮箱验证
+//电子邮箱验证
 Route::get('/logVerify','Student\EmailController@Verify');
-//QQ邮箱验证码验证
+//电子邮箱验证码验证
 Route::post('/codeVerify','Student\EmailController@codeVerify');
 
 //admin

@@ -17,7 +17,7 @@ class CreateStudentTable extends Migration
         Schema::create('student', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('account')->nullable();
-            $table->char('email',18);
+            $table->char('email',30);
             $table->char('is_verification',3)->nullable();
             $table->string('verification_code',250)->nullable();
             $table->dateTime('verification_expire')->nullable();
