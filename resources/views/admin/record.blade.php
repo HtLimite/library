@@ -2,7 +2,7 @@
 <!--    record        -->
 <div id="recordData" >
     <ol class="breadcrumb">
-        <li><a href="#"><span class="glyphicon glyphicon-home"></span> 首页</a></li>
+        <li><a href="#"><span class="fa-solid fa-house-user"></span> 首页</a></li>
         <li><a id="title1" href="#">管理员管理</a></li>
         <li id="title2" class="active">管理员列表</li>
         <button class="btn btn-primary btn-xs pull-right"><span class="glyphicon glyphicon-refresh"></span>
@@ -11,7 +11,7 @@
     <!-- 面版 -->
     <div class="panel panel-default">
         <div class="panel-heading">
-            <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> 批量删除</button>
+            <button class="btn btn-danger"><span class="fa-solid fa-trash"></span> 批量删除</button>
             <!-- <a href="/admin/admin/create" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> 添加管理员</a> -->
             <a href="javascript:;" data-toggle="modal" data-target="#add" class="btn btn-success"><span
                     class="glyphicon glyphicon-plus"></span> 添加管理员</a>

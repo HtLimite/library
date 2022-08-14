@@ -14,7 +14,7 @@ class AdminController extends Controller
 public function index(){
     $totA=\DB::table('admin')->count();
     $admin = \DB::table('admin')->paginate(10);
-    return view("Admin.index",[
+    return view("admin.index",[
         'totA' => $totA,
         'admin' => $admin,
     ]);

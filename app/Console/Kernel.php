@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\DB;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,6 +25,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        //定时清理座位
+        $schedule->call(function () {
+            DB::table('seat')->where('status','已结束')->update(['status'=> '未使用','beginTime'=> null,'endTime' => null]);
+        })->everyFiveMinute();
         // $schedule->command('inspire')
         //          ->hourly();
     }

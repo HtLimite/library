@@ -1,3 +1,6 @@
+<script type="text/javascript" src="/seat/bootstrap-clockpicker.js"></script>
+
+
 <!--座位信息-->
 {{--<div id="seatOne">--}}
 
@@ -194,6 +197,21 @@
     </div>
 </div>
 {{--</div>--}}
+{{--时间选择--}}
+<script type="text/javascript">
+    $('.clockpicker').clockpicker()
+        .find('input').change(function () {
+        // TODO：时间改变
+        // console.log(this.value);
+    });
+</script>
+
+
+
+
+
+
+
 
 
 

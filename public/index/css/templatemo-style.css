@@ -436,6 +436,7 @@ body{
 
 .social-icons {
   text-align: right;
+    height: 20px;
 }
 .social-icons a {
   color: white;
@@ -447,7 +448,6 @@ body{
 @media screen and (max-width: 992px) {
   .social-icons {
     text-align: center;
-    margin-top: 20px;
   }
   .social-icons li:first-child {
     margin-left: 0;
@@ -571,14 +571,27 @@ body{
   width: 100%;
   display: block;
 }
+
 @media screen and (max-width: 768px) {
   .profile-thumb {
-    float: none;
+    float: left;
     margin-bottom: 25px;
-    width: 80%;
+    width: 50%;
     height: auto;
   }
 }
+@media screen and (max-width: 568px) {
+
+.seatBlock{
+    width: 33.3333%;}
+
+}
+/*@media screen and (max-width: 483px) {*/
+/*    #seatIndex i{*/
+/*        display: none;*/
+/*    }*/
+/*}*/
+
 
 .profile-content {
     height: 175px;
@@ -600,6 +613,7 @@ body{
 }
 .myBottomDiv{
     height: 127px;
+    clear: both;
 }
 .profile-content-seatOne{
     width: 260px;

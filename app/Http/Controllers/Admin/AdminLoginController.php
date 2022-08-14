@@ -10,7 +10,7 @@ use function session;
 
 class AdminLoginController extends Controller
 {
-    //Admin 登录处理
+    //admin 登录处理
     public function store(){
         $account = $_POST['account'];
         $password = $_POST['password'];

@@ -2,15 +2,20 @@
 <!--我的预约信息-->
 <script type="text/javascript" src="/seat/bootstrap-clockpicker.js"></script>
 
-<div class="col-md-8 col-sm-8" style="padding-left: 0;">
+<div class="col-md-8 col-sm-8 bigqi1">
     <div class="box-content profile">
 
         <h3 class="widget-title"><i class="fa-solid fa-user-clock"></i>&nbsp;&nbsp;我的信息</h3>
         <div class="profile-thumb">
-            <img class="picMy" src="{{$studentInfo->avatar}}" alt="">
+            @if($studentInfo->avatar == null)
+                <img class="picMy" src="/index/images/8.jpg" alt="">
+            @else
+                <img class="picMy" src="{{$studentInfo->avatar}}" alt="">
+            @endif
         </div>
         <div class="profile-content">
-            <h5 class="profile-name"><i class="fa-solid fa-envelope">&nbsp;邮箱</i>{{$mySeatInfo->student}}
+            <h5 style="font-size: 17px;" class="profile-name"><i class="fa-solid fa-envelope">&nbsp;邮箱</i>
+                <span>{{$mySeatInfo->student}}</span>
             </h5>
             <span class="profile-role"></span>
             <div class="myLi" id="myLi">
@@ -48,10 +53,10 @@
     </div>
 </div>
 <!--我的信息侧边栏-->
-<div class="col-md-4 col-sm-4" style="padding-right: 0">
+<div class="col-md-4 col-sm-4 bigqi"  >
     <div class="box-content">
         <h3 class="widget-title">About Lim</h3>
-        <p> Lim&nbsp; 是英文&nbsp; Limite&nbsp; 的缩写，是极限的意义，象征着无限趋近，无限趋近于光、无限趋近于美好...... <br><br>未来将无限向往着&nbsp; <strong>Lim</strong>. </p>
+        <p> Lim&nbsp; 是英文&nbsp; Limite&nbsp; 的缩写，是极限的意义，象征着无限趋近，无限趋近于光、无限趋近于美好...... <br><br>无限向往着&nbsp; <strong>Lim</strong>. </p>
         <div class="about-social">
             <ul>
                 <li>
@@ -123,6 +128,8 @@
     </div>
 </div>
 
+
+
 {{--</div>--}}
 <!-- css3 svg弹窗  修改预约信息-->
 <div  id="mySide"></div>
@@ -132,7 +139,7 @@
     </div>
     <div id="somedialog" class="dialog">
         <div class="dialog__overlay"></div>
-        <div class="dialog__content" style="padding-top: 0;">
+        <div class="dialog__content" style="padding-top: 0;width: 100%">
             <div class="morph-shape"
                  data-morph-open="M0,0h80c0,0,0,9.977,0,29.834c0,19.945,0,30.249,0,30.249H0c0,0,0-10.055,0-30.332C0,8.219,0,0,0,0z"
                  data-morph-close="M0,29.75h80c0,0-3.083,0.014-3.083,0.041c0,0.028,3.083,0.042,3.083,0.042H0c0,0,3.084-0.014,3.084-0.042
@@ -213,7 +220,7 @@
                     <div class="imgDisplay">
                         <img class="picMy" src="{{$studentInfo->avatar}}" alt="">
                         </div>
-                    <div class="imgDisplay" onclick="picClick();" style="cursor: pointer">
+                    <div class="imgDisplay" id="picDragenter" onclick="picClick();" style="cursor: pointer">
                         <div>
                             <img id="picUpImg" src="">
                             <i class="fa-solid fa-plus"></i>  <p>将图片拖进此处<span>即可上传</span></p>

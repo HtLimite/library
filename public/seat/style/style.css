@@ -17,9 +17,39 @@
     padding: 30px 30px 0px 30px;
     color: white;
     background: rgba(0, 0, 0, 0.8);
+    width: 100%;
 
 }
+@media (max-width: 992px) {
+    .seatBlock{
+        width: 25%;
+    }
+}
 
+
+@media (max-width: 767px){
+    #oneHun{
+        width: 100%;
+    }
+    .bigqi{
+        margin:0 -15px;
+    }
+    .bigqi1{
+        margin-right: -15px;
+    }
+    .seatBlock{
+        width: 33.33333%;
+    }
+}
+@media (min-width: 767px) {
+    .bigqi {
+        padding-right: 0;
+        width: 34.333333%;
+    }
+}
+.bigqi1{
+    margin-left:-15px;
+}
 .seatDiv-fixed {
     position: fixed;
     display: flex;
@@ -183,7 +213,6 @@
 .unLoginH3{
     font-size: 23px;
     background: white;
-    margin: 15px;
     height: 370px;
     padding: 30px;
 }

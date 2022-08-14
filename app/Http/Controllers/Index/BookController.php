@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use function redirect;
 use function view;
 
+
 class BookController extends Controller
 {
     // | POST      | library                    | library.store 登录注册
@@ -23,12 +24,14 @@ class BookController extends Controller
             //注册
             //注册时间
             $user->reg = time();
-            $user->log = time();
             //调用邮箱注册
             $regEmail = new EmailController();
-            $regEmail->index($Email['email'], "library.email", 0);
+            $resul = $regEmail->index($Email['email'], "library.email", 0);
+            if(!$resul){
+                return ['code'=>0];
+            }
             //邮件类获取验证码,验证过期时间
-            $user->verification_code = $regEmail->code;
+            $user->verification_code = $regEmail->codeN;
             $user->verification_expire = $regEmail->expireTime;
             //默认激活
             $user->is_verification = 1;
@@ -46,10 +49,11 @@ class BookController extends Controller
             $regEmail = new EmailController();
             $regEmail->index($Email['email'], "library.email", 1);
             //邮件类获取验证码,验证过期时间
-            $user1->verification_code = $regEmail->code;
+            $user1->verification_code = $regEmail->codeN;
             $user1->verification_expire = $regEmail->expireTime;
             $user1->log = time();
             $user1->save();
+
             return ['code'=>1,'avatar' => $user1->avatar];
         }
     }
@@ -196,6 +200,7 @@ class BookController extends Controller
         $offset = ($page - 1) * $pageNum;
         $pageArray = array_slice($array,$offset,50,true);
         $pageArray = (object)$pageArray;
+
 
         return view('library.search', [
             'seatInfo' => $pageArray,

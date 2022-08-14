@@ -19,10 +19,15 @@ searBut.click(function () {
     searLi.nextAll().hide();
     $(".seatType").hide();
     searLi.css("margin-right", "233px");
+    if ($(window).width() < 472) {
+        $("#seatIndex").css('opacity', 0);
+    }
 });
 $(".close").click(function () {
-   searLi.nextAll().show(700)
+    searLi.nextAll().show(700)
     searLi.css("margin-right", "0");
+    $("#seatIndex").css('opacity', 1);
+
 });
 
 //button 绑定事件处理
@@ -174,19 +179,19 @@ $(".returnTop").click(function () {
 });
 
 
-
 //预约表单弹出
 //预约锁 预约成功后锁住  false
 let seatLock = true;
 
 
 function yuyueForm(id) {
-    //弹出模态框
-    $(".trigger").click();
     //函数节流
     if (!lock) {
         return;
     }
+    // 弹出模态框
+    $(".trigger").click();
+
     if (!seatLock) {
         //预约用户
         spop({
@@ -260,15 +265,15 @@ function timesVerify(begin1, end1, id) {
     begin[1] = Number(begin[1]);
     end[1] = Number(end[1]);
     //有效预约时间 8:00-23:00 不小于30分钟 大于此时此刻 nowDate
-    // if (begin[0] > end[0] || begin[0] < 8 || end[0] > 24 || begin[0] < nowDate.getHours()) {
-    //     spop({
-    //         template: '<h4 style="color: #a5fed7" class="spop-body">无效的预约时间!</h4>',
-    //         position: 'top-center',
-    //         style: 'error',
-    //         autoclose: 2000,
-    //     });
-    //     return false;
-    // }
+    if (begin[0] > end[0] || begin[0] < 8 || end[0] > 24 || begin[0] < nowDate.getHours()) {
+        spop({
+            template: '<h4 style="color: #a5fed7" class="spop-body">无效的预约时间!</h4>',
+            position: 'top-center',
+            style: 'error',
+            autoclose: 2000,
+        });
+        return false;
+    }
     if (begin[0] == nowDate.getHours() && begin[1] <= nowDate.getMinutes()) {
         //小于当前时间
         spop({
@@ -351,6 +356,7 @@ function updateAjax(message, id, begin, end, _token) {
             //我的信息
             EscClose();
             myMessage(data[1]);
+            seatLock = false;
 
         } else {
             spop({
@@ -368,27 +374,19 @@ function updateAjax(message, id, begin, end, _token) {
 
 //我的信息
 function myMessage(student) {
-    //函数节流
-    if (!lock) {
-        return;
-    }
 
     //展示我的信息
     if (student === undefined || student === '') {
         //未登录用户
         str = '<h1 class="unLoginH3"><i class="fa-solid fa-user-xmark"></i>&nbsp;&nbsp;您未登录,请登录后查看</h1>';
         $("#leftDiv").html(str);
-        return ;
-    }else {
+        return;
+    } else {
         $.get("/reserve/" + student, function (data) {
-            //关锁
-            lock = false;
-            setTimeout(function () {
-                lock = true;
-            }, 3000);
+
             if (data == 0) {
                 str = '<h1 class="unLoginH3"><i class="fa-solid fa-user"></i>&nbsp;&nbsp;' + student + '<br><br><br>无预约信息</h1>';
-                $("#leftDiv").html(str);
+                // $("#leftDiv").html(str);
             } else {
                 //写进我的展示页面
                 $("#leftDiv").html(data);
@@ -400,6 +398,7 @@ function myMessage(student) {
 }
 
 myMessage(student);
+
 //编辑预约信息
 function editSeatInfo(id) {
     //弹窗调用
@@ -418,6 +417,35 @@ function picUp() {
     $("#mySide").append(cssTan);
     $("#uploadPic").hide();
     $("#picUpImg").attr('src', '');
+
+//拖动上传
+    $("#picDragenter").on({
+        //拖进触发的事件
+        "dragenter": function (e) {
+            //清除浏览器默认的功能
+            e.preventDefault();
+            // console.log("有东西在拖动")
+        },
+        //在目标地点拖动触发的事件
+        "dragover": function (e) {
+            //清除浏览器默认的功能
+            e.preventDefault();
+            // console.log("文件进来了")
+        },
+        //在目标地点放置后出发的事件
+        "drop": function (e) {
+            //清除浏览器默认的功能
+            e.preventDefault();
+            //获取文件的信息，可自行输出查看
+            let file = e.originalEvent.dataTransfer.files;
+            // console.log(file);
+            pictureUpJs(1, file);
+            //将获取的文件信息替换到input的自带属性的files中
+            $("#pictureFile").prop("files", file)
+
+        }
+    })
+
 }
 
 // {{--            弹窗--}}
@@ -472,10 +500,17 @@ function yuEdit(message, _token) {
 
 function picClick(e) {
     $(".picBut input").click();
+
 }
 
-function pictureUpJs(e) {
-    const picFile = $("#pictureFile")[0].files;
+function pictureUpJs(e, picFile1) {
+    if (picFile1 == undefined) {
+        var picFile = $("#pictureFile")[0].files;
+    } else {
+        picFile = picFile1;
+
+    }
+
     //上传按钮
     let upBt = $("#uploadPic");
     //图片预览
@@ -519,6 +554,7 @@ function pictureUpJs(e) {
     upBt.show();
     return true;
 }
+
 
 //图片上传
 function pictureUp(_token) {
@@ -600,13 +636,15 @@ function pictureUp(_token) {
     }, 7000);
 
 }
-//Admin
+
+//admin
 //提交表单
-$("#AdminB").click(function (){
+$("#AdminB").click(function () {
     $("#AdminI").click();
 })
+
 //表单返回函数
-function Admin(){
+function Admin() {
     //获取
     let account = $("#AdminAccount").val();
     let password = $("#AdminPassword").val();
@@ -618,18 +656,18 @@ function Admin(){
     var regExp1 = /^\d{10}$/;
     //^[a-zA-Z]\w{5,17}$ 正确格式为：以字母开头，长度在6-18之间，只能包含字符、数字和下划线。
     var regExp2 = /^[a-zA-Z]\w{5,17}$/;
-    if(!regExp1.test(account)){
+    if (!regExp1.test(account)) {
         MessA.text('错误');
         return false;
     }
     MessA.text('');
     //防sql注入
     var regex = /^(.*)(select|insert|into |delete|from |count|drop|join|union|table|database|update|truncate|asc\(|mid\(|char\(|xp_cmdshell|exec |master|net localgroup administrators|\"|:|net user|\| or )(.*)$/gi;
-    if(!regExp2.test(password)){
+    if (!regExp2.test(password)) {
         MessB.text('错误');
         return false;
     }
-    if(regex.test(password)){
+    if (regex.test(password)) {
         //sql注入
         MessB.text('警告!!!摄像头前的你,正在犯罪!')
         return false;
@@ -637,15 +675,15 @@ function Admin(){
     MessB.text('');
     //通过
     button.text('登录中...');
-    button.css('background','#864745');
+    button.css('background', '#864745');
 
-    setTimeout(function (){
+    setTimeout(function () {
         //表单重置
         $("#AdminForm")[0].reset();
         button.text('登录');
-        button.css('background','#e75854');
+        button.css('background', '#e75854');
         $("#AdminClose").click();
-    },3000)
+    }, 3000)
     return true;
 }
 

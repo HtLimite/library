@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>图书系统</title>
-    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="shortcut icon" href="/index/images/lb.jpg">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{{--    <meta name="viewport" content="width=device-width, initial-scale=1">--}}
     <link rel="stylesheet" href="/student/css/spop.min.css"/>
     <link rel="stylesheet" href="/index/css/normalize.css">
     {{--    <link rel="stylesheet" href="/index/css/font-awesome.css">--}}
@@ -28,6 +28,11 @@
     <link rel="stylesheet" type="text/css" href="/adminlogin/css/content.css"/>
     <script src="/adminlogin/js/modernizr.custom.js"></script>
 
+    {{--管理员登录弹窗--}}
+    <script src="/adminlogin/js/classie.js"></script>
+    <script src="/adminlogin/js/uiMorphingButton_fixed.js"></script>
+
+
     <!--    seat style-->
     <link rel="stylesheet" href="/seat/lunbo/style.css">
     <link rel="stylesheet" href="/seat/style/style.css">
@@ -37,14 +42,12 @@
     <link rel="stylesheet" href="/seat/search/css/search-form.css">
 
     <!-- css3 svg弹窗-->
-    <link rel="stylesheet" type="text/css" href="/seat/style/dialog.css"/>
-    <link rel="stylesheet" type="text/css" href="/seat/style/dialog-henry.css"/>
-    <script src="/seat/snap.svg-min.js"></script>
-    <script src="/seat/modernizr.custom.js"></script>
+{{--    <link rel="stylesheet" type="text/css" href="/seat/style/dialog.css"/>--}}
+{{--    <link rel="stylesheet" type="text/css" href="/seat/style/dialog-henry.css"/>--}}
+{{--    <script src="/seat/snap.svg-min.js"></script>--}}
+{{--    <script src="/seat/modernizr.custom.js"></script>--}}
 
-    <!-- css3 svg弹窗-->
-    <script src="/seat/classie.js"></script>
-    <script src="/seat/dialogFx.js"></script>
+
 
 
     <!--时间选择 -->
@@ -70,7 +73,7 @@
 <!-- TOP HEADER -->
 <div class="top-header">
     <div class="container">
-        <div class="row">
+        <div class="row" style="display: flex;">
             <div class="col-md-6 col-sm-6 col-xs-12">
                 {{--                <p class="phone-info" id="adminLogin">图书馆系统--}}
                 {{--                    <a  href="javascript:" onclick="adminL();" style="margin-left: 20px;"><i class="fa-solid fa-user-lock"></i>--}}
@@ -119,16 +122,16 @@
                     <ul>
                         <li>
                             {{--                            <a href="#" class="fa fa-facebook"></a>--}}
-                            <a href="#" class="fa-brands fa-facebook-f"></a>
+{{--                            <a href="#" class="fa-brands fa-facebook-f"></a>--}}
                         </li>
                         <li>
-                            <a href="#" class="fa-solid fa-pen-to-square"></a>
+{{--                            <a href="#" class="fa-solid fa-pen-to-square"></a>--}}
                         </li>
                         <li>
-                            <a href="#" class="fa fa-linkedin"></a>
+{{--                            <a href="#" class="fa fa-linkedin"></a>--}}
                         </li>
                         <li>
-                            <a href="#" class="fa fa-dribbble"></a>
+{{--                            <a href="#" class="fa fa-dribbble"></a>--}}
                         </li>
                         @if(session()->has('email'))
                             <li>
@@ -152,22 +155,22 @@
 
 
 <div class="visible-xs visible-sm responsive-menu">
-    <a href="#" class="toggle-menu">
-        <i class="fa fa-bars"></i> Show Menu
+    <a href="javascript:;" class="toggle-menu">
+        <i class="fa fa-bars"></i> 菜单
     </a>
     <div class="show-menu">
         <ul class="main-menu">
             <li>
-                <a class="show-1 active homebutton" href="#"><i class="fa fa-home"></i>首页</a>
+                <a class="show-1 active homebutton" href="javascript:;"><i class="fa fa-home"></i>首页</a>
             </li>
             <li>
-                <a class="show-2 aboutbutton" href="#"><i class="fa fa-user"></i>我的</a>
+                <a class="show-2 aboutbutton" href="javascript:;"><i class="fa fa-user"></i>我的</a>
             </li>
             <li>
-                <a class="show-3 projectbutton" href="#"><i class="fa-solid fa-swatchbook"></i>预约</a>
+                <a class="show-3 projectbutton" href="javascript:;"><i class="fa-solid fa-swatchbook"></i>预约</a>
             </li>
             <li>
-                <a class="show-5 contactbutton" href="#"><i class="fa fa-envelope"></i>认证</a>
+                <a class="show-5 contactbutton" href="javascript:;"><i class="fa fa-envelope"></i>关于</a>
             </li>
         </ul>
     </div>
@@ -177,24 +180,21 @@
     <div class="row">
 
 
-        <div class="col-md-9 col-sm-12 content-holder" style="transition: all 1s;">
+        <div class="col-md-9 col-sm-12 content-holder myInfo "  id="oneHun" style="transition: all 1s;">
             <!-- CONTENT -->
             <div id="menu-container">
 
                 <div class="logo-holder logo-top-margin">
                     <a href="javascript:;" class="site-brand"><img onclick="logo();" id="myInfo"
                                                                    src="/index/images/logo.png" alt=""
-                                                                   style="height: 100px;width: 100px;"></a>
+                                                                   style="height: 100px; width: 100px;"></a>
                 </div>
 
 
                 <div id="menu-1" class="homepage home-section text-center">
                     <div class="welcome-text">
                         <h2>你好, 欢迎来到<strong>图书馆</strong></h2>
-                        <p>Rectangle is free mobile template brought to you by <span class="orange">template</span><span
-                                class="green">mo</span>.com website. You can download, edit and use this layout for any
-                            purpose. Please tell your friends about our
-                            website. Thank you.</p>
+                        <p></p>
                         @if(!session()->has('email'))
                             <script> var isLogined = false;</script>
 
@@ -203,7 +203,7 @@
                                 <div class="row">
                                     <fieldset class="col-md-offset-2 col-md-6">
                                         <input name="QQemail" type="email" class="email" id="subscribe-email"
-                                               placeholder="QQ Email" required maxlength="17">
+                                               placeholder="Email" required maxlength="30">
                                     </fieldset>
                                     <fieldset class="col-md-4 button-holder">
                                         <input name="submit1" type="submit" readonly onclick="QQenrol(this);"
@@ -211,7 +211,24 @@
                                                value="登录"/>
                                     </fieldset>
                                 </div>
-                                <p class="subscribe-text">请输入您的QQ邮箱登录,若没有账号则为<strong>注册!</strong></p>
+                                <p class="subscribe-text">请输入您的电子邮箱登录,若没有账号则为<strong>注册!</strong></p>
+                            </form>
+                            <form id="codeN" onsubmit="return false;" style="display: none" class="subscribe-form">
+                                @csrf
+                                <div class="row">
+                                    <fieldset class="col-md-offset-2 col-md-6">
+                                        <input name="codeN" type="number" class="email" id="codeVerity"
+                                               placeholder="验证码" required maxlength="7">
+                                        <input name="" type="email" class="email" id="codeEmail"
+                                               placeholder="验证码"  style="display: none">
+                                    </fieldset>
+                                    <fieldset class="col-md-4 button-holder">
+                                        <input name="su1" type="submit" style="background: #31708f" readonly onclick="codes();"
+                                               class="button default tada"
+                                               value="验证"/>
+                                    </fieldset>
+                                </div>
+                                <p class="subscribe-text">请及时查看您的电子邮件哦!</p>
                             </form>
 
                         @else
@@ -287,14 +304,13 @@
 
 
                 <div id="menu-3" class="content gallery-section">
-
-
                     <div class="box-content" id="seatInfo">
+
                         <!--导航菜单-->
                         <div class="seatDiv" id="seatNav">
                             <div><h3 class="widget-title" style="cursor: pointer;color: white;" id="seatIndex"
                                      onclick="page(1,true)">
-                                    <i class="fa-solid fa-table "></i> 座位信息</h3>
+                                    <i class="fa-solid fa-table "></i>&nbsp;&nbsp;<span>座位信息</span> </h3>
                             </div>
                             <div class="seatNav">
                                 <ul>
@@ -349,9 +365,8 @@
 
 
                         <!--未登录弹窗-->
-
                         <div class="input " id="unLoginDiv" style="display: none">
-                            <h1 style="font-size: 30px;padding: 30px"><i class="fa-solid fa-triangle-exclamation"></i>
+                            <h1 style="font-size: 27px;padding: 30px"><i class="fa-solid fa-triangle-exclamation"></i>
                                 未登录</h1>
                             <fieldset>
                                 <div class="endDiv">
@@ -398,10 +413,15 @@
 
                             <!--座位信息-->
                             <div id="seatOne">
+
+
+
                             </div>
                             <div class="returnTop"><i id="returnTop" class="fa-solid fa-chevron-up"></i></div>
                         </div>
                     </div>
+
+
                 </div>
 
                 <div id="menu-4" class="content contact-section">
@@ -429,8 +449,8 @@
                                                       placeholder="Message.."></textarea>
                                     </fieldset>
                                     <fieldset>
-                                        <input type="submit" class="button" onclick="enrol(this);" id="button1"
-                                               value="认证账号">
+                                        <input type="submit" class="button"  style="background: #777;" onclick="enrol(this);" id="button1"
+                                               value="暂未开发">
                                     </fieldset>
 
                                 </form>
@@ -469,46 +489,37 @@
             <nav id="nav" class="main-navigation hidden-xs hidden-sm">
                 <ul class="main-menu">
                     <li>
-                        <a class="show-1 active homebutton" href="#"><i class="fa fa-home"></i>首页</a>
+                        <a class="show-1 active homebutton" href="javascript:;"><i class="fa fa-home"></i>首页</a>
                     </li>
                     <li>
                         <a id="shouye" class="show-2 aboutbutton" onclick="myMessage(student);" href="#"><i
                                 class="fa fa-user"></i>我的</a>
                     </li>
                     <li>
-                        <a class="show-3 projectbutton" href="#" onclick="seat();"><i
+                        <a class="show-3 projectbutton" href="javascript:;" onclick="seat();"><i
                                 class="fa-solid fa-swatchbook"></i>预约</a>
                     </li>
                     <li>
-                        <a class="show-5 contactbutton" href="#"><i class="fa-brands fa-uniregistry"></i>关于</a>
+                        <a class="show-5 contactbutton" href="javascript:;"><i class="fa-brands fa-uniregistry"></i>关于</a>
                     </li>
                 </ul>
             </nav>
         </div>
     </div>
 </div>
-<!-- SITE-FOOTER -->
-<div class="site-footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <p>Copyright &copy; Reiki</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- .site-footer -->
-
 <!-- css3 svg弹窗 预约-->
-
+<!-- css3 svg弹窗-->
+<link rel="stylesheet" type="text/css" href="/seat/style/dialog.css"/>
+<link rel="stylesheet" type="text/css" href="/seat/style/dialog-henry.css"/>
+<script src="/seat/snap.svg-min.js"></script>
+<script src="/seat/modernizr.custom.js"></script>
 <div id="cssTan">
     <div class="button-wrap" style="display: none">
         <button data-dialog="somedialog" class="trigger">Open Dialog</button>
     </div>
     <div id="somedialog" class="dialog">
         <div class="dialog__overlay"></div>
-        <div class="dialog__content" style="padding-top: 0;">
+        <div class="dialog__content" style="padding-top: 0;width: 100%">
             <div class="morph-shape"
                  data-morph-open="M0,0h80c0,0,0,9.977,0,29.834c0,19.945,0,30.249,0,30.249H0c0,0,0-10.055,0-30.332C0,8.219,0,0,0,0z"
                  data-morph-close="M0,29.75h80c0,0-3.083,0.014-3.083,0.041c0,0.028,3.083,0.042,3.083,0.042H0c0,0,3.084-0.014,3.084-0.042
@@ -528,7 +539,7 @@
                     <form class="" id="yuyueForm" onsubmit="return yuYue('预约','{{csrf_token()}}');">
                         <div>
                             <h2 class="seatId">座位号</h2>
-                            <div class="numSeat">7</div>
+                            <div class="numSeat">null</div>
                         </div>
                         <div id="seatEditMo">
                             <fieldset>
@@ -568,14 +579,55 @@
         </div>
     </div>
 </div>
-{{--时间选择--}}
-<script type="text/javascript">
-    $('.clockpicker').clockpicker()
-        .find('input').change(function () {
-        // TODO：时间改变
-        // console.log(this.value);
-    });
+<!-- css3 svg弹窗-->
+<script src="/seat/classie.js"></script>
+<script src="/seat/dialogFx.js"></script>
+<script>
+    (function () {
+        var dlgtrigger = document.querySelector('[data-dialog]'),
+            somedialog = document.getElementById(dlgtrigger.getAttribute('data-dialog')),
+            // svg..
+            morphEl = somedialog.querySelector('.morph-shape'),
+            s = Snap(morphEl.querySelector('svg')),
+            path = s.select('path'),
+            steps = {
+                open: morphEl.getAttribute('data-morph-open'),
+                close: morphEl.getAttribute('data-morph-close')
+            },
+            dlg = new DialogFx(somedialog, {
+                onOpenDialog: function (instance) {
+                    // animate path
+                    path.stop().animate({
+                        'path': steps.open
+                    }, 400, mina.easeinout);
+                },
+                onCloseDialog: function (instance) {
+                    // animate path
+                    path.stop().animate({
+                        'path': steps.close
+                    }, 400, mina.easeinout);
+                }
+            });
+        dlgtrigger.addEventListener('click', dlg.toggle.bind(dlg));
+    })();
+</script>
 
+
+<!-- SITE-FOOTER -->
+<div class="site-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>Copyright &copy; Reiki</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- .site-footer -->
+
+
+<script>
     //用户邮箱传入js全局变量
     var student = "<?php echo session('email');?>";
 </script>
@@ -593,6 +645,9 @@
 <script src="/seat/lunbo/lunbo.js"></script>
 
 
+<!-- css3 svg弹窗-->
+{{--<script src="/seat/classie.js"></script>--}}
+{{--<script src="/seat/dialogFx.js"></script>--}}
 <!--座位信息-->
 <script src="/seat/my.js"></script>
 
@@ -605,6 +660,8 @@
 
 
 <script>
+
+
     //信息提示弹框
     function message(world, close) {
         spop({
@@ -656,10 +713,12 @@
     //是否预约
     function isReserve() {
         if (student) {
-            $.get("/reserve/" + student, function (data) {
+            $.get("/reserve/" ,{'email': student}, function (data) {
                 if (data == 0) {
+                    //解锁
                     seatLock = true;
                 } else {
+                    //锁住
                     seatLock = false;
                 }
             });
@@ -674,14 +733,23 @@
 
     //座位展示
     //监控浏览器屏幕大小
-    $(window).resize(function () {
-        if ($(window).width() < 992) {
-            $(".seatBlock").css("width", "25%");
-            $("#navhidden").css("width", "100%");
-        } else {
-            $(".seatBlock").css("width", "20%");
+    $(window).resize(windowsSize);
+
+    // bodyWidth = document.body.clientWidth;
+    //
+    // if(bodyWidth <= 483){
+    //
+    //     $("#seatIndex span").text('');
+    //
+    // }
+    function windowsSize(){
+        if ($(window).width() < 548){
+            $("#seatIndex span").text('');
+        } else{
+            $("#seatIndex span").text('座位信息');
         }
-    });
+    }
+    windowsSize();
 
     //座位展示点击函数
     page(1, true);
@@ -690,10 +758,10 @@
         $("#navhidden").fadeOut("slow");
         $("#navhidden").css("width", "0");
 
-        $(".col-md-9").css("width", "100%");
+        $(".col-md-9").css('width','100%');
         $(".seatBlock").css("width", "20%");
         // //调用第一页座位信息展示
-        // page(1, true);
+        page(1, true);
         //调用预约检查锁
         isReserve();
         //触发弹窗函数
@@ -706,7 +774,7 @@
         $("#shouye").click();
         $("#navhidden").fadeIn("slow");
         $("#navhidden").css("width", "25%");
-        $(".col-md-9").css("width", "75%");
+        $(".col-md-9").css('width','');
         $(".col-md-4").css("width", "33.33333333%");
     }
 
@@ -757,9 +825,6 @@
     }
 
 </script>
-{{--管理员登录弹窗--}}
-<script src="/adminlogin/js/classie.js"></script>
-<script src="/adminlogin/js/uiMorphingButton_fixed.js"></script>
 
 
 <script>
@@ -841,6 +906,7 @@
         document.getElementById("adminButton").click();
     }
 
+    var codeEmail;
 
     //QQ邮箱登录/注册
     function QQenrol(obj) {
@@ -851,16 +917,16 @@
         if (qqeamil == "") {
             return;
         }
-        const qqEmail = /[1-9][0-9]{4,}@qq.com/;
-        if (!qqEmail.test(qqeamil)) {
-            spop({
-                template: '<h4 style="color: white" class="spop-body">请输入正确的QQ邮箱!</h4>',
-                position: 'top-left',
-                style: 'warning',
-                autoclose: 7000,
-            })
-            return;
-        }
+        // const qqEmail = /[1-9][0-9]{4,}@qq.com/;
+        // if (!qqEmail.test(qqeamil)) {
+        //     spop({
+        //         template: '<h4 style="color: white" class="spop-body">请输入正确的QQ邮箱!</h4>',
+        //         position: 'top-left',
+        //         style: 'warning',
+        //         autoclose: 7000,
+        //     })
+        //     return;
+        // }
         //防sql注入
         var regex = /^(.*)(select|insert|into |delete|from |count|drop|join|union|table|database|update|truncate|asc\(|mid\(|char\(|xp_cmdshell|exec |master|net localgroup administrators|\"|:|net user|\| or )(.*)$/gi;
 
@@ -873,30 +939,34 @@
             });
             return;
         }
+        codeEmail = qqeamil;
+
+        codeN = $("#codeN").html();
         //ajax
         $.post('/library ', {email: qqeamil, '_token': '{{csrf_token()}}'}, function (data) {
             //注册 2
-
             if (data.code == 2) {
                 spop({
-                    template: '<h4 style="color: black" class="spop-body">请查收QQ邮箱验证注册 </h4>',
+                    template: '<h4 style="color: black" class="spop-body">请查收您的邮箱验证注册 </h4>',
                     position: 'top-left',
                     style: 'success',
                     autoclose: 3000,
                 });
-
+                $("#logForm").html(codeN);
             } else if (data.code == 1) {
                 //登录 1
                 spop({
-                    template: '<h4 style="color: black" class="spop-body">请查收QQ邮箱验证登录 </h4>',
+                    template: '<h4 style="color: black" class="spop-body">请查收您的电子邮箱验证登录 </h4>',
                     position: 'top-left',
                     style: 'success',
                     autoclose: 3000,
                 });
+
                 if(data.filePath != null){
                     $(".picMy").attr('src',data.filePath);
                 }
-            } else if (data == 3) {
+                $("#logForm").html(codeN);
+            } else if (data.code == 3) {
                 spop({
                     template: '<h4 style="color: #b85b53" class="spop-body">失败!登录太频繁,请30s后重试 </h4>',
                     position: 'top-left',
@@ -904,6 +974,43 @@
                     autoclose: 3000,
                 });
             }
+        });
+    }
+
+
+    //验证码
+    function codes(){
+        var code = $("#codeVerity").val();
+        if(code.length !== 7) return;
+
+        spop({
+            template: '<h4 style="color: yellow" class="spop-body">正在验证中... </h4>',
+            position: 'top-left',
+            style: 'info',
+            autoclose: 3000,
+        });
+        $.post('/codeVerify',{'_token':'{{csrf_token()}}','code':code,'codeEmail':codeEmail},function (data){
+
+            if(data.code === 'success'){
+                location.reload();
+            }else if(data.status === 403){
+                spop({
+                    template: '<h4 style="color: red" class="spop-body">状态'+ data.status +'验证失败</h4>',
+                    position: 'top-left',
+                    style: 'error',
+                    autoclose: 3000,});
+                location.reload();
+            }else if(data.status === 423){
+                spop({
+                    template: '<h4 style="color: red" class="spop-body">'+ data.status +'账号已被管理员禁用</h4>',
+                    position: 'top-left',
+                    style: 'error',
+                    autoclose: 3000,});
+            }
+            setTimeout(function (){
+                location.reload();
+
+            },3000);
         });
     }
 </script>

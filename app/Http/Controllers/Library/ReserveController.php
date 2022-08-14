@@ -12,9 +12,18 @@ use function view;
 
 class ReserveController extends Controller
 {
-    //| GET|HEAD  | reserve                | reserve.index
-    public function index()
+    //| GET|HEAD  | reserve                | reserve.index  查询预约信息
+    public function index(Request $request)
     {
+        $email = $request->get('email');
+        $mySeatInfo = DB::table('seat')->where('student', $email)->exists();
+        if(!$mySeatInfo){
+            //不存在预约
+            return 0;
+        }else{
+            return 1;
+        }
+
 
     }
 
@@ -88,11 +97,13 @@ class ReserveController extends Controller
         //预约记录
         $record = DB::table('record')->where('email', $email)->first();
         //事件处理
-        //小时转化
-        $record->total_time = ($record->total_time) / 3600;
+        if(!empty($record)){
+            //小时转化
+            $record->total_time = ($record->total_time)/3600;
+        }
         if (empty($mySeatInfo) || empty($record)) {
             //无预约信息  预约记录
-            return 0;
+            return view('library.myInfo',['studentInfo' => $studentInfo,'record' => $record]);
         }
         //更新我的预约状况
         $nowT = Date::now();
@@ -127,17 +138,23 @@ class ReserveController extends Controller
     public function update($id): int
     {
 
-        $result = DB::table('seat')->where('id', $id)->update(['status' => '离开']);
-        if (!$result) {
+        $result = DB::table('seat')->where('id', $id)->first();
+        if ($result->status == '离开') {
             if (DB::table('seat')->where('id', $id)->update(['status' => '使用中'])) {
                 //使用状态
                 return 2;
             }
             //失败
             return 0;
+        }else if ($result->status == '使用中') {
+            //离开状态
+            if (DB::table('seat')->where('id', $id)->update(['status' => '使用中'])) {
+                //使用状态
+                return 1;
+            }
+            return 0;
         }
-        //离开状态
-        return 1;
+        return 0;
     }
 
 

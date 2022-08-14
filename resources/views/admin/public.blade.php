@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/admin/bootstrap.min.css">
     <script src="/js/jquery-3.6.0.js"></script>
     <script src="/seat/bootstrap.js"></script>
+    <link rel="stylesheet" href="/css/fontawesome/css/all.css">
+
     <style>
         .navbar-blue {
             background-color: #ccc;
@@ -48,6 +50,9 @@
         .panel-primary > .panel-heading {
             background-color: #ccc;
         }
+        .col-md-2 .panel-primary div h2{
+            color: #000000;
+        }
     </style>
 </head>
 <body>
@@ -64,7 +69,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#"><img style="display:inline" width="30px" src="/style/admin/img/1.png"
+                <a class="navbar-brand" href="#"><img style="display:inline" width="30px" src="/index/images/logo.png"
                                                       alt=""> Lim-图书预约后台管理系统</a>
             </div>
 
@@ -96,7 +101,7 @@
             <!-- 管理员管理-->
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h2 class="panel-title" id="admin"><span class="glyphicon glyphicon-user"></span> 管理员管理</h2>
+                    <h2 class="panel-title" id="admin"><span class="fa-regular fa-address-card"></span> 管理员</h2>
                 </div>
                 <ul class="list-group">
                     <li class="list-group-item"><a href="/admin/admin">管理员列表</a></li>
@@ -106,7 +111,7 @@
             <!-- 座位管理 -->
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h2 class="panel-title" id="user"><span class="glyphicon glyphicon-user"></span> 座位管理</h2>
+                    <h2 class="panel-title" id="user"><span class="fa-solid fa-chair"></span> 座位管理</h2>
                 </div>
                 <ul class="list-group">
                     <li class="list-group-item"><a href="/admin/seat" >座位列表</a></li>
@@ -118,7 +123,7 @@
             <!-- 学生管理 -->
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h2 class="panel-title" id="types"><span class="glyphicon glyphicon-tasks"></span> 学生管理</h2>
+                    <h2 class="panel-title" id="types"><span class="fa-solid fa-users"></span> 学生管理</h2>
                 </div>
                 <ul class="list-group">
                     <li class="list-group-item"><a href="/admin/student" >学生列表</a></li>
@@ -127,7 +132,7 @@
             <!-- 记录管理 -->
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h2 class="panel-title" id="goods"><span class="glyphicon glyphicon-gift"></span> 记录管理</h2>
+                    <h2 class="panel-title" id="goods"><span class="fa-solid fa-clipboard-user"></span> 记录管理</h2>
                 </div>
                 <ul class="list-group">
                     <li class="list-group-item"><a href="javascript:;" onclick="record();">记录信息</a></li>
@@ -136,7 +141,7 @@
         <!-- 评论管理 -->
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h2 class="panel-title" id="comment"><span class="glyphicon glyphicon-envelope"></span> 评论管理</h2>
+                    <h2 class="panel-title" id="comment"><span class="fa-regular fa-envelope"></span> 评论管理</h2>
                 </div>
                 <ul class="list-group">
                     <li class="list-group-item"><a href="/admin/comment">评论列表</a></li>
@@ -146,14 +151,13 @@
             <!-- 系统管理 -->
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h2 class="panel-title" id="sys"><span class="glyphicon glyphicon-certificate"></span> 系统管理</h2>
+                    <h2 class="panel-title" id="sys"><span class="fa-solid fa-gear"></span> 系统管理</h2>
                 </div>
                 <ul class="list-group">
                     <li class="list-group-item"><a href="/admin/sys/config">系统配置</a></li>
                     <li class="list-group-item"><a href="/admin/sys/slider">轮播图管理</a></li>
                     <li class="list-group-item"><a href="/admin/sys/ads">广告管理</a></li>
                     <li class="list-group-item"><a href="/admin/sys/types">分类广告管理</a></li>
-
                 </ul>
             </div>
         </div>
@@ -230,7 +234,68 @@
 </div><!-- /.modal -->
 
 
+<!--删除确认模态框 -->
+<button type="button" id="deletB" class="btn btn-primary" style="display: none" data-toggle="modal"
+        data-target="#deleted">
+</button>
+<div class="modal fade" id="deleted">
+    <div class="modal-dialog modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span
+                        aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title">确认删除</h4>
+            </div>
+            <div class="modal-body deleteMessage">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button type="button" id="deleteTure" class="btn btn-primary">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script src="/admin/admin.js"></script>
+
 <script>
+    // ajax修改状态
+
+    function disabled(obj, id, status) {
+
+        // 发送ajax请求
+
+        if (!status) {
+            // 发送ajax请求
+            //被禁用
+            //发送 启用 1 请求
+            $.post('/admin/student/{1}', {id: id, _method:"put","_token": "{{csrf_token()}}", "status": "1"}, function (data) {
+
+                if (data == 1) {
+                    $("#Tanble").load(location.href + " #Tanble");
+                } else {
+                    alert('修改失败');
+                }
+
+            })
+        } else {
+
+            $.post('/admin/student/{1}', {id: id, _method:"put","_token": "{{csrf_token()}}", "status": "0"}, function (data) {
+
+                if (data == 1) {
+                    $("#Tanble").load(location.href + " #Tanble");
+                } else {
+
+                    alert('修改失败');
+                }
+
+            })
+        }
+    }
+
+
 
 
     mianBan = $(".col-md-10");
@@ -287,45 +352,12 @@
 
                 $("#body").html(data);
             }
-            ;
+
 
         });
 
     }
 
-    // ajax修改状态
-
-    function status(obj, id, status) {
-
-        // 发送ajax请求
-
-        if (status) {
-            // 发送ajax请求
-
-            $.post('/admin/admin/ajaxStatu', {id: id, "_token": "{{csrf_token()}}", "status": "0"}, function (data) {
-
-                if (data == 1) {
-                    $(obj).parent().html('<td><span class="btn btn-success" onclick="status(this,' + id + ',0)">正常</span></td>')
-                } else {
-
-                    alert('修改失败');
-                }
-
-            })
-        } else {
-
-            $.post('/admin/admin/ajaxStatu', {id: id, "_token": "{{csrf_token()}}", "status": "1"}, function (data) {
-
-                if (data == 1) {
-                    $(obj).parent().html('<td><span class="btn btn-danger" onclick="status(this,' + id + ',1)">禁用</span></td>')
-                } else {
-
-                    alert('修改失败');
-                }
-
-            })
-        }
-    }
 
     // ajax删除
 
@@ -405,8 +437,6 @@
         });
     }
 </script>
-</div>
-</div>
 
 
 <!-- 修改密码的摸态框 -->

@@ -1,4 +1,4 @@
-@extends('Admin.public')
+@extends('admin.public')
 
 @section('main')
     <!-- 内容 -->
@@ -6,7 +6,7 @@
         <!--    admin        -->
         <div id="mianBan">
             <ol class="breadcrumb">
-                <li><a href="#"><span class="glyphicon glyphicon-home"></span> 首页</a></li>
+                <li><a href="#"><span class="fa-solid fa-house-user"></span> 首页</a></li>
                 <li><a id="title1" href="#">管理员管理</a></li>
                 <li id="title2" class="active">管理员列表</li>
 
@@ -18,7 +18,7 @@
             <div class="panel panel-default">
                 <div id="adminData">
                     <div class="panel-heading">
-                        <button class="btn btn-success"><span class="glyphicon glyphicon-trash"></span> Admin</button>
+                        <button class="btn btn-success"><span class="fa-solid fa-dice-d20"></span> Admin</button>
                         <!-- <a href="/admin/admin/create" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> 添加管理员</a> -->
                         <a href="javascript:;" data-toggle="modal" data-target="#add" class="btn btn-success"><span
                                 class="glyphicon glyphicon-plus"></span> 添加管理员</a>

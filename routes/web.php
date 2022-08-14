@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('library.index');
 });
 //
 //Auth::routes();
@@ -50,8 +50,10 @@ Route::get('/exit','Index\BookController@exit');
 
 //QQ邮箱验证
 Route::get('/logVerify','Student\EmailController@Verify');
+//QQ邮箱验证码验证
+Route::post('/codeVerify','Student\EmailController@codeVerify');
 
-//Admin
+//admin
 //登录处理
 Route::post('/admin/login','Admin\AdminLoginController@store');
 
