@@ -11,19 +11,18 @@ use function view;
 class AdminController extends Controller
 {
 //        | GET|HEAD  | admin                    | admin.index   首页
-public function index(){
-    $totA=\DB::table('admin')->count();
-    $admin = \DB::table('admin')->paginate(10);
-    return view("admin.index",[
-        'totA' => $totA,
-        'admin' => $admin,
-    ]);
-}
+    public function index()
+    {
+        $totA = \DB::table('admin')->count();
+        $admin = \DB::table('admin')->paginate(10);
+        return view("admin.index", [
+            'totA' => $totA,
+            'admin' => $admin,
+        ]);
+    }
 
 
 //        | POST      | admin                    | admin.store
-
-
 
 
 //        | GET|HEAD  | admin/create             | admin.create
@@ -33,10 +32,11 @@ public function index(){
 //        | GET|HEAD  | admin/{admin}/edit       | admin.edit
 
 //        | GET|HEAD  | admin/logout       | admin.logout   退出
-public function logout(Request $request){
-    DB::table('admin')->where('account',session('adminInfo'))->update(['is_login' => 0]);
-    $request->session()->forget('adminInfo');
-    return redirect('/library');
+    public function logout(Request $request)
+    {
+        DB::table('admin')->where('account', session('adminInfo'))->update(['is_login' => 0]);
+        $request->session()->forget('adminInfo');
+        return redirect('/library');
 
-}
+    }
 }

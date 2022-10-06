@@ -28,7 +28,12 @@ class Kernel extends ConsoleKernel
         //定时清理座位
         $schedule->call(function () {
             DB::table('seat')->where('status','已结束')->update(['status'=> '未使用','beginTime'=> null,'endTime' => null]);
-        })->everyFiveMinute();
+            DB::table('admin')->where('is_login','1')->update(['is_login'=> '0']);
+        })->everyFiveMinutes();
+        //定时更新admin
+        $schedule->call(function () {
+            DB::table('admin')->where('is_login','1')->update(['is_login'=> '0']);
+        })->everyThirtyMinutes();
         // $schedule->command('inspire')
         //          ->hourly();
     }

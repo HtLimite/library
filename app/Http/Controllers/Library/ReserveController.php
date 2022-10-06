@@ -94,6 +94,7 @@ class ReserveController extends Controller
         $mySeatInfo = DB::table('seat')->where('student', $email)->first();
         //预约人信息
         $studentInfo = DB::table('student')->where('email', $email)->first();
+//        dd($studentInfo);
         //预约记录
         $record = DB::table('record')->where('email', $email)->first();
         //事件处理
@@ -111,7 +112,7 @@ class ReserveController extends Controller
             $status = '使用中';
         } else if ($nowT > $mySeatInfo->endTime) {
             $status = '已结束';
-        } else {
+        } else if($mySeatInfo->status != '离开'){
             $status = '已预约';
 
         }
@@ -133,13 +134,24 @@ class ReserveController extends Controller
         ]);
     }
 
+    public function isYuYue($email)
+    {
+        //查询数据库展示
+        $mySeatInfo = DB::table('seat')->where('student', $email)->first();
+        if (!isset($mySeatInfo)) {
+            return 0;
+        }
+        return 1;
+    }
 
     //| PUT|PATCH | reserve/{reserve}      | reserve.update   暂时离开
     public function update($id): int
     {
 
         $result = DB::table('seat')->where('id', $id)->first();
+//        dd($result);
         if ($result->status == '离开') {
+
             if (DB::table('seat')->where('id', $id)->update(['status' => '使用中'])) {
                 //使用状态
                 return 2;
@@ -148,7 +160,7 @@ class ReserveController extends Controller
             return 0;
         }else if ($result->status == '使用中') {
             //离开状态
-            if (DB::table('seat')->where('id', $id)->update(['status' => '使用中'])) {
+            if (DB::table('seat')->where('id', $id)->update(['status' => '离开'])) {
                 //使用状态
                 return 1;
             }

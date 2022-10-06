@@ -18,7 +18,7 @@
                 <ul>无预约信息</ul>
             </div>
         </div>
-</div>
+    </div>
 </div>
 <!--我的信息侧边栏-->
 <div class="col-md-4 col-sm-4 bigqi"  >

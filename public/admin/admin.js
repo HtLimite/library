@@ -63,7 +63,7 @@
 
             //座位删除
 
-            $.post("/admin/seat/" + idArr, {'_method': 'delete', '_token': _token}, function (data) {
+            $.post("/admin/seat/1" + idArr, {'_method': 'delete', '_token': _token}, function (data) {
                 if (data == 1) {
                     str ="<div class='alert alert-success'>已删除<strong >" + idArr.length + "</strong>个座位</div>";
                 }else {
@@ -81,7 +81,7 @@
         }else if(type === 'student'){
 
             //学生删除
-            $.post("/admin/student/" + idArr, {'_method': 'delete', '_token': _token}, function (data) {
+            $.post("/admin/student/1" + idArr, {'_method': 'delete', '_token': _token}, function (data) {
                 if (data == 1) {
                     str ="<div class='alert alert-success'>已删除<strong >" + idArr.length + "</strong>个学生</div>";
                 }else {

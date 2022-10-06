@@ -513,7 +513,7 @@
 <link rel="stylesheet" type="text/css" href="/seat/style/dialog-henry.css"/>
 <script src="/seat/snap.svg-min.js"></script>
 <script src="/seat/modernizr.custom.js"></script>
-<div id="cssTan">
+<div id="cssTan" >
     <div class="button-wrap" style="display: none">
         <button data-dialog="somedialog" class="trigger">Open Dialog</button>
     </div>
@@ -713,12 +713,13 @@
     //是否预约
     function isReserve() {
         if (student) {
-            $.get("/reserve/" ,{'email': student}, function (data) {
+            $.get("/isYuYue/" + student, function (data) {
                 if (data == 0) {
                     //解锁
                     seatLock = true;
                 } else {
                     //锁住
+                    // console.log(seatLock)
                     seatLock = false;
                 }
             });
@@ -779,7 +780,6 @@
     }
 
     //分页ajax刷新
-
     function page(pages, bool, status) {
         //节流
         if (!lock) {
@@ -917,16 +917,16 @@
         if (qqeamil == "") {
             return;
         }
-        // const qqEmail = /[1-9][0-9]{4,}@qq.com/;
-        // if (!qqEmail.test(qqeamil)) {
-        //     spop({
-        //         template: '<h4 style="color: white" class="spop-body">请输入正确的QQ邮箱!</h4>',
-        //         position: 'top-left',
-        //         style: 'warning',
-        //         autoclose: 7000,
-        //     })
-        //     return;
-        // }
+        const qqEmail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+        if (!qqEmail.test(qqeamil)) {
+            spop({
+                template: '<h4 style="color: white" class="spop-body">请输入正确的邮箱!</h4>',
+                position: 'top-left',
+                style: 'warning',
+                autoclose: 7000,
+            })
+            return;
+        }
         //防sql注入
         var regex = /^(.*)(select|insert|into |delete|from |count|drop|join|union|table|database|update|truncate|asc\(|mid\(|char\(|xp_cmdshell|exec |master|net localgroup administrators|\"|:|net user|\| or )(.*)$/gi;
 
@@ -989,8 +989,9 @@
             style: 'info',
             autoclose: 3000,
         });
-        $.post('/codeVerify',{'_token':'{{csrf_token()}}','code':code,'codeEmail':codeEmail},function (data){
+        $.post('/codeVerify',{'_token':'{{csrf_token()}}','code':code,'codeEmail':codeEmail},function (data,status){
 
+            console.log(status);
             if(data.code === 'success'){
                 location.reload();
             }else if(data.status === 403){

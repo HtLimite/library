@@ -181,7 +181,7 @@ $(".returnTop").click(function () {
 
 //预约表单弹出
 //预约锁 预约成功后锁住  false
-let seatLock = true;
+var seatLock = true;
 
 
 function yuyueForm(id) {
@@ -189,9 +189,8 @@ function yuyueForm(id) {
     if (!lock) {
         return;
     }
-    // 弹出模态框
-    $(".trigger").click();
 
+    console.log(seatLock);
     if (!seatLock) {
         //预约用户
         spop({
@@ -207,6 +206,9 @@ function yuyueForm(id) {
         }, 3000);
         return;
     }
+
+    // 弹出模态框
+    $(".trigger").click();
 
     if (isLogined && seatLock) {
         //登录用户 和 未预约用户
@@ -586,7 +588,7 @@ function pictureUp(_token) {
     //只能post
     $.ajax({
         headers: {'X-CSRF-TOKEN': _token},
-        url: "userInfo ",
+        url: "/userInfo ",
         type: "post",
         data: formData,
         contentType: false,

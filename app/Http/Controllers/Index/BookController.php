@@ -13,10 +13,17 @@ use function view;
 class BookController extends Controller
 {
     // | POST      | library                    | library.store 登录注册
-    public function store(Request $request): array
+    public function store(Request $request)
     {
         //获取qq邮箱
         $Email = $request->all();
+        //验证邮箱正确性
+        $pattern = "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/";
+        if (!isset($Email['email']) || !preg_match($pattern,$Email['email'])) {
+            return response([
+                'msg' => '邮箱地址错误!',
+            ],400);
+        }
         //查询是否存在邮箱
         $user = new Library();
         $user1 = $user->where('email', $Email['email'])->first();
@@ -38,13 +45,13 @@ class BookController extends Controller
             $user->email = $Email['email'];
             //存入数据库
             $user->save();
-            return ['code' => 2];
+            return ['code' => 2,'msg' => '注册'];
         } else {
             //登录
             //限制登录时间间隔
             if (time() - $user1->log < 30) {
                 //登陆时间小于30s 返回 3
-                return ['code' => 3];
+                return ['code' => 3,'msg' => '登录太频繁'];
             }
             $regEmail = new EmailController();
             $regEmail->index($Email['email'], "library.email", 1);
@@ -54,7 +61,7 @@ class BookController extends Controller
             $user1->log = time();
             $user1->save();
 
-            return ['code'=>1,'avatar' => $user1->avatar];
+            return ['code'=>1,'avatar' => $user1->avatar , 'msg' => '登录'];
         }
     }
 

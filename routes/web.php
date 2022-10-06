@@ -49,7 +49,7 @@ Route::resource('/library','Index\BookController');
 Route::get('/exit','Index\BookController@exit');
 
 //电子邮箱验证
-Route::get('/logVerify','Student\EmailController@Verify');
+//Route::get('/logVerify','Student\EmailController@Verify');
 //电子邮箱验证码验证
 Route::post('/codeVerify','Student\EmailController@codeVerify');
 
@@ -76,6 +76,8 @@ Route::group(['middleware' => 'adminLogin','prefix' => 'admin','namespace' => 'A
 Route::group(['middleware' => 'libraryLogin','namespace' => 'Library'],function (){
     //座位预约
     Route::resource('/reserve','ReserveController');
+    //是否预约
+    Route::get('/isYuYue/{email}','ReserveController@isYuYue');
     //个人信息
-    Route::resource('userInfo','UserInfoController');
+    Route::resource('/userInfo','UserInfoController');
 });

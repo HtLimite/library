@@ -114,10 +114,17 @@ class EmailController extends Controller
         $str = "<div style='height: 100vh;line-height: 100vh;text-align: center;'>$message</div>";
         echo $str;
     }
-    //qq验证码验证
+    //验证码验证
     public function codeVerify(Request $request)
     {
+
+
         $code = $request->all();
+        if (!isset($code['codeEmail'])) {
+            return response([
+                'msg' => '无效的验证码'
+            ]);
+        }
         $user = DB::table('student')->where('email', $code['codeEmail'])->first();
         if($user->is_verification == 0){
             //账号禁用
