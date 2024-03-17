@@ -618,7 +618,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                <p>Copyright &copy; Reiki</p>
+
+                <p><span>陕ICP备</span><a href="https://beian.miit.gov.cn/" target="_blank">2024030857号</a><span style="margin-left:10px"></span>Copyright &copy; Reiki</p>
             </div>
         </div>
     </div>
