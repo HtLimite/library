@@ -10,7 +10,7 @@
 > mysql -V
 > ```
 >
-> ![image-20220814100301621](C:\Users\Reiki\AppData\Roaming\Typora\typora-user-images\image-20220814100301621.png)
+> ![image-20220814100301621](.\readme\image-20220814100301621.png)
 
 ​       Laravel 根目录下的 ***.env***  文件
 
@@ -33,7 +33,7 @@
 > php -v
 > ```
 >
-> ![image-20220814100207944](C:\Users\Reiki\AppData\Roaming\Typora\typora-user-images\image-20220814100207944.png)
+> ![image-20220814100207944](.\Readme\image-20220814100207944.png)
 
 ### 2.运行数据迁移
 
@@ -55,10 +55,10 @@ php artisan migrate
 composer dump-autoload
 ```
 
-填充数据(1000个座位)
+填充数据(1000个座位、管理员账号)
 
 ```powershell
- php artisan db:seed --class=SeatTableSeeder
+ php artisan db:seed 
 ```
 
 ### 4.启动本地服务
@@ -68,3 +68,11 @@ php artisan serve
 ```
 
 最后QQ邮箱登录 测试
+
+### 5.管理员账号
+
+```sh
+account: 1445919044
+password: w1445919044
+```
+
